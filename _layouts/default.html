@@ -1,0 +1,32 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>{% if page.page_title %}{{ page.page_title | downcase }} - {% endif %} mrchlblng</title>
+  <meta name="description" content="A blog you should be reading later...">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link href='http://fonts.googleapis.com/css?family=Cabin|Pacifico|Droid+Serif' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/assets/css/mrchlblng.css">
+
+  <script defer src="/assets/js/modernizr.js"></script>
+
+</head>
+<body>
+  <div class="columns">
+
+    {% include header.html %}
+
+    <div class="blog">
+      {{ content }}
+    </div>
+
+  </div>
+
+  <script defer src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+  <script defer src="/assets/js/mrchlblng.js"></script>
+</body>
+</html>

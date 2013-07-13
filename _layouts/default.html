@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{% if page.page_title %}{{ page.page_title | downcase }} - {% endif %} mrchlblng</title>
-  <meta name="description" content="A blog you should be reading later...">
+  <title>{% if page.title %} {{ page.title | downcase }} | {% endif %} mrchlblng</title>
+  <meta name="description" content="A blog you should read later">
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -13,6 +13,7 @@
 
   <script defer src="/assets/js/modernizr.js"></script>
 
+  {% include analytics.html %}
 </head>
 <body>
   <div class="columns">
@@ -20,7 +21,7 @@
     {% include header.html %}
 
     <div class="blog">
-      {{ content }}
+      {% include default.html %}
     </div>
 
   </div>

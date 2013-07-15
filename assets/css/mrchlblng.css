@@ -18,33 +18,36 @@ html, body {
 
 body {
   background-color: #fcfcfc;
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 /* Typography */
 body {
   color: #333;
   font-size: 1.1em;
+  font-weight: normal;
+  text-align:justify;
+  text-justify:inter-word;
 }
 
 h1, h2, h3, h4, h5 {
   margin: 0;
-  font-family: 'Droid Serif', serif;
+  font-family: 'Paytone One', serif;
   font-weight: 400;
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-weight: 400;
 }
 
 h2 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight: 400;
 }
 
 hgroup h2 {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 /* shh */
@@ -144,7 +147,7 @@ header h2 {;
 /* @group Blog */
 
 .blog {
-  width: 640px;
+  width: 520px;
   margin: 50px 0 0 0;
   padding: 0 0 0 40px;
 }
@@ -170,7 +173,7 @@ article hgroup h1 a:hover {
 
 hgroup h2 {
   float: left;
-  width: 80%;
+  width: 95%;
   color: #999;
 }
 

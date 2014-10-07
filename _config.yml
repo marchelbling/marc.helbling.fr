@@ -11,9 +11,8 @@ source: .
 # Where to put the compiled site
 destination: ./_site
 # Markdown engine
-markdown: kramdown
-# Use Pygments for syntax highlighting
-pygments: true
+markdown: redcarpet
+highlighter: pygments
 
 # Exclude these files from compilation
 exclude: [Gemfile, Gemfile.lock, CNAME, README.md, vendor]

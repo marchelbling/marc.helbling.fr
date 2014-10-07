@@ -1,10 +1,10 @@
 <article class="post">
-  <hgroup class="cf">
+  <div class="cf">
     <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
     {% if page.description %}
       <h2>{{ page.description }}</h2>
     {% endif %}
-  </hgroup>
+  </div>
 
   <div class="body">
     {% if content %}
@@ -20,4 +20,3 @@
     {% endfor %}
   </ul>
 </article>
-

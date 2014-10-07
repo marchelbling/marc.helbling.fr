@@ -1,17 +1,7 @@
 ---
 ---
-/* @group Normalize */
 
-{% include normalize.css %}
-
-/* @end Normalize */
-
-/* @group Pygments - mojombo Theme */
-
-{% include pygments.css %}
-
-/* @end Pygments */
-
+{% include wombat.css %}
 html, body {
   height: 100%;
 }
@@ -19,38 +9,40 @@ html, body {
 body {
   background-color: #fcfcfc;
   font-family: 'Lato', sans-serif;
-}
-
-/* Typography */
-body {
   color: #333;
-  font-size: 1.1em;
-  font-weight: normal;
-  text-align:justify;
-  text-justify:inter-word;
+  font-size: 1.05em;
+  font-weight: 200;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 h1, h2, h3, h4, h5 {
   margin: 0;
-  font-family: 'Paytone One', serif;
-  font-weight: 400;
+  font-family: 'Coustard', serif;
+  font-weight: 300;
+  clear: both;
 }
 
 h1 {
-  font-size: 1.6em;
-  font-weight: 400;
+  font-size: 1.8em;
 }
 
 h2 {
-  font-size: 1.3em;
-  font-weight: 400;
+  font-size: 1.08em;
 }
 
-hgroup h2 {
+body h1 {
+  font-size: 1.4em;
+}
+
+body h2 {
   font-size: 1.2em;
 }
 
-/* shh */
+body h3 {
+  font-size: 1.1em;
+}
+
 p.quiet {
   color: #aaa;
 }
@@ -67,10 +59,6 @@ p.quiet a:hover {
 a {
   text-decoration: none;
   color: #0077cc;
-}
-
-a.gplus {
-  color: #d74937;
 }
 
 a:hover {
@@ -91,22 +79,29 @@ code {
 }
 
 blockquote {
-  background: #f0f1f2;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+  width: 80%;
+  margin: 0 auto;
+  background: #f6f7f7;
+  border: 1px solid #ebebeb;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-style: oblique;
 }
 
-blockquote p code {
-  color: #333;
-  border: none;
-  background: none;
+blockquote cite:before {
+  content: "\2014 \2009";
 }
 
-/* End Typography */
-
-/* Columns */
+blockquote cite {
+  float: right;
+  font-style: normal;
+  padding-left: 6px;
+  padding-right: 6px;
+  background: #f6f7f7;
+  border-left: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
+  border-right: 1px solid #ebebeb;
+}
 
 .columns, .blog {
   overflow: hidden;
@@ -117,10 +112,6 @@ blockquote p code {
 .columns header {
   float: left;
 }
-
-/* End Columns */
-
-/* Header */
 
 header {
   width: 200px;
@@ -142,53 +133,42 @@ header h2 {;
   font-size: 1.2em;
 }
 
-/* End Header */
-
-/* @group Blog */
-
 .blog {
-  width: 520px;
-  margin: 50px 0 0 0;
+  width: 600px;
+  margin: 60px 0 0 0;
   padding: 0 0 0 40px;
 }
-
-/* @group Posts */
 
 article {
   margin: 0 0 30px 0;
 }
 
-article hgroup {
-  margin: 0 0 15px 0;
-  border-bottom: 1px solid #eee;
+
+/* Post header */
+article div.cf {
+  padding: 0 0 15px 0;
 }
 
-article hgroup h1 a {
+article div.cf h1 a {
   color: #333;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;  
+  border-bottom: 1px solid #eee;
+  font-size: 1.4em;
 }
 
-article hgroup h1 a:hover {
+article div.cf h1 a:hover {
   color: #0077cc;
 }
 
-hgroup h2 {
+article div.cf h2 {
   float: left;
   width: 95%;
   color: #999;
-}
-
-hgroup h2 a, hgroup h3 a {
-  color: #999;
-}
-
-/* comment count */
-hgroup h3 {
-  width: 50%;
-  float: right;
+  padding: 0 0 15px 0;
   font-size: 1em;
-  text-align: right;
 }
-
+/* Post header */
 
 article img {
   display: block;
@@ -211,7 +191,8 @@ article img {
 
 .tags li a {
   padding: 1px 12px 2px 12px;
-  background: #eaeff0;
+  margin-top: 6px;
+  background: #eeeeee;
   color: #5e6d74;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -230,10 +211,6 @@ article img {
   top: 1px;
 }
 
-/* @end Posts */
-
-/* @group Pagination */
-
 .pagination .previous {
   float: right;
   text-align: right;
@@ -243,20 +220,15 @@ article img {
   float: left;
 }
 
-/* @end Pagination */
-
-/* @group Search Results Pages */
-/* categories etc. */
-
 .results {
   padding-left: 20px;
   list-style-type: none;
 }
 
 .results > li {
-  margin: 0 0 15px 0;
-  padding: 0 0 10px 0;
-  font-size: 1.2em;
+  margin: 0 0 10px 0;
+  padding: 0 0 20px 0;
+  font-size: 1.02em;
   border-bottom: 1px solid #eee;
 }
 
@@ -266,19 +238,13 @@ article img {
 }
 
 .results ul.tags {
-  margin: 5px 0 0 0;
+  margin: 5px 0 4px 0;
   font-size: 0.6em;
 }
 
-/* @end Search Results Pages */
-
-/* @end Blog */
-
-/* @group Code */
-
 .highlight {
   margin-bottom: 1em;
-  padding: 8px;
+  padding: 4px;
   border: 0px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
@@ -290,84 +256,52 @@ article img {
 }
 
 .highlight {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+
+#disqus_thread {
+  padding: 0 0 40px 0;
+}
+
+p code, ul code, ol code {
+  padding: 1px 4px;
+  border: 1px solid #e1e1e8;
+  background: #f0f5fb;
+  color: #303840;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
 }
 
-/* @end Code */
 
-/* @group Tables */
-
-table {
-  width: 100%;
-  margin-bottom: 18px;
-  border-collapse: collapse;
-  border-spacing: 0;
+article .body {
+  clear: both;
 }
 
-table th, table td {
-  padding: 8px;
-  border-top: 1px solid #dddddd;
-  line-height: 18px;
-  vertical-align: top;
-  text-align: left;
+article .body h1 {
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
-table th {
-  font-weight: bold;
+article .body h2 {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
-table thead th {
-  vertical-align: bottom;
-}
-
-table colgroup + thead tr:first-child th,
-table colgroup + thead tr:first-child td,
-table thead:first-child tr:first-child th,
-table thead:first-child tr:first-child td {
-  border-top: 0;
-}
-
-table tbody + tbody {
-  border-top: 2px solid #dddddd;
-}
-
-/* @end Tables */
-
-/* @group Comments */
-
-#disqus_thread {
-  padding: 0 0 40px 0;
-}
-
-/* @end Comments */
-
-/* inline code */
-p code, ul code, ol code {
-  padding: 1px 4px;
-  border: 1px solid #e1e1e8;
-  background: #f7f7f9;
-  color: #2aa198;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-}
 
 @media screen and (max-width: 1060px) {
   header {
     margin: 20px 0 0 20px;
   }
-  
+
   .blog {
     margin: 20px 0 0 0;
   }
 }
-
-/* @group Media Queries */
-/* For phones and stuff */
 
 @media screen and (max-width: 980px) {
   header {
@@ -411,12 +345,11 @@ p code, ul code, ol code {
   }
   
   article h2 {
-    font-size: 1.1em;
+    font-size: 1.2em;
   }
   
-  article h2 {
+  article h3 {
     font-size: 1.1em;
   }
 }
 
-/* @end Media Queries */

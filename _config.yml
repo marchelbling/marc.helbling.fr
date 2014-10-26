@@ -12,6 +12,9 @@ source: .
 destination: ./_site
 # Markdown engine
 markdown: redcarpet
+# see http://stackoverflow.com/a/16126840/626278:
+redcarpet:
+ extensions: ["tables", "strikethrough", "with_toc_data"]
 highlighter: pygments
 
 # Exclude these files from compilation

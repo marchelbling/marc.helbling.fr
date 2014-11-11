@@ -1438,7 +1438,7 @@ To summarize what seems to become the dominant branch workflow in git:
 
 ### Atomicity
 
-A good commit is about atomicity. Not unlike Unix philosophy, a commit should do [one thing](http://dev.solita.fi/2013/07/04/whats-in-a-good-commit.html) and one thing well. The reason is that it will allow to undo a precise change very easilyit will provide a kind of documentation about how the system works in its whole.
+A good commit is about atomicity. Not unlike Unix philosophy, a commit should do [one thing](http://dev.solita.fi/2013/07/04/whats-in-a-good-commit.html) and one thing well. The reason is that it will allow to undo a precise change very easily, and it will provide a kind of documentation about how the system works in its whole.
 A commit message where the conjunction ’and’ appears is probably not very atomic. Nonetheless, doing only one thing does *not* necessarily mean that a good commit should impact only a single file. Typically making a change in the code base will require a test suite update.
 
 
@@ -1461,7 +1461,7 @@ Last but not least, a good commit should not contain code that has been commente
 
 ### Formatting
 
-The structure of a commit message is important. It [shoud](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) look like:
+The structure of a commit message is important. It [should](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) look like:
 
 ```bash
 Short commit summary (below 50 chars)

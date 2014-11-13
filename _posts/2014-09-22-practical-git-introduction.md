@@ -1079,7 +1079,7 @@ Those changes probably deserve to belong to the same commit. `git rebase --inter
 * remove commits
 * swap commits.
 
-In our case we want to squash commits `075ce36` and `113d5ab`:
+In our case we want to squash commits `075ce36` and `7a48ea2`:
 
 ```bash
 $ git rebase --interactive 075ce36^
@@ -1782,6 +1782,7 @@ A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-
 
 # References
 
+* http://rogerdudler.github.io/git-guide/
 * https://try.github.io/levels/1/challenges/1
 * http://git-scm.com/book/en/v2
 * https://speakerdeck.com/schacon/introduction-to-git

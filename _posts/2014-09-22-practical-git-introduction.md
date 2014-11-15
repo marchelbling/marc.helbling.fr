@@ -297,7 +297,7 @@ $ git ls-tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
 040000 tree 5c7f626253bb14227d6e074382ee91574a180f21	fr
 
 $ git cat-file blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e
-Hello
+A dummy app listing ways to just say 'hello'
 
 $ git ls-tree 5c7f626253bb14227d6e074382ee91574a180f21
 100644 blob 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3	data

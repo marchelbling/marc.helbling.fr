@@ -1,0 +1,1051 @@
+.archive,
+.archive li {
+  padding: 0;
+  margin: 0;
+}
+.archive,
+.archive li,
+.ie7 .archive,
+.ie7 .archive li {
+  list-style: none;
+}
+.archive li {
+  line-height: 24px;
+  margin-bottom: 12px;
+  padding-left: 50px;
+  display: block;
+  position: relative;
+}
+.archive li:before {
+  display: none;
+}
+.archive .date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 14px;
+  line-height: 14px;
+}
+.archive .date .year {
+  display: block;
+}
+.archive.right li {
+  padding-left: 0;
+  padding-right: 40px;
+}
+.archive.right .date {
+  left: auto;
+  right: 0;
+  text-align: right;
+}
+
+html {
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Libre Baskerville', serif;
+  margin: 0;
+  padding: 8px 0 0 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+.date {
+  font-family: 'Anonymous Pro', monospace;
+}
+#content {
+  clear: both;
+}
+code,
+.tldr {
+  font-family: 'Anonymous Pro', monospace;
+}
+.small,
+.thin {
+  font-size: 0.61em;
+}
+.thin {
+  text-transform: uppercase;
+  line-height: 0.61em;
+}
+.dont-break {
+  white-space: nowrap;
+}
+.clear {
+  clear: both;
+}
+.smaller {
+  font-size: 0.78em;
+}
+.math {
+  text-align: center;
+  font-style: italic;
+  white-space: pre-line;
+}
+.sidenote {
+  font-size: 0.78em;
+  line-height: 1.49em;
+}
+@media (max-width: 850px) {
+  .sidenote {
+    text-align: right;
+  }
+}
+@media (min-width: 850px) {
+  .sidenote {
+    margin: 0.5em 0 0 0;
+    position: absolute;
+    left: -100px;
+    width: 100px;
+    text-align: right;
+  }
+  .sidenote p {
+    margin: 0 0 0.5em 0;
+  }
+}
+@media screen {
+  .in_print {
+    display: none;
+  }
+}
+@media print {
+  * {
+    color: black !important;
+    background-color: white !important;
+  }
+  #top,
+  #photos {
+    display: none;
+  }
+  body {
+    font-size: 11px;
+  }
+}
+
+.theme {
+  padding: 0;
+}
+.theme article {
+  padding: 0;
+}
+.theme h1 {
+  line-height: 1.2em;
+}
+@media (orientation: landscape) {
+  .theme section {
+    font-size: 5vh;
+    line-height: 7vh;
+    position: relative;
+    height: 100vh;
+  }
+  .theme .wrap {
+    position: absolute;
+    max-width: 120vh;
+    min-width: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+  }
+}
+@media (orientation: portrait) {
+  .theme section {
+    padding: 20px;
+  }
+  .theme pre {
+    overflow-x: auto;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+}
+.theme section {
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05));
+  background: -moz-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05));
+}
+.theme section ul,
+.theme section li {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+}
+.theme section li {
+  margin-bottom: 0.4em;
+}
+.theme section pre .capturing {
+  color: #aaffcc;
+}
+.theme section pre .captured {
+  color: #333338;
+  background: #aaffcc;
+}
+.theme section pre .diagonal_line,
+.theme section pre .vertical_line,
+.theme section pre .to_diagonal_line,
+.theme section pre .horizontal_line {
+  display: inline-block;
+}
+.theme section pre .diagonal_line {
+  transform: rotate(-45deg) scaleX(4);
+  -ms-transform: rotate(-45deg) scaleX(4);
+  -webkit-transform: rotate(-45deg) scaleX(4);
+}
+.theme section pre .vertical_line {
+  transform: rotate(90deg) scaleX(3);
+  -ms-transform: rotate(90deg) scaleX(3);
+  -webkit-transform: rotate(90deg) scaleX(3);
+}
+.theme section pre .horizontal_line {
+  transform: scaleX(1.4);
+  -ms-transform: scaleX(1.4);
+  -webkit-transform: scaleX(1.4);
+}
+.theme section pre .to_diagonal_line {
+  transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform: rotate(-30deg) scaleX(2.8);
+  -ms-transform: rotate(-30deg) scaleX(2.8);
+  -webkit-transform: rotate(-30deg) scaleX(2.8);
+}
+.theme section h1 {
+  font-size: 1.3em;
+  color: #aae0de;
+}
+.theme section strong {
+  color: #aaffcc;
+  font-weight: inherit;
+}
+.theme section li:before {
+  display: none;
+}
+.theme section .or_list li {
+  position: relative;
+}
+.theme section .or_list li:before {
+  display: block;
+  content: "or ";
+}
+.theme section .or_list li:first-child:before {
+  display: none;
+}
+.theme section p.math {
+  font-style: normal;
+  line-height: 1.5em;
+}
+.theme section pre {
+  line-height: 1.1em;
+  font-size: 18px;
+}
+.theme section pre:before,
+.theme section pre:after {
+  display: none;
+}
+.theme section .heart {
+  color: #f67;
+}
+.theme section p.footnote {
+  font-size: 12px;
+  line-height: 1.1em;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  font-family: 'Abril Fatface', 'Libre Baskerville', serif;
+}
+h2,
+h3,
+h4 {
+  margin-bottom: 0;
+}
+h1 {
+  font-size: 1.78em;
+  line-height: 1.2em;
+  margin: 1em 0 0.5em 0;
+}
+h1 + p.meta {
+  position: relative;
+  top: -0.4em;
+}
+h2 {
+  font-size: 1.22em;
+  margin-top: 1.46em;
+}
+h3,
+h4 {
+  font-size: inherit;
+  margin-top: 1.78em;
+}
+article,
+section {
+  display: block;
+}
+p,
+ul,
+ol,
+pre,
+dl,
+figure {
+  margin: 18px 0;
+}
+figure p,
+figure ul,
+figure ol,
+figure pre,
+figure dl,
+figure figure {
+  margin-bottom: 0;
+}
+p code,
+ul code,
+ol code,
+dl code {
+  white-space: nowrap;
+}
+article {
+  clear: both;
+  line-height: 1.67em;
+}
+blockquote {
+  position: relative;
+  margin: 0;
+  padding: 1em 0 1em 1.33em;
+}
+blockquote ul,
+blockquote ol,
+blockquote p,
+blockquote pre {
+  margin: 0.55em 0;
+}
+blockquote:before {
+  display: block;
+  position: absolute;
+  font-style: normal;
+  font-size: 3em;
+  line-height: 1em;
+}
+blockquote:before {
+  content: "“";
+  top: 0.5em;
+  left: 0;
+}
+pre {
+  line-height: 1.28em;
+  margin-left: -16px;
+  margin-right: -16px;
+  position: relative;
+}
+pre code {
+  display: block;
+  overflow-x: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+pre:before,
+pre:after {
+  pointer-events: none;
+  content: "";
+  display: block;
+  width: 16px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+pre:before {
+  left: 0;
+}
+pre:after {
+  right: 0;
+}
+img {
+  border: none;
+}
+article img {
+  max-width: 100%;
+}
+a {
+  outline: none;
+  text-decoration: none;
+  transition: color 0.25s, text-shadow 1s;
+  -webkit-transition: color 0.25s, text-shadow 1s;
+}
+.meta,
+figcaption {
+  font-family: 'Anonymous Pro', monospace;
+}
+dd,
+.meta,
+figcaption {
+  font-size: 0.78em;
+  line-height: 1.5em;
+}
+@media print {
+  dd,
+  .meta,
+  figcaption {
+    font-size: 1em;
+  }
+}
+.meta figcaption {
+  font-size: inherit;
+}
+dd {
+  margin: 0 0 16px 0;
+}
+sup {
+  vertical-align: top;
+  position: relative;
+  font-size: 0.83em;
+  top: -0.27em;
+}
+.center,
+figcaption {
+  text-align: center;
+}
+article ul,
+article ol {
+  padding: 0;
+  margin-left: 0;
+}
+article ul li,
+article ol li {
+  position: relative;
+  margin-left: 24px;
+}
+@media print {
+  article ul li,
+  article ol li {
+    margin-left: 15px;
+  }
+}
+article ul li:before,
+article ol li:before {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  white-space: pre;
+  color: #999;
+  display: block;
+  text-align: right;
+}
+@media print {
+  article ul li:before,
+  article ol li:before {
+    color: black;
+  }
+}
+article ol {
+  counter-reset: ol_counter;
+}
+article ol li {
+  counter-increment: ol_counter;
+}
+.ie7 article ol li {
+  list-style: decimal;
+}
+article ol li:before {
+  content: counter(ol_counter) ") ";
+}
+.ie7 article ul li {
+  list-style: decimal;
+}
+article ul li:before {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "❖ ";
+}
+article .flat,
+article .flat li {
+  margin: 0;
+  padding: 0;
+}
+article .flat:before,
+article .flat li:before {
+  display: none;
+}
+.comments {
+  margin-top: 1.78em;
+  margin-bottom: 1.78em;
+}
+.tldr {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 0.67em;
+  line-height: 0.83em;
+  width: 1.25em;
+}
+.emot {
+  font-family: 'Anonymous Pro', monospace;
+  display: inline-block;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+}
+.key {
+  font-family: 'Anonymous Pro', monospace;
+  display: inline-block;
+  border: 1px solid transparent;
+  font-size: 0.89em;
+  line-height: 1em;
+  padding: 0.19em 0.31em;
+  border-radius: 0.19em;
+}
+.only-in-feed {
+  display: none;
+}
+
+.index {
+  line-height: 1.5em;
+}
+.index section {
+  position: relative;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.index section .meta {
+  margin-bottom: 16px;
+}
+@media (min-width: 500px) {
+  .index section {
+    margin-top: 44px;
+    padding-left: 110px;
+  }
+  .index section h1 {
+    line-height: 1em;
+    position: absolute;
+    left: 0;
+    top: -8px;
+    margin-top: 0;
+  }
+  .index ul.archive {
+    position: relative;
+    top: 2px;
+  }
+}
+
+#top,
+#sections,
+article,
+.comments {
+  position: relative;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wide #top,
+.wide #sections,
+.wide article,
+.wide .comments {
+  max-width: 600px;
+}
+@media (min-width: 600px) {
+  .wide #top,
+  .wide #sections,
+  .wide article,
+  .wide .comments {
+    max-width: 860px;
+  }
+}
+.reading #top,
+.reading #sections,
+.reading article,
+.reading .comments {
+  max-width: 600px;
+}
+
+table {
+  border-spacing: 0;
+}
+table.full {
+  width: 100%;
+}
+table .head {
+  font-weight: 700;
+}
+table .sparse td {
+  padding-top: 1em;
+}
+table .sparse :first-child tr:first-child td {
+  padding-top: 0;
+}
+td {
+  vertical-align: top;
+  padding-right: 0;
+  padding-left: 16px;
+}
+td:first-child {
+  padding-left: 0;
+}
+
+.dark {
+  color: #fffff5;
+  background: #333338;
+}
+.dark a,
+.dark a:visited {
+  color: #99eeee;
+}
+.dark a:hover,
+.dark a:active {
+  color: #00ffff;
+}
+.dark a:hover.parenthesis,
+.dark a:active.parenthesis,
+.dark a:hover .parenthesis,
+.dark a:active .parenthesis {
+  color: inherit;
+}
+.dark a.icon,
+.dark a.icon:visited {
+  color: #fffff5;
+}
+.dark a.icon:hover,
+.dark a.icon:active {
+  color: #00ffff;
+}
+.dark a.icon:hover.parenthesis,
+.dark a.icon:active.parenthesis,
+.dark a.icon:hover .parenthesis,
+.dark a.icon:active .parenthesis {
+  color: inherit;
+}
+.dark h1 a,
+.dark h1 a:visited {
+  color: #fffff5;
+}
+.dark h1 a:hover,
+.dark h1 a:active {
+  color: #80fffa;
+}
+.dark h1 a:hover.parenthesis,
+.dark h1 a:active.parenthesis,
+.dark h1 a:hover .parenthesis,
+.dark h1 a:active .parenthesis {
+  color: inherit;
+}
+.dark .small,
+.dark .parenthesis,
+.dark .date {
+  color: #999997;
+}
+.dark .small a,
+.dark .parenthesis a,
+.dark .date a,
+.dark .small a:visited,
+.dark .parenthesis a:visited,
+.dark .date a:visited {
+  color: #70a3a5;
+}
+.dark .small a:hover,
+.dark .parenthesis a:hover,
+.dark .date a:hover,
+.dark .small a:active,
+.dark .parenthesis a:active,
+.dark .date a:active {
+  color: #0fc2c3;
+}
+.dark .small a:hover.parenthesis,
+.dark .parenthesis a:hover.parenthesis,
+.dark .date a:hover.parenthesis,
+.dark .small a:active.parenthesis,
+.dark .parenthesis a:active.parenthesis,
+.dark .date a:active.parenthesis,
+.dark .small a:hover .parenthesis,
+.dark .parenthesis a:hover .parenthesis,
+.dark .date a:hover .parenthesis,
+.dark .small a:active .parenthesis,
+.dark .parenthesis a:active .parenthesis,
+.dark .date a:active .parenthesis {
+  color: inherit;
+}
+.dark blockquote:before {
+  color: #47474b;
+}
+.dark pre:before {
+  background: linear-gradient(to left, rgba(51, 51, 56, 0), #333338);
+}
+.dark pre:after {
+  background: linear-gradient(to right, rgba(51, 51, 56, 0), #333338);
+}
+.dark #top a,
+.dark #top a:visited {
+  color: #fffff5;
+}
+.dark #top a:hover,
+.dark #top a:active {
+  color: #00ffff;
+}
+.dark #top a:hover.parenthesis,
+.dark #top a:active.parenthesis,
+.dark #top a:hover .parenthesis,
+.dark #top a:active .parenthesis {
+  color: inherit;
+}
+.dark #logo > div {
+  background: #fffff5;
+}
+.dark #logo:hover > div,
+.dark #logo:active > div {
+  background: #00ffff;
+}
+.dark .key {
+  color: #c2c2bc;
+  background: #47474b;
+}
+.black {
+  color: #aaaaaa;
+  background: #000000;
+}
+.black a,
+.black a:visited {
+  color: #99aaaa;
+}
+.black a:hover,
+.black a:active {
+  color: #00ffff;
+}
+.black a:hover.parenthesis,
+.black a:active.parenthesis,
+.black a:hover .parenthesis,
+.black a:active .parenthesis {
+  color: inherit;
+}
+.black a.icon,
+.black a.icon:visited {
+  color: #aaaaaa;
+}
+.black a.icon:hover,
+.black a.icon:active {
+  color: #00ffff;
+}
+.black a.icon:hover.parenthesis,
+.black a.icon:active.parenthesis,
+.black a.icon:hover .parenthesis,
+.black a.icon:active .parenthesis {
+  color: inherit;
+}
+.black h1 a,
+.black h1 a:visited {
+  color: #aaaaaa;
+}
+.black h1 a:hover,
+.black h1 a:active {
+  color: #55d5d5;
+}
+.black h1 a:hover.parenthesis,
+.black h1 a:active.parenthesis,
+.black h1 a:hover .parenthesis,
+.black h1 a:active .parenthesis {
+  color: inherit;
+}
+.black .small,
+.black .parenthesis,
+.black .date {
+  color: #555555;
+}
+.black .small a,
+.black .parenthesis a,
+.black .date a,
+.black .small a:visited,
+.black .parenthesis a:visited,
+.black .date a:visited {
+  color: #5c6666;
+}
+.black .small a:hover,
+.black .parenthesis a:hover,
+.black .date a:hover,
+.black .small a:active,
+.black .parenthesis a:active,
+.black .date a:active {
+  color: #00b3b3;
+}
+.black .small a:hover.parenthesis,
+.black .parenthesis a:hover.parenthesis,
+.black .date a:hover.parenthesis,
+.black .small a:active.parenthesis,
+.black .parenthesis a:active.parenthesis,
+.black .date a:active.parenthesis,
+.black .small a:hover .parenthesis,
+.black .parenthesis a:hover .parenthesis,
+.black .date a:hover .parenthesis,
+.black .small a:active .parenthesis,
+.black .parenthesis a:active .parenthesis,
+.black .date a:active .parenthesis {
+  color: inherit;
+}
+.black blockquote:before {
+  color: #111111;
+}
+.black pre:before {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0), #000000);
+}
+.black pre:after {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #000000);
+}
+.black #top a,
+.black #top a:visited {
+  color: #aaaaaa;
+}
+.black #top a:hover,
+.black #top a:active {
+  color: #00ffff;
+}
+.black #top a:hover.parenthesis,
+.black #top a:active.parenthesis,
+.black #top a:hover .parenthesis,
+.black #top a:active .parenthesis {
+  color: inherit;
+}
+.black #logo > div {
+  background: #aaaaaa;
+}
+.black #logo:hover > div,
+.black #logo:active > div {
+  background: #00ffff;
+}
+.black .key {
+  color: #777777;
+  background: #111111;
+}
+.light {
+  color: #000000;
+  background: #ffffff;
+}
+.light a,
+.light a:visited {
+  color: #ff0219;
+}
+.light a:hover,
+.light a:active {
+  color: #ff7302;
+}
+.light a:hover.parenthesis,
+.light a:active.parenthesis,
+.light a:hover .parenthesis,
+.light a:active .parenthesis {
+  color: inherit;
+}
+.light a.icon,
+.light a.icon:visited {
+  color: #000000;
+}
+.light a.icon:hover,
+.light a.icon:active {
+  color: #ff7302;
+}
+.light a.icon:hover.parenthesis,
+.light a.icon:active.parenthesis,
+.light a.icon:hover .parenthesis,
+.light a.icon:active .parenthesis {
+  color: inherit;
+}
+.light h1 a,
+.light h1 a:visited {
+  color: #000000;
+}
+.light h1 a:hover,
+.light h1 a:active {
+  color: #803a01;
+}
+.light h1 a:hover.parenthesis,
+.light h1 a:active.parenthesis,
+.light h1 a:hover .parenthesis,
+.light h1 a:active .parenthesis {
+  color: inherit;
+}
+.light .small,
+.light .parenthesis,
+.light .date {
+  color: #808080;
+}
+.light .small a,
+.light .parenthesis a,
+.light .date a,
+.light .small a:visited,
+.light .parenthesis a:visited,
+.light .date a:visited {
+  color: #ff6775;
+}
+.light .small a:hover,
+.light .parenthesis a:hover,
+.light .date a:hover,
+.light .small a:active,
+.light .parenthesis a:active,
+.light .date a:active {
+  color: #ff9d4e;
+}
+.light .small a:hover.parenthesis,
+.light .parenthesis a:hover.parenthesis,
+.light .date a:hover.parenthesis,
+.light .small a:active.parenthesis,
+.light .parenthesis a:active.parenthesis,
+.light .date a:active.parenthesis,
+.light .small a:hover .parenthesis,
+.light .parenthesis a:hover .parenthesis,
+.light .date a:hover .parenthesis,
+.light .small a:active .parenthesis,
+.light .parenthesis a:active .parenthesis,
+.light .date a:active .parenthesis {
+  color: inherit;
+}
+.light blockquote:before {
+  color: #e6e6e6;
+}
+.light pre:before {
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), #ffffff);
+}
+.light pre:after {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff);
+}
+.light #top a,
+.light #top a:visited {
+  color: #000000;
+}
+.light #top a:hover,
+.light #top a:active {
+  color: #ff7302;
+}
+.light #top a:hover.parenthesis,
+.light #top a:active.parenthesis,
+.light #top a:hover .parenthesis,
+.light #top a:active .parenthesis {
+  color: inherit;
+}
+.light #logo > div {
+  background: #000000;
+}
+.light #logo:hover > div,
+.light #logo:active > div {
+  background: #ff7302;
+}
+.light .key {
+  color: #4d4d4d;
+  background: #e6e6e6;
+}
+.red {
+  color: #ffddaa;
+  background: #442222;
+}
+.red a,
+.red a:visited {
+  color: #ffffaa;
+}
+.red a:hover,
+.red a:active {
+  color: #ffffff;
+}
+.red a:hover.parenthesis,
+.red a:active.parenthesis,
+.red a:hover .parenthesis,
+.red a:active .parenthesis {
+  color: inherit;
+}
+.red a.icon,
+.red a.icon:visited {
+  color: #ffddaa;
+}
+.red a.icon:hover,
+.red a.icon:active {
+  color: #ffffff;
+}
+.red a.icon:hover.parenthesis,
+.red a.icon:active.parenthesis,
+.red a.icon:hover .parenthesis,
+.red a.icon:active .parenthesis {
+  color: inherit;
+}
+.red h1 a,
+.red h1 a:visited {
+  color: #ffddaa;
+}
+.red h1 a:hover,
+.red h1 a:active {
+  color: #ffeed5;
+}
+.red h1 a:hover.parenthesis,
+.red h1 a:active.parenthesis,
+.red h1 a:hover .parenthesis,
+.red h1 a:active .parenthesis {
+  color: inherit;
+}
+.red .small,
+.red .parenthesis,
+.red .date {
+  color: #a28066;
+}
+.red .small a,
+.red .parenthesis a,
+.red .date a,
+.red .small a:visited,
+.red .parenthesis a:visited,
+.red .date a:visited {
+  color: #b4a774;
+}
+.red .small a:hover,
+.red .parenthesis a:hover,
+.red .date a:hover,
+.red .small a:active,
+.red .parenthesis a:active,
+.red .date a:active {
+  color: #c7bdbd;
+}
+.red .small a:hover.parenthesis,
+.red .parenthesis a:hover.parenthesis,
+.red .date a:hover.parenthesis,
+.red .small a:active.parenthesis,
+.red .parenthesis a:active.parenthesis,
+.red .date a:active.parenthesis,
+.red .small a:hover .parenthesis,
+.red .parenthesis a:hover .parenthesis,
+.red .date a:hover .parenthesis,
+.red .small a:active .parenthesis,
+.red .parenthesis a:active .parenthesis,
+.red .date a:active .parenthesis {
+  color: inherit;
+}
+.red blockquote:before {
+  color: #573530;
+}
+.red pre:before {
+  background: linear-gradient(to left, rgba(68, 34, 34, 0), #442222);
+}
+.red pre:after {
+  background: linear-gradient(to right, rgba(68, 34, 34, 0), #442222);
+}
+.red #top a,
+.red #top a:visited {
+  color: #ffddaa;
+}
+.red #top a:hover,
+.red #top a:active {
+  color: #ffffff;
+}
+.red #top a:hover.parenthesis,
+.red #top a:active.parenthesis,
+.red #top a:hover .parenthesis,
+.red #top a:active .parenthesis {
+  color: inherit;
+}
+.red #logo > div {
+  background: #ffddaa;
+}
+.red #logo:hover > div,
+.red #logo:active > div {
+  background: #ffffff;
+}
+.red .key {
+  color: #c7a581;
+  background: #573530;
+}

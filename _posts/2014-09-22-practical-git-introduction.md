@@ -13,8 +13,10 @@ In just a few years, [git](http://git-scm.com/) has become the dominant version 
 
 1. <a href="#introduction">Introduction</a>
     1. <a href="#why-a-version-control-system?">Why a version control system?</a>
-    2. <a href="#why-git?">Why git?</a>
-    3. <a href="#setup">Setup</a>
+    2. <a href="#a-short-history-of-vcs">A short history of vcs</a>
+    3. <a href="#why-git?">Why git?</a>
+    4. <a href="#about-this-document">About this document</a>
+    5. <a href="#setup">Setup</a>
 2. <a href="#git-basics">git basics</a>
     1. <a href="#first-commit!">First commit!</a>
     2. <a href="#staging-area">Staging area</a>
@@ -75,7 +77,7 @@ In just a few years, [git](http://git-scm.com/) has become the dominant version 
     6. <a href="#guis-and-plugins">GUIs and plugins</a>
     7. <a href="#jargon">Jargon</a>
         * <a href="#upstream/downstream">upstream/downstream</a>
-        * <a href="#bare-and-non-bare-repository">bare and non-bare repositor</a>
+        * <a href="#bare-and-non-bare-repository">bare and non-bare repository</a>
         * <a href="#fork">fork</a>
         * <a href="#pull-request">pull request</a>
         * <a href="#porcelain/plumbing">porcelain/plumbing</a>
@@ -84,13 +86,40 @@ In just a few years, [git](http://git-scm.com/) has become the dominant version 
 7. <a href="#references">References</a>
 
 
-## Why a version control system?
+## Why a Version Control System?
 
 People not already using a [version control system](http://en.wikipedia.org/wiki/Revision_control) (vcs) often perform some manual operations to keep incremental revisions of some work. Keeping iterative versions of a document or a collection of documents may be done through naming schemes like [`[filename]_v{0-9}+.doc`](http://www.phdcomics.com/comics/archive/phd101212s.gif) or `[timestamp]_[filename]_[comment].zip` (where e.g. using the [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format for dates will sort version).
 However it becomes quickly cumbersome to easily see compare versions, to undo some modification or to work in parallel on the same document and not mentionning the possibility of making a mistake when freezing a version.
 
 This is where a vcs becomes handy if not mandatory to use. A [vcs](http://mikemcquaid.com/2014/01/18/why-use-version-control/) will store version of a collection of documents without modifying their apparent filenames, allow to undo/redo some modification and keep a context in which modification were performed (e.g. an author, timestamp, comment for the modification).
 
+From [wikipedia](http://en.wikipedia.org/wiki/Revision_control):
+
+> Version control is the management of changes to collections of documents. Changes are usually identified by a number or letter code termed the “revision”. Revisions can be compared, restored, and with some types of files, merged.
+
+Use cases are numerous:
+
+* thesis writing with multiple people going back and forth on document structure or content;
+* a resume translated in multiple languages or adapted for different types of carreer;
+* or, the reason for this blog post, handling software code written by a group of people.
+
+
+## A short history of vcs
+
+There has been [three](http://ericsink.com/vcbe/html/history_of_version_control.html) main [eras](http://codicesoftware.blogspot.com/2010/11/version-control-timeline.html) in the world of version control software:
+
+1. local repositories operating on a single file (1970’s — 1980’s)
+    * [Source Code Control System](http://en.wikipedia.org/wiki/Source_Code_Control_System)
+    * [Revision Control System](http://www.gnu.org/software/rcs/)
+2. centralized repositories handling full project (1990’s — )
+    * [Concurrent Versions System](http://www.nongnu.org/cvs/)
+    * [Perforce](http://www.perforce.com/)
+    * [Subversion](https://subversion.apache.org/) (svn)
+3. decentralized repository (2000’s — )
+    * [git](http://git-scm.com)
+    * [mercurial](http://mercurial.selenic.com/)
+
+Centralized versioning probably still represents the mostly used approach currently. However, decentralized repositories enable greater flexibility as no access to the central repo is required at all time and new solutions have improved branching a lot, making it very easy to have distinct histories living at the same time.
 
 ## Why git?
 
@@ -112,6 +141,19 @@ Versioning code is not a new problem. Alternatives to git, such as [subversion (
 > <cite>[Linus Torvald](http://lwn.net/Articles/356626/)</cite>
 
 
+## About this document
+
+This document intends to be a progressive introduction going from beginner’s usage (understanding what a commit is, handling branches), to intermediate usage (writing clean commits and being able to manipulate the commits history) and hopefully advanced usage.
+ It takes a “learn the hard way” path: it only makes use of the command line and exposes some internals. This could be seen as an engineering failure, however git internals are pretty quick to cover and git is a very good example of how very few low-level objects can offer powerful high-level actions.
+
+Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
+Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit text (which means *not* MS Word).
+
+This document might be be regularly updated; see the [history](https://github.com/mrchlblng/mrchlblng.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://mrchlblng.me/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595).
+
+At some point, I would love to offer an interactive shell to make as interactive as it should be. Feel free to contact me if you could be interested in helping me on this.
+
+
 ## Setup
 
 Before running git commands, we need:
@@ -120,6 +162,9 @@ Before running git commands, we need:
 * a git user i.e.:
     * a name `git config --global user.name "My Name"`
     * an email `git config --global user.email "me@mail.org"`
+
+As mentioned previously, it is necessary to have a text editor installed (and presumably the `EDITOR` environment variable). Setting up the command-line [tab completion](#command-line-completion) script might also ease typing a lot.
+
 
 Let’s create a dummy repository
 
@@ -145,7 +190,7 @@ $ tree -a -I hooks
         └── tags
 ```
 
-git just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!
+`git init` just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!
 
 
 # git basics
@@ -422,6 +467,7 @@ $ git commit --amend
 opens our favorite editor (as defined by the `$EDITOR` environment variable) where we may edit the commit message
 
 ```bash
+#!EDITOR
 Add more french data
 
 # Please enter the commit message for your changes. Lines starting

@@ -174,9 +174,20 @@ article div.cf h2 {
   font-size: 0.85em;
 }
 
+.rev {
+  text-align: right;
+  float: right;
   color: #999;
-  padding: 0 0 15px 0;
-  font-size: 1em;
+}
+
+.rev a {
+  color: #999;
+  border-bottom: 1px solid #999;
+}
+
+.rev a:hover {
+  color: #111;
+  border-bottom: 1px solid #111;
 }
 /* Post header */
 

@@ -8,38 +8,32 @@ html, body {
 
 body {
   background-color: #fcfcfc;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Libre Baskerville';
   color: #333;
-  font-size: 1.05em;
-  font-weight: 200;
+  font-size: 0.95em;
+  line-height: 1.4em;
   text-align: justify;
   text-justify: inter-word;
 }
 
 h1, h2, h3, h4, h5 {
-  margin: 0;
-  font-family: 'Coustard', serif;
-  font-weight: 300;
+  font-family: 'Cutive', serif;
   clear: both;
 }
 
 h1 {
-  font-size: 1.8em;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  font-size: 1.5em;
 }
 
 h2 {
-  font-size: 1.08em;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: 1.25em;
 }
 
-body h1 {
-  font-size: 1.4em;
-}
-
-body h2 {
-  font-size: 1.2em;
-}
-
-body h3 {
+h3 {
   font-size: 1.1em;
 }
 
@@ -70,25 +64,38 @@ pre, code {
 }
 
 pre code {
-  font-size: 0.9em;
+  font-size: 0.95em;
 }
 
 code {
   /* Smaller inline code */
-  font-size: 0.85em;
+  font-size: 0.9em;
 }
 
 blockquote {
   width: 80%;
   margin: 0 auto;
-  background: #f6f7f7;
-  border: 1px solid #ebebeb;
   padding-left: 20px;
   padding-right: 20px;
   font-style: oblique;
 }
 
-blockquote cite:before {
+blockquote p:first-of-type:before {
+  content: open-quote;
+  font-size: 3.5em;
+  vertical-align: -0.5em;
+  margin-right: 0.2em;
+  line-height: 0.0em;
+}
+
+blockquote p:first-of-type:after {
+  content: close-quote;
+  font-size: 3.5em;
+  vertical-align: -0.5em;
+  line-height: 0.0em;
+}
+
+blockquote cite:last-of-type:before {
   content: "\2014 \2009";
 }
 
@@ -97,10 +104,8 @@ blockquote cite {
   font-style: normal;
   padding-left: 6px;
   padding-right: 6px;
-  background: #f6f7f7;
-  border-left: 1px solid #ebebeb;
-  border-bottom: 1px solid #ebebeb;
-  border-right: 1px solid #ebebeb;
+  margin-top: -1em;
+  margin-bottom: 1.5em;
 }
 
 .columns, .blog {
@@ -120,6 +125,7 @@ header {
 
 header h1 {
   font-family: Pacifico;
+  font-size: 1.8em;
 }
 
 header h1 a {
@@ -146,15 +152,13 @@ article {
 
 /* Post header */
 article div.cf {
-  padding: 0 0 15px 0;
+  margin-top: 5px;
 }
 
 article div.cf h1 a {
   color: #333;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;  
   border-bottom: 1px solid #eee;
-  font-size: 1.4em;
+  font-size: 1.6em;
 }
 
 article div.cf h1 a:hover {
@@ -163,7 +167,13 @@ article div.cf h1 a:hover {
 
 article div.cf h2 {
   float: left;
-  width: 95%;
+  width: 100%;
+  color: #999;
+  margin-top: -1.8em;
+  margin-bottom: 2em;
+  font-size: 0.85em;
+}
+
   color: #999;
   padding: 0 0 15px 0;
   font-size: 1em;
@@ -226,8 +236,8 @@ article img {
 }
 
 .results > li {
-  margin: 0 0 10px 0;
-  padding: 0 0 20px 0;
+  margin: 0 0 4px 0;
+  padding: 0 0 25px 0;
   font-size: 1.02em;
   border-bottom: 1px solid #eee;
 }
@@ -238,7 +248,7 @@ article img {
 }
 
 .results ul.tags {
-  margin: 5px 0 4px 0;
+  margin: 0 0 4px 0;
   font-size: 0.6em;
 }
 
@@ -268,30 +278,19 @@ article img {
 
 p code, ul code, ol code {
   padding: 1px 4px;
-  border: 1px solid #e1e1e8;
-  background: #f0f5fb;
+  border: 1px solid #e1e1e4;
+  background: #f0f5f8;
   color: #303840;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  -o-border-radius: 6px;
-  border-radius: 6px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
 
 
 article .body {
   clear: both;
 }
-
-article .body h1 {
-  margin-top: 20px;
-  margin-bottom: 15px;
-}
-
-article .body h2 {
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
 
 @media screen and (max-width: 1060px) {
   header {
@@ -307,7 +306,7 @@ article .body h2 {
   header {
     width: 20%;
   }
-  
+
   .blog {
     width: 70%;
   }
@@ -317,7 +316,7 @@ article .body h2 {
   .columns {
     overflow: none;
   }
-  
+
   header {
     width: 100%;
     float: none;
@@ -325,31 +324,13 @@ article .body h2 {
     padding: 10px;
     border-bottom: 1px solid #eee;
   }
-  
+
   header .deets {
     display: none;
   }
-  
+
   .blog {
     width: 100%;
     padding: 0;
   }
-  
-  article {
-    padding: 0 10px;
-    font-size: 0.9em;
-  }
-  
-  article h1 {
-    font-size: 1.4em;
-  }
-  
-  article h2 {
-    font-size: 1.2em;
-  }
-  
-  article h3 {
-    font-size: 1.1em;
-  }
 }
-

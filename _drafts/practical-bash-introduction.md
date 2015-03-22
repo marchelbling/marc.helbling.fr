@@ -2,7 +2,7 @@
 layout: post
 title: A practical introduction to bash
 category: tools
-tags: [script, shell]
+tags: [script, shell, tools]
 description: 
 ---
 
@@ -19,19 +19,37 @@ A console runs a terminal that specifically inputs from a keyboard and outputs t
 
 A shell is a command line interpreter i.e. a computer program relaying on a terminal for user interaction.
 
+## POSIX
+
+The POSIX [specifications](http://pubs.opengroup.org/onlinepubs/9699919799/)
+
+> defines a standard operating system interface and environment, including a command interpreter (or “shell”), and common utility programs to support applications portability at the source code level. POSIX.1-2008 is intended to be used by both application developers and system implementors and comprises four major components (each in an associated volume)
+
+POSIX is thus both a “program-level” and a “user-level” specification for interoperability over unix-y OSes.
+
+
 ## sh == bash?
 
 http://stackoverflow.com/questions/5725296/difference-between-sh-and-bash
 
-## POSIX
-
-http://stackoverflow.com/questions/1780599/i-never-really-understood-what-is-posix
-
-POSIX is a family of standards, specified by the IEEE, to clarify and make uniform the application programming interfaces (and ancillary issues, such as commandline shell utilities) provided by Unix-y operating systems. When you write your programs to rely on POSIX standards, you can be pretty sure to be able to port them easily among a large family of Unix derivatives (including Linux, but not limited to it!); if and when you use some Linux API that’s not standardized as part of Posix, you will have a harder time if and when you want to port that program or library to other Unix-y systems (e.g., MacOSX) in the future.
-
 ## Interactivity vs scripting
 
 Shebang. `$-`.
+
+```
+$ cat foo.sh
+#!/bin/bash
+
+echo "$-"
+```
+
+```
+$ chmod +x foo.sh && ./foo.sh
+hB
+
+$ echo "$-"
+himBH
+```
 
 
 # Variables
@@ -44,12 +62,35 @@ Shebang. `$-`.
 
 ## Default value
 
+`${value:-default_value}`. Can be recursive: `${value:-${Value:-$( echo "VALUE" )}}`
 
 ## Strings
 
+Single vs double quotes. Escaping.
+
 ## Numerics
 
+### Floating values
+
+Need `bc -l`.
+
 ## Scope
+
+`local`
+`unset`
+
+```
+function func {
+  echo "global foo: ${foo}"
+  local foo="foo"
+  echo "${foo}"
+  foo="${foo}baz"
+}
+
+foo="bar"
+func
+echo "${foo}"
+```
 
 ## Arrays
 
@@ -74,16 +115,18 @@ $ echo $(( "${foo}" + 1 ))
 
 ## Special variables
 
-`$0`: name of the script.
-`$1 $2`: command line arguments given to the script. `$1` is the first argument, `$2` the second and so on.
-`$#`: How many command line arguments were given to the script.
-`$*`: All of the command line arguments.
-`$-`: is shell interactive or not
-`$$`: process id
-`$?`: status of the *last* command
+* `$0`: name of the script.
+* `$1 $2`: command line arguments given to the script. `$1` is the first argument, `$2` the second and so on.
+* `$#`: How many command line arguments were given to the script.
+* `$*`: All of the command line arguments.
+* `$-`: is shell interactive or not
+* `$$`: process id
+* `$?`: status of the *last* command
 
 
 # Builtins
+
+See official [builtins](http://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html) list
 
 * [`alias`](http://ss64.com/bash/alias.html): set/get aliases
 * `bind`: bind a key sequence to a Readline function or a macro, or set a Readline variable
@@ -103,13 +146,15 @@ $ echo $(( "${foo}" + 1 ))
 * `readarray`: read lines from a file into an array variable
 * [`source`](http://ss64.com/bash/source.html) or dot (`.`) operator: source filename
 * [`type`](http://ss64.com/bash/type.html): display information about command type
-* `typeset`: set variable values and attributes
+* [`typeset`](http://tldp.org/LDP/abs/html/declareref.html): set variable values and attributes
 * [`ulimit`](http://ss64.com/bash/ulimit.html): modify shell resource limits
 * [`unalias`](http://ss64.com/bash/alias.html): remove some aliases
 
 
 # Pipes & Redirects
 
+http://vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html
+https://gist.github.com/mrchlblng/dd72ae78d4cd6845a038
 
 # Traps
 
@@ -124,6 +169,31 @@ set -v	set -o verbose	Prints shell input lines as they are read.
 set -x	set -o xtrace	Print command traces before executing command.
 
 http://bashdb.sourceforge.net/
+
+
+# Utils
+
+## xargs
+
+http://stackoverflow.com/questions/4185017/maximum-number-of-bash-arguments-max-num-cp-arguments
+
+## Network
+
+### Requests
+
+* `curl`
+* `wget`
+
+### Syncing data
+
+* `scp`
+* `rsync`
+
+## Computation
+
+## Parallel
+
+http://www.gnu.org/software/parallel/
 
 
 # References

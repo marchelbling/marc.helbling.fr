@@ -6,48 +6,44 @@ html, body {
   height: 100%;
 }
 
-body {
-  background-color: #fcfcfc;
-  font-family: 'Libre Baskerville';
-  color: #333;
-  font-size: 0.95em;
-  line-height: 1.4em;
-  text-align: justify;
-  text-justify: inter-word;
-}
-
 h1, h2, h3, h4, h5 {
+  font-size: 1em;
   font-family: 'Cutive', serif;
   clear: both;
 }
 
 h1 {
-  padding-top: 25px;
-  padding-bottom: 10px;
-  font-size: 1.5em;
+  padding-top: 1em;
+  font-size: 1.4em;
 }
 
 h2 {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-size: 1.25em;
+  padding-top: 0.5em;
+  font-size: 1.2em;
 }
 
 h3 {
   font-size: 1.1em;
 }
 
+body {
+  background-color: #fcfcfc;
+  color: #333;
+  line-height: 1.45em;
+  text-align: justify;
+  text-justify: inter-word;
+  text-rendering: optimizelegibility;
+  font-family: Georgia;
+  font-size: 1.05em;
+  font-variant-ligatures: common-ligatures;
+}
+
+li:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
 p.quiet {
   color: #aaa;
-}
-
-p.quiet a {
-  color: rgba(0, 119, 204, 0.7);
-  -webkit-transition: color 0.3s;
-}
-
-p.quiet a:hover {
-  color: rgba(0, 119, 204, 1);
 }
 
 a {
@@ -57,19 +53,6 @@ a {
 
 a:hover {
   color: #a0d137;
-}
-
-pre, code {
-  font-family: Consolas, Courier, monospace;
-}
-
-pre code {
-  font-size: 0.95em;
-}
-
-code {
-  /* Smaller inline code */
-  font-size: 0.9em;
 }
 
 blockquote {
@@ -83,7 +66,7 @@ blockquote {
 blockquote p:first-of-type:before {
   content: open-quote;
   font-size: 3.5em;
-  vertical-align: -0.5em;
+  vertical-align: -0.45em;
   margin-right: 0.2em;
   line-height: 0.0em;
 }
@@ -92,6 +75,7 @@ blockquote p:first-of-type:after {
   content: close-quote;
   font-size: 3.5em;
   vertical-align: -0.5em;
+  margin-left: 0.1em;
   line-height: 0.0em;
 }
 
@@ -108,6 +92,18 @@ blockquote cite {
   margin-bottom: 1.5em;
 }
 
+pre, code {
+  font-family: Consolas, Courier, monospace;
+  font-size: 1em;
+  line-height: 1em;
+}
+
+code {
+  /* inlined code */
+  font-size: 0.85em;
+  vertical-align: 0.1em;
+}
+
 .columns, .blog {
   overflow: hidden;
   _overflow: hidden;
@@ -120,7 +116,7 @@ blockquote cite {
 
 header {
   width: 200px;
-  margin: 100px 0 0 100px;
+  margin: 80px 100px 0 80px;
 }
 
 header h1 {
@@ -141,37 +137,25 @@ header h2 {;
 
 .blog {
   width: 600px;
-  margin: 60px 0 0 0;
-  padding: 0 0 0 40px;
-}
-
-article {
-  margin: 0 0 30px 0;
-}
-
-
-/* Post header */
-article div.cf {
-  margin-top: 5px;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
 }
 
 article div.cf h1 a {
   color: #333;
   border-bottom: 1px solid #eee;
   font-size: 1.6em;
-}
-
-article div.cf h1 a:hover {
-  color: #0077cc;
+  line-height: 1.25em;
 }
 
 article div.cf h2 {
   float: left;
   width: 100%;
   color: #999;
-  margin-top: -1.8em;
+  margin-top: -2em;
   margin-bottom: 2em;
-  font-size: 0.85em;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.92em;
 }
 
 .rev {
@@ -202,7 +186,8 @@ article img {
   margin: 20px 0 0 0;
   padding: 0;
   list-style-type: none;
-  font-size: 0.8em;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7em;
 }
 
 .tags li {
@@ -249,18 +234,19 @@ article img {
 .results > li {
   margin: 0 0 4px 0;
   padding: 0 0 25px 0;
-  font-size: 1.02em;
+  font-size: 0.9em;
+  font-family: 'Cutive', serif;
   border-bottom: 1px solid #eee;
 }
 
 .results .date {
-  font-size: 0.8em;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9em;
   color: #ccc;
 }
 
 .results ul.tags {
   margin: 0 0 4px 0;
-  font-size: 0.6em;
 }
 
 .highlight {
@@ -281,6 +267,10 @@ article img {
   -moz-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
+}
+
+.deets {
+   font-family: 'Lato';
 }
 
 #disqus_thread {

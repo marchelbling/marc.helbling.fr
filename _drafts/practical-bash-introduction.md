@@ -122,6 +122,8 @@ $ echo $(( "${foo}" + 1 ))
 * `$-`: is shell interactive or not
 * `$$`: process id
 * `$?`: status of the *last* command
+* `!!`: rerun last command
+* `!foo`: rerun last command involving `foo`
 
 
 # Builtins

@@ -123,7 +123,7 @@ Centralized versioning probably still represents the mostly used approach curren
 
 ## Why git?
 
-Versioning code is not a new problem. Alternatives to git, such as [subversion (svn)](https://subversion.apache.org/), [concurrent versions system (cvs)](http://savannah.nongnu.org/projects/cvs), [perforce](http://www.perforce.com/) are "old" vcs softwares. Wether git is better than those softwares or not will not be discussed here. However let’s list some of the attractive features provided by git:
+Versioning code is not a new problem. Alternatives to git, such as [subversion (svn)](https://subversion.apache.org/), [concurrent versions system (cvs)](http://savannah.nongnu.org/projects/cvs), [perforce](http://www.perforce.com/) are “old” vcs softwares. Wether git is better than those softwares or not will not be discussed here. However let’s list some of the attractive features provided by git:
 
 * free/open source/binaries available for all major platforms
 * decentralized
@@ -149,9 +149,8 @@ This document intends to be a progressive introduction going from beginner’s u
 Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
 Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit text (which means *not* MS Word).
 
-This document might be be regularly updated; see the [history](https://github.com/mrchlblng/mrchlblng.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://mrchlblng.me/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595).
+This document might be regularly updated; see the [history](https://github.com/mrchlblng/mrchlblng.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://mrchlblng.me/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595).
 
-At some point, I would love to offer an interactive shell to make as interactive as it should be. Feel free to contact me if you could be interested in helping me on this.
 
 
 ## Setup
@@ -323,7 +322,7 @@ Create french data file
 
 From this, we see that a [commit](http://git-scm.com/docs/git-commit-tree) references:
 
-* a "tree": git internal description of the filesystem
+* a “tree”: git internal description of the filesystem
 * a parent: git is fundamentally a **direct acyclic graph** ([DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)) in which nodes are commits that references their parent commit(s)
 * an author: the person who originally wrote the current commit *content*
 * an author date
@@ -331,7 +330,7 @@ From this, we see that a [commit](http://git-scm.com/docs/git-commit-tree) refer
 * a committer date
 * a message: the description for the changes contained in the commit.
 
-This is the high level definition of a commit in git. We need to go one more step into internals and inspect the "tree" object to have a better picture of how git structures data.
+This is the high level definition of a commit in git. We need to go one more step into internals and inspect the “tree” object to have a better picture of how git structures data.
 
 ```bash
 $ git cat-file tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
@@ -353,14 +352,14 @@ bonjour
 
 So we can see that:
 
-* a "tree" contains pointers to "blobs" and other trees and a name for each pointer
-* a "blob" is bunch of bytes representing user content (text, images etc.)
+* a “tree” contains pointers to “blobs” and other trees and a name for each pointer
+* a “blob” is bunch of bytes representing user content (text, images etc.)
 * both trees and blobs store a [file mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29) (i.e. a [`chmod`](http://linux.die.net/man/1/chmod)); note however that the file owernship ([`chown`](http://linux.die.net/man/1/chown)) will depend on the user that performs the git commands and is up to the final user
 * git performs deduplication based on content: if file `foo` and file `bar` are a copy of each other
     * they will be represented by the same blob
     * the tree will point to two blobs with the same id but refering different names and possibly different file modes
 
-There are 4 git objects (listed from "low" to "high" level) that can be described as:
+There are 4 git objects (listed from “low” to “high” level) that can be described as:
 
 * blob: content
 * tree: file tree description
@@ -398,7 +397,7 @@ bonjour
 salut
 ```
 
-The conclusion is that git stores pointers to "full" blobs which means that a blob is useful by itself, independantly of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)). This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create "[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)" that represent content 'delta's to optimize disk usage.
+The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independantly of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)). This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)” that represent content ‘delta’s to optimize disk usage.
 Time to examine how the data is actually stored.
 
 ```bash
@@ -581,7 +580,7 @@ index 1cd909e..bd61b2c 100644
 
 ```
 
-we realize that a branch simply is a pointer to a "leaf" commit also called "tip" commit. The binding name/commit is stored in
+we realize that a branch simply is a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in
 
 ```bash
 $ tree .git/refs/heads/
@@ -1303,7 +1302,7 @@ $ git remote show origin
   HEAD branch: (unknown)
 ```
 
-We see two new verbs, "Fetch" to retrieve modification *from* the remote repository and "Push" to publish our local modification *to* a remote repository. This local/remote binding is callled the [refspec](http://git-scm.com/book/en/v2/Git-Internals-The-Refspec). By default, the "Fetch" URL is the same as the "Push" URL but this may be easily [configured](http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html) if needed.
+We see two new verbs, “Fetch” to retrieve modification *from* the remote repository and “Push” to publish our local modification *to* a remote repository. This local/remote binding is callled the [refspec](http://git-scm.com/book/en/v2/Git-Internals-The-Refspec). By default, the “Fetch” URL is the same as the “Push” URL but this may be easily [configured](http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html) if needed.
 
 As we did not interact (to fetch or push) with the `origin` remote yet, the `HEAD` branch is unknown.
 
@@ -1421,7 +1420,7 @@ We here see that pushing a rewritten history (`git commit --amend` or `git rebas
 
 * branches are simply references to commits
 * `HEAD` references the tip commit for current branch
-* `git merge` (and most "merging-like" commands) relies on three-way merge by default
+* `git merge` (and most “merging-like” commands) relies on three-way merge by default
 * `git rebase` enables to rewrite history
     * `git rebase foo` will move current branch commits onto `foo` branch (note that in case of conflict `ours` and `theirs` can feel inverted as `git rebase foo` checkouts the `foo` branch under the hood)
     * `git rebase --interactive sha1^` will allow to edit/squash/remove/swap all commits from `sha1` to `HEAD`
@@ -1461,14 +1460,14 @@ The question now becomes: how should branches be synchronized?
 
 ### Merge or rebase?
 
-The ["merge or rebase"](https://blog.sourcetreeapp.com/2012/08/21/merge-or-rebase/) [question](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/) [is](http://stackoverflow.com/questions/804115/when-do-you-use-git-rebase-instead-of-git-merge) [one](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions) [of](http://blog.experimentalworks.net/2009/03/merge-vs-rebase-a-deep-dive-into-the-mysteries-of-revision-control/) [the](http://www.derekgourlay.com/archives/428) [most](http://mislav.uniqpath.com/2013/02/merge-vs-rebase/) [debated](http://softwareswirl.blogspot.fr/2009/04/truce-in-merge-vs-rebase-war.html) [one](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa).
+The [“merge or rebase”](https://blog.sourcetreeapp.com/2012/08/21/merge-or-rebase/) [question](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/) [is](http://stackoverflow.com/questions/804115/when-do-you-use-git-rebase-instead-of-git-merge) [one](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions) [of](http://blog.experimentalworks.net/2009/03/merge-vs-rebase-a-deep-dive-into-the-mysteries-of-revision-control/) [the](http://www.derekgourlay.com/archives/428) [most](http://mislav.uniqpath.com/2013/02/merge-vs-rebase/) [debated](http://softwareswirl.blogspot.fr/2009/04/truce-in-merge-vs-rebase-war.html) [one](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa).
 
 The arguments mostly fall back to
 
 * `git merge` keeps original context but create a clumsy history that can be difficult to read and makes `git bisect` more [difficult to use](http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits)
 * `git rebase` ends up in a linear history but rewrites history by computing incremental patches and thus modifies the original authored commits.
 
-It used to be about only merge or only rebase but usage evolving with time. Nowadays, rewriting a "private" branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necesarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
+It used to be about only merge or only rebase but usage evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necesarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
 
 * a private branch is your own responsibility and its history may be altered to meet the project quality standards
 * a public branch is a collective responsibility and thus history should be taken with care as changing it may offend people.
@@ -1549,7 +1548,7 @@ Here is a short list of useful options that applies to many git commands
 * `--cached`: apply command to the staging area instead of repository objects
 * `--stat`: display a diffstat only i.e. for each file modified it shows the number of deletions and additions
 * `git [command] [options] -- file/to/path`: using ` -- file/to/path/` will only apply `git [command] [options]` to `file/to/path`. Note that a regexp might be used e.g. `-- '*.[ch]'` will perform the command on all C files and headers.
-* some commands accept date/time filters such as `--since`, `--until`, `--before` or `--after`; the ["approxidate"](http://alexpeattie.com/blog/working-with-dates-in-git/) [parser](https://github.com/git/git/blob/master/date.c) will accept absolute date (e.g. `"2014-01-01"` or `"Jan 01 10:00:00 2014 +01"`) or relative ones (e.g. `"3.weeks.ago"` or `"last monday"`).
+* some commands accept date/time filters such as `--since`, `--until`, `--before` or `--after`; the [“approxidate”](http://alexpeattie.com/blog/working-with-dates-in-git/) [parser](https://github.com/git/git/blob/master/date.c) will accept absolute date (e.g. `"2014-01-01"` or `"Jan 01 10:00:00 2014 +01"`) or relative ones (e.g. `"3.weeks.ago"` or `"last monday"`).
 * commands that do not directly accept date/time filters can still be used with dates through the `branch@{approxidate}` construct e.g. `git diff --stat master@{1.week.ago} master` will display a diffstat of changes committed on the `master` during the last week.
 
 
@@ -1803,7 +1802,7 @@ A [pull request](https://help.github.com/articles/using-pull-requests/) is a req
 This terminology refers to [toilets](http://stackoverflow.com/a/6976506/626278):
 
 * porcelain is the material from which toilets are made; this stands for git high level commands, the one the user actually see and interact with
-* plumbing is what happens behind the scene and what carries "stuff"; plumbing are the low level commands to which porcelain commands transfer data.
+* plumbing is what happens behind the scene and what carries “stuff”; plumbing are the low level commands to which porcelain commands transfer data.
 
 ### gist
 
@@ -1811,7 +1810,7 @@ A [gist](https://help.github.com/articles/about-gists/) is a lightweight reposit
 
 ### hunk
 
-A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-with-git-or-imma-edit-your-hunk/on:2011-11-16@20:54:30) is a section of diff e.g.
+A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-with-git-or-imma-edit-your-hunk/on:2011-11-16@20:54:30) is a section of diff displayed using the [unified format](http://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html#Detailed-Unified) e.g.
 
 ```bash
 @@@ -1,1 -1,3 +1,2 @@@
@@ -1821,19 +1820,19 @@ A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-
 ```
 
 * the triple `@` indicates where are using `diff3`
-* the three pairs of numbers indicates common ancestor, "from file" and "to file" lines span
+* the three pairs of numbers indicates common ancestor, “from file” and “to file” lines span
 * a line span pair represent `first line, number of lines` for the diff patch.
 
 
 
 # References
 
-* http://rogerdudler.github.io/git-guide/
-* https://try.github.io/levels/1/challenges/1
-* http://git-scm.com/book/en/v2
-* https://speakerdeck.com/schacon/introduction-to-git
-* http://onlywei.github.io/explain-git-with-d3/
-* http://wildlyinaccurate.com/a-hackers-guide-to-git
-* http://eagain.net/articles/git-for-computer-scientists/
-* http://justinhileman.info/article/git-pretty/
-* http://alexpeattie.com/blog/working-with-dates-in-git/
+* [Git the simple guide](http://rogerdudler.github.io/git-guide/)
+* [CodeSchool - Try Git](https://try.github.io/levels/1/challenges/1)
+* [Pro Git](http://git-scm.com/book/en/v2)
+* [Introduction to git](https://speakerdeck.com/schacon/introduction-to-git)
+* [Visualizing Git Concepts with D3](http://onlywei.github.io/explain-git-with-d3/)
+* [A hackcker’s guide to git](http://wildlyinaccurate.com/a-hackers-guide-to-git)
+* [git for computer scientists](http://eagain.net/articles/git-for-computer-scientists/)
+* [git pretty (cheat sheet)](http://justinhileman.info/article/git-pretty/)
+* [Working with dates in git](http://alexpeattie.com/blog/working-with-dates-in-git/)

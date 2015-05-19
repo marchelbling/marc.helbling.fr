@@ -109,11 +109,12 @@ set +e
   1 will usually return the same object, this is [implementation](http://www.laurentluce.com/posts/python-integer-objects-implementation/)
   dependant. Do *not* use `is` to test equality if objects are not singleton, always use `==`.
 * Python is a dynamic language but people often forget that it is
-  [compiled](http://late.am/post/2012/03/26/exploring-python-code-objects.html). When using default
-  arguments for function parameters, Python will define the value at compile time instead of
-  re-evaluating code at each call. This is probably one of the most common
+  [compiled](http://late.am/post/2012/03/26/exploring-python-code-objects.html) and not re-evaluated
+  at each call. [Functions](http://intermediatepythonista.com/the-function) are first class citizens
+  and default values are stored in the [`func_default`](http://effbot.org/zone/default-values.htm)
+  tuple attribute. This is probably one of the most common
   [gotcha](http://docs.python-guide.org/en/latest/writing/gotchas/#mutable-default-arguments) but
-  using a *mutable* object there (e.g. a `list` or a `dict`) will cause unexpected results.
+  using a *mutable* object there (e.g. a `list` or a `dict`) will probably cause unexpected results.
   Typically use `None` and assign the desired default value in the function body.
 
 

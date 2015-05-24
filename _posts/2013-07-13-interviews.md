@@ -6,10 +6,39 @@ tags: [interview]
 description: Some return of experience, questions and toughts.
 ---
 
-[Like it or not](http://techcrunch.com/2013/06/22/the-technical-interview-is-dead/), technical interviews are still a reality in the software industry and my guess is that it is not going to stop anytime soon. I am not saying that I find the current process good but it will take time to make people evolve on the subject. So you better get ready for this or start your own company.
+[Like it or not](http://techcrunch.com/2013/06/22/the-technical-interview-is-dead/), technical interviews
+are still a reality in the software industry and I don’t expect this to radically change anytime soon.
 
-Getting a job in a place where you have [no connection](http://www.karenx.com/blog/how-to-get-a-job-when-you-have-no-connections/) can prove very hard. My (obvious?) guess: the bigger/hotter the company, the harder. You may try to be original but I am not sure this helps to get a job at a very big corporation. IMO, you better be concise, have a clear message, show why you care about the company you’re applying at and hopefully you’ll have a chance to show them your abilities. Of course, if you’ve already shown the world with some of your project, this might have proven easier than it sounds to get to the interview process.
+Getting a job in a place where you have [no connection](http://www.karenx.com/blog/how-to-get-a-job-when-you-have-no-connections/)
+can prove very hard. The obvious guess: the bigger/hotter the company, the harder. You may try to be
+original but I’m not sure this works very often for technical positions. From my experience, you better
+be concise, have a clear message, show why you care about the company you’re applying at and hopefully
+you’ll have a chance to show them your abilities. Of course, if you’ve already shown the world with
+some of your project, this might have proven easier than it sounds to get to the interview process.
 
+
+# A critique
+
+Most of the time, recruitment processes just suck:
+
+* companies do not know exactly what role/competence they actually need making the process somewhat ‘fuzzy’.
+* companies  delegate the early process to external recruitment agency whose interest is not really
+  aligned with the company; they often don’t really understand the technical challenges and do not
+  know the company culture well.
+* most job descriptions sound like companies are looking for people ready to master their role from day 1.
+  What about learning? Does it mean the company just look to hire someone from a competitor (that likely have quite
+  the same technological stack)?
+* either companies or recruitment agencies ask you to be available on office hours and for long
+  times. This is plain [wrong](http://www.recruitingblogs.com/m/blogpost?id=502551%3ABlogPost%3A1466641).
+  Even if I’m willing to change job, it doesn’t mean that I’m not involved in my current position.
+  Recruiting is one of the most important apsect of a company so it is your responsibility to adapt.
+* [salary negotiation](http://www.kalzumeus.com/2012/01/23/salary-negotiation/) is a biaised game
+  where the interviewee is often being tricked. The compay is not looking for your ‘real’ value but
+  the lowest salary they can pay you. Neglecting the salary will often lower your motivation to perform
+  at the job very soon. Do *not* lower your salary expectations and even better, do not reveal your
+  expectations first.
+
+Knowing this, job interviews are an exercice that requires a good preparation.
 
 # Screen interviews
 
@@ -19,7 +48,7 @@ You might then have a technical screen interview where you’ll be asked some qu
 
 * explain the lastest project you’ve been working on
 * do you code at home?
-* explain differences between a thread & a process
+* explain differences between a thread and a process
 * explain what a hash table is, what it is used for and how it is implemented
 * explain what a critical section is
 * explain what a deadlock is
@@ -33,8 +62,11 @@ You might then have a technical screen interview where you’ll be asked some qu
 * determine if an array of integers contains duplicates
 * do you have any questions?
 
-Those are not difficult questions but still you have to be prepared as, if you do not regularly practice, you may have forgotten how [Quicksort](http://en.wikipedia.org/wiki/Quicksort) works.
-
+Those are not difficult questions but still you have to be prepared as, if you do not regularly
+practice, you may have forgotten how [Quicksort](http://en.wikipedia.org/wiki/Quicksort) works. Also
+it is important that you know what you are looking for in your next job. This first step is both
+a technical and a ‘human’ filter and if you sound like you don’t know where you’re going with your
+carrier, you will likely not look attractive.
 
 # On site interviews
 
@@ -45,7 +77,7 @@ If you were convincing enough, you should go for an on site interview loop (and 
 * make sure you’ve understood the question; test your understanding with an example and ask your interviewer for validation.
 * smile and stay positive; there might be questions that you don’t know the answer directly. Do not show frustration. Show you are thinking, interact with your interviewer to try to find a solution.
 * communicate a lot; explain your reasoning loudly. Your interviewer is judging your reasoning as much as your ability to solve the problem. And if you’re going on a wrong direction, he/she might even give you an hint early.
-* do *not* try to be smart. First find a working solution and if the interviewer wants a better one or prefers to skip the easy one, he/she will ask you to move on to the better solution. But looking for a "not naive" solution you may give the impression that you like complexity which is not good. At all.
+* do *not* try to be too smart. First find a working solution and if the interviewer wants a better one or prefers to skip the easy one, he/she will ask you to move on to the better solution. But looking for a “not naive” solution you may give the impression that you like complexity which is not good. At all.
 
 Here are some questions you may encounter:
 
@@ -70,10 +102,10 @@ Here are some questions you may encounter:
 
 You may have or not an offer. You may try to negociate your salary but I won’t be of any help on that. However, just some final remarks:
 
-* ask questions about working conditions and philosophy; [working long hours](http://alexstechthoughts.com/post/55085393173/stop-glorifying-hard-work-and-long-hours) might not be what you are looking for or people might work on their own when you feel good in a collaborative workplace;
-* do *not* take a negative response personally. First time you hear ‘no’ it might be difficult (you might like reading [The Now Habit](http://www.amazon.com/The-Now-Habit-Overcoming-Procrastination/dp/1585425524) but that’s for another post). Analyze what may have gone wrong to do a better job next time (remember that in the anti loop case you are not really the cause). You may ask some feedback about what you could have done better;
-* working with people requires *trust*. You should probably not want to work in a company where you don’t feel you can trust your manager or colleagues. This is [a rule](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html) your interviewer should apply and from my experience, the interviewee should do the same;
-* if the company forgot to give you an answer, send them an email. But companies that do not take time to give you an answer (which often is a standard email) is probably a company that you do *not* want to work for.
+* ask questions about working conditions and philosophy: [working long hours](http://alexstechthoughts.com/post/55085393173/stop-glorifying-hard-work-and-long-hours) or [crunch mode](http://chadfowler.com/blog/2014/01/22/the-crunch-mode-antipattern/) might not be what you are looking for, people might work on their own when you feel good in a collaborative workplace etc.
+* do *not* take a negative response personally. First time you hear ‘no’ it might be difficult (you might like reading [The Now Habit](http://www.amazon.com/The-Now-Habit-Overcoming-Procrastination/dp/1585425524)). Analyze what may have gone wrong to do a better job next time (remember that in the anti loop case you are not really the cause). You may ask some feedback about what you could have done better;
+* working with people requires *trust*. You should probably not want to work in a company where you don’t feel you can trust your manager or colleagues. This is [a rule](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html) your interviewer should apply butyou should do the same as an interviewee;
+* if the company forgot to give you an answer, send them an email. A company not taking the time to give you an answer (which often is a standard email) is just neglecting its most important mission so it is likely a company that you do *not* want to work for.
 
 # Resources
 

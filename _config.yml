@@ -4,7 +4,9 @@
 safe: true
 
 baseurl: /
-url: http://localhost:4000
+url: http://mrchlblng.me
+name: mrchlblng
+description:  A blog you should read *later*
 
 # Site source
 source: .

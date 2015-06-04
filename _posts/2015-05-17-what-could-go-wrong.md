@@ -7,9 +7,21 @@ description: An ongoing list of real-life software “failures”
 ---
 
 When dealing with software, stuff — be it <a href="#code">technical</a> or <a href="#management">human</a> —
-quite inexorably go wrong at some point. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them.
-Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
+quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
 
+This is not intended to be a list of technical difficulties encountered during the development
+phase but a reminder of what to think about *before* starting to code:
+
+* specifications: what is the role for the code/people in the project?
+* responsibility: what are the edge cases/possible input data that should be expected and how should
+  they be handled?
+* quality: how can we measure the ‘success’ of the code?
+
+as well as a list of possibly overlooked langague fallacies/corner cases.
+Also we often only think in terms of code but [organizational
+debt](http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/) is
+just as real as the technical debt however it seems to be often more neglected; people more easily
+think in terms of a product instead of a team building a product.
 
 ## Code
 
@@ -19,7 +31,7 @@ Some points might look totally obvious but as I experienced them at least once t
 
 ### Bash
 
-* Use [shellcheck](http://www.shellcheck.net/).
+* use [shellcheck](http://www.shellcheck.net/).
 * when processing unknown inputs in bash, you always end up with a filename containing
   a space. Or worse. When manipulating a path or a string variable in bash, *always* use double
   quotes unless you’re 100% sure it will always work correctly.
@@ -70,14 +82,16 @@ set +e
   Never log as `root`.
 * not using a common environment locally and in production may cause undetected bugs e.g. the setup
   uses some bash script with non-POSIX commands, either the command themselves or some options might
-  slightly change between two distinct environments. Use a [VM](https://www.vagrantup.com/) or a
-  [container](http://docker.com/) to make sure there are no discrepancies between your environments.
+  slightly change between two distinct environments (e.g. `sort` has a `--random-sort` option on Linux but not on OSX).
+  Use a [VM](https://www.vagrantup.com/) or a [container](http://docker.com/) to make sure there are
+  no discrepancies between your environments.
 * when developing new features, we often purely rely on a local setup. This is fine however it will
   mask lots of ‘real usage’ issues. For example, uploading a file locally will likely be instantaneous
   but will take much longer on a distant server. Not considering this could lead to unusable code
   (e.g. synchronous upload that could freeze the whole system). Make sure to test features with a real
   setup early enough.
-* a lot of products somehow rely on files. You should know your filesystem. NFS typically needs to be
+* a lot of products somehow rely on files. You should know your [filesystem](http://www.linux.org/threads/filesystem-article-index.6028/).
+  NFS typically needs to be
   fine [configured](https://wiki.archlinux.org/index.php/NFS/Troubleshooting#Close-to-open.2Fflush-on-close)
   depending on your usage requirements.
 
@@ -107,15 +121,45 @@ set +e
 
 * everything is an object in Python. Even if small [integer values](https://docs.python.org/2/c-api/int.html)  like 0 or
   1 will usually return the same object, this is [implementation](http://www.laurentluce.com/posts/python-integer-objects-implementation/)
-  dependant. Do *not* use `is` to test equality if objects are not singleton, always use `==`.
-* Python is a dynamic language but people often forget that it is
-  [compiled](http://late.am/post/2012/03/26/exploring-python-code-objects.html) and not re-evaluated
-  at each call. [Functions](http://intermediatepythonista.com/the-function) are first class citizens
+  dependant; see [“investigating Python wats”](https://www.youtube.com/watch?v=sH4XF6pKKmk) for more details.
+  Do *not* use `is` to test equality if objects are not singleton, [always use
+  `==`](http://blog.lerner.co.il/why-you-should-almost-never-use-is-in-python/).
+* in Python, [functions](http://intermediatepythonista.com/the-function) are first class citizens
   and default values are stored in the [`func_default`](http://effbot.org/zone/default-values.htm)
-  tuple attribute. This is probably one of the most common
-  [gotcha](http://docs.python-guide.org/en/latest/writing/gotchas/#mutable-default-arguments) but
-  using a *mutable* object there (e.g. a `list` or a `dict`) will probably cause unexpected results.
+  (`__defaults__` in Python3) tuple attribute. Using a *mutable* object (e.g. a `list` or a `dict`) is probably one of the most common
+  [gotcha](http://docs.python-guide.org/en/latest/writing/gotchas/#mutable-default-arguments) that will
+  often cause unexpected results as the default value is being reused across distinct calls.
   Typically use `None` and assign the desired default value in the function body.
+* when working with filenames, Python [`os.listdir`](https://docs.python.org/2.7/howto/unicode.html#unicode-filenames)
+  will behave differently when called with a unicode string or a 8-bit string:
+
+  >  If you pass a Unicode string as the path, filenames will be decoded using the filesystem’s
+  >  encoding and a list of Unicode strings will be returned, while passing an 8-bit path will
+  >  return the 8-bit versions of the filenames.
+
+  You should therefore always [know](http://nedbatchelder.com/text/unipain/unipain.html#1) what type of string you are currently using and if it is the proper type for what you want to do.
+
+* [`assert`](https://docs.python.org/2/reference/simple_stmts.html#the-assert-statement) is useful ‘debug’
+  statement allowing to check that everything is going as expected in a program. This can be useful during a
+  data migration to assert that the data being migrated has been correctly processed and the
+  statement takes a second parameter to provide a human readable message. The gotcha here would be
+  to call `assert` like a function
+
+```python
+>>> assert(False, 'this is false')
+<stdin>:1: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+
+>>> assert False, 'this is false'
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+AssertionError: this is false
+```
+
+  Note that the REPL issues a warning when called with a tuple. However if the assert statement is
+  in a module, you will not see this and if you do not test your script on ‘faulty’ data you may just
+  think that everything went fine when the assertions were actually not testing anything. Always
+  test code thoroughly (especially a data migration) and make sure that safeguards are actually
+  safe.
 
 
 ### Security & credentials

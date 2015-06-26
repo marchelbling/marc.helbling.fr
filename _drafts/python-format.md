@@ -7,27 +7,24 @@ description: Diving into python formatting syntax and performance
 ---
 
 Links:
+
 * http://plumberjack.blogspot.co.uk/2010/10/supporting-alternative-formatting.html
-* http://stackoverflow.com/questions/5082452/python-string-formatting-vs-format
 * http://www.protocolostomy.com/2011/01/02/python-3-informal-string-formatting-performance-comparison/
-* https://developers.google.com/edu/python/strings
+* => https://paolobernardi.wordpress.com/2012/11/06/python-string-concatenation-vs-list-join/
+* http://stackoverflow.com/a/25433007/626278
 
 Formatting strings is one of the most used features in most languages and Python is no exception. Be
 it for logging, template generation, database query, string formatting is everywhere!
 
+
 Python string interpolation comes in 2 flavors:
 
 * “old” syntax: `'%s' % (content,)`; the original format quite inspired by the C `printf` syntax
-* “new” syntax: `'{}'.format(content)`; a new flexible syntax introduced in Python 2.6 (see [PEP 3101](https://www.python.org/dev/peps/pep-3101))
-
-The `format` syntax was introduced to prevent “[common errors](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
+* “new” syntax: `'{}'.format(content)`; a new [flexible](https://mkaz.com/2012/10/10/python-string-format/) [syntax](http://pyformat.info/) introduced in Python 2.6 (see [PEP 3101](https://www.python.org/dev/peps/pep-3101))
 such as failing to display tuples and dictionaries correctly”. However both syntaxes work with
 python3.
 
-http://pyformat.info/
-+ https://mkaz.com/2012/10/10/python-string-format/
-
-This post intends to look at differences and performance of these 2 syntaxes.
+This post is not intended to be an [introduction](https://developers.google.com/edu/python/strings) to string usage in Python but will look at differences and performance of these 2 syntaxes.
 
 ## Similarities
 
@@ -40,6 +37,9 @@ This post intends to look at differences and performance of these 2 syntaxes.
 * both methods can be used in a functional way:
     * `map('%(foo)s'.__mod__, [{'foo': 'one'}, {'foo': 'two'}, {'foo': 'three'}])`
     * `map('{}'.format, ['one', 'two', 'three'])`
+* both will raise when called with less arguments than ‘expected’
+    * `'%s %s' % ('foo',)` ⟹   `TypeError: not enough arguments for format string`
+    * `'{} {}'.format('foo')` ⟹   `IndexError: tuple index out of range`
 
 ## Differences
 
@@ -52,8 +52,52 @@ This post intends to look at differences and performance of these 2 syntaxes.
     * `'{} {}'.format('foo', 'bar', 'baz')` will print `'foo bar'`, discarding `bar`
 * printing `%` requires to type `'%%'` with the old syntax
 * printing `{` (resp. `}`) requires to type `'{​{'` (resp. `'}​}'`) with the new syntax
-* Mixing Unicode and byte string http://stackoverflow.com/a/12252460/626278
-* Decimals http://stackoverflow.com/a/23637584/626278
+* **for python 2.x**, `format` is more [restrictive](http://stackoverflow.com/a/12252460/626278) than `%` regarding `unicode` and `str` mix
+    * `str.format(str)` ⟶   `str`
+    * `str % str` ⟶   `str`
+
+    * `str.format(unicode)` ⟶   `UnicodeEncodeError`
+    * `str % unicode` ⟶   `unicode`
+
+    * `unicode.format(str)` ⟶   `UnicodeEncodeError`
+    * `unicode % str` ⟶   `UnicodeEncodeError`
+
+    * `unicode.format(unicode)` ⟶   `unicode`
+    * `unicode % unicode` ⟶   `unicode`
+
+```python
+>>> '{}'.format('é')
+'\xc3\xa9'
+
+>>> '%s' % 'é'
+'\xc3\xa9'
+
+>>> '{}'.format(u'é')
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xe9' in position 0: ordinal not in range(128)
+
+>>> '%s' % u'é'
+u'\xe9'
+
+>>> u'{}'.format('é')
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 0: ordinal not in range(128)
+
+>>> u'%s' % 'é'
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 0: ordinal not in range(128)
+
+>>> u'{}'.format(u'é')
+u'\xe9'
+
+>>> u'%s' % u'é'
+u'\xe9'
+```
+
+
+## Implementation
+
+[code](https://docs.python.org/devguide/setup.html#directory-structure)
+
+* https://docs.python.org/2.7/library/string.html
+    * https://hg.python.org/cpython/file/2.7/Lib/string.py
 
 
 ## Performance
@@ -123,3 +167,6 @@ Let’s look at raw performance
 => add performance bench
 + look at instructions
 
+
+
+https://docs.python.org/2.7/howto/unicode.html#unicode-filenames

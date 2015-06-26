@@ -58,6 +58,7 @@ himBH
 
 ## Referencing a value
 
+Quoting `''` vs `""`.
 `$variable` is the same as `${variable}`.
 
 ## Default value
@@ -196,6 +197,35 @@ http://stackoverflow.com/questions/4185017/maximum-number-of-bash-arguments-max-
 ## Parallel
 
 http://www.gnu.org/software/parallel/
+
+
+## Executing a script remotely
+
+```
+$ function remote_hostname1 {
+    local credentials="$1"
+    ssh "${credentials}" 'bash -s' <<'ENDSSH'
+        echo ${HOSTNAME}
+        echo \${HOSTNAME}
+ENDSSH
+
+$ remote_hostname1 "me@remote"
+remote
+$HOSTNAME
+
+$ function remote_hostname2 {
+    local credentials="$1"
+    ssh "${credentials}" 'bash -s' <<ENDSSH
+        echo ${HOSTNAME}
+        echo \${HOSTNAME}
+ENDSSH
+}
+
+$ remote_hostname2 "me@remote"
+localhost
+remote
+
+```
 
 
 # References

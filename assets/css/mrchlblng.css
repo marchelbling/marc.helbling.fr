@@ -288,6 +288,9 @@ p code, ul code, ol code {
   border-radius: 4px;
 }
 
+a code {
+  border-color: #0077cc;
+}
 
 article .body {
   clear: both;

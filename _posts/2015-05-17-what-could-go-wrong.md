@@ -56,6 +56,9 @@ set +e
 * some STL functions require the definition of a [strict weak ordering](https://www.sgi.com/tech/stl/StrictWeakOrdering.html) which means that `x op y` and `y op x` can not be true at the same time (especially `x op x` must be false). As the function signature does not impose anything more than taking two instances and returning a boolean, there is no way the compiler could detect that the function is not properly defined.
 * when using pointer wrappers, make sure you actually test the pointer value rather than the
   wrapper.
+* when 'using' namespace, you might not be aware of what version of a function you actually call. Do
+  not use `using namespace foo` (example with stl vs stdlib `sqrt`). Recall that compiler prefers
+  overloaded function over template version.
 
 
 ### Data
@@ -98,8 +101,8 @@ set +e
 
 ### Failures & exceptions
 
-* when bootstrapping a project, it’s tempting to think that it should not crash to give an *impression*
-  of robustness to early users. This is probably ok for early development but will soon enough mask
+* when bootstrapping a project, it’s tempting to think that it should [fail safe](http://www.yegor256.com/2015/08/25/fail-fast.html)
+  and not crash to give an *impression* of robustness to early users. This is probably ok for early development but will soon enough mask
   bugs. Don’t “catch all exceptions” everywhere, let the [code crash](https://mazenharake.wordpress.com/2009/09/14/let-it-crash-the-right-way/),
   monitor, understand the real issues and then fix.
 
@@ -243,3 +246,4 @@ AssertionError: this is false
 * beware of the team culture. Joking (aka trolling) about everything gives the impression that nothing
   really matters and will make people less willing to share ideas or ask for help. Team cohesion is
   very important and you need to make people feel like they [belong rather than just fit](http://blog.jessitron.com/2015/05/fitting-in-v-belonging.html).
+* http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/

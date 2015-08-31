@@ -125,6 +125,7 @@ $ echo $(( "${foo}" + 1 ))
 * `$?`: status of the *last* command
 * `!!`: rerun last command
 * `!foo`: rerun last command involving `foo`
+* `!$`: last argument from the last command
 
 
 # Builtins

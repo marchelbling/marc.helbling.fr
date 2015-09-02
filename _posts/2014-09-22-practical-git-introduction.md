@@ -147,7 +147,7 @@ This document intends to be a progressive introduction going from beginner’s u
  It takes a “learn the hard way” path: it only makes use of the command line and exposes some internals. This could be seen as an engineering failure, however git internals are pretty quick to cover and git is a very good example of how very few low-level objects can offer powerful high-level actions.
 
 Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
-Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit text (which means *not* MS Word).
+Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit raw text (which means *not* MS Word).
 
 This document might be regularly updated; see the [history](https://github.com/mrchlblng/mrchlblng.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://mrchlblng.me/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595).
 
@@ -162,7 +162,7 @@ Before running git commands, we need:
     * a name `git config --global user.name "My Name"`
     * an email `git config --global user.email "me@mail.org"`
 
-As mentioned previously, it is necessary to have a text editor installed (and presumably the `EDITOR` environment variable). Setting up the command-line [tab completion](#command-line-completion) script might also ease typing a lot.
+As mentioned previously, it is necessary to have a text editor installed (and presumably the [`EDITOR`](http://askubuntu.com/questions/432524/how-do-i-find-and-set-my-editor-environment-variable) environment variable). Setting up the command-line [tab completion](#command-line-completion) script might also ease typing a lot.
 
 
 Let’s create a dummy repository
@@ -191,6 +191,11 @@ $ tree -a -I hooks
 
 `git init` just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!
 
+
+## A note on revision control UX
+
+Newcomers to revision control systems are often confused about how the vcs changes the way they interact with the filesystem. The good news is: it basically changes nothing! One should still edit and modify files and folders as if they were not under revision control and simply create a new revision whenever desired. Some other commands will usually allow to visualize a previous revision, compare some revisions, come back to a previous revision etc.
+In git, this commands will use the information stored in the `.git` folder that we will inspect.
 
 # git basics
 
@@ -1456,6 +1461,22 @@ There is no single answer to that question. Mostly because the answer depends on
 * new features should branch off/get integrated in the `develop` branch
 * hotfixes should branch off `master` and be integrated in both `master` and `develop` branches.
 
+#### Alternatives
+
+See [discussion](https://news.ycombinator.com/item?id=9744059)
+
+* http://endoflineblog.com/gitflow-considered-harmful
+* https://about.gitlab.com/2014/09/29/gitlab-flow/
+* https://www.atlassian.com/git/tutorials/comparing-workflows
+* https://guides.github.com/introduction/flow/
+
+* centralized flow (rebase everything similar to svn)
+* branch flow
+* git flow
+* downstream flow
+* github flow
+* fork flow
+
 The question now becomes: how should branches be synchronized?
 
 ### Merge or rebase?
@@ -1467,33 +1488,42 @@ The arguments mostly fall back to
 * `git merge` keeps original context but create a clumsy history that can be difficult to read and makes `git bisect` more [difficult to use](http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits)
 * `git rebase` ends up in a linear history but rewrites history by computing incremental patches and thus modifies the original authored commits.
 
-It used to be about only merge or only rebase but usage evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necesarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
+It used to be about only merge or only rebase but usage is evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necesarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
 
 * a private branch is your own responsibility and its history may be altered to meet the project quality standards
 * a public branch is a collective responsibility and thus history should be taken with care as changing it may offend people.
 
 The question is now: how should a private branch be integrated in the public history? There is no really better solution; however it seems that people are tending to use a merge in order to keep an [identifiable](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa#032f) view of the former private branch. Also some tools like GitHub make opiniated choice and when using a Pull Request workflow with the service interface, branches may only be merged.
 
-To summarize what seems to become the dominant branch workflow in git:
+To summarize what seems to become the dominant branch lifecycle in git:
 
 > [Rebases](http://gitguru.com/2009/02/03/rebase-v-merge-in-git/) are how changes should pass from the top of hierarchy downwards and merges are how they flow back upwards.
 
 
 ## What’s a good commit?
 
+Good commits help managing the project in the long run.  Let’s look at how to best structure changes to make a useful commit and a clean history.
+
 ### Atomicity
 
 A good commit is about atomicity. Not unlike Unix philosophy, a commit should do [one thing](http://dev.solita.fi/2013/07/04/whats-in-a-good-commit.html) and one thing well. The reason is that it will allow to undo a precise change very easily, and it will provide a kind of documentation about how the system works in its whole.
-A commit message where the conjunction ’and’ appears is probably not very atomic. Nonetheless, doing only one thing does *not* necessarily mean that a good commit should impact only a single file. Typically making a change in the code base will require a test suite update.
+
+A commit message where the conjunction ‘and’ appears is probably not very atomic. Nonetheless, doing only one thing does *not* necessarily mean that a good commit should impact only a single file. Typically making a change in the code base will require a test suite update which probably resides in different files than the ‘main’ code itself.
 
 
 ### Hiding sausage making
 
-However, unlike the maxim, the [destination](http://sethrobertson.github.io/GitBestPractices/#sausage) is more important than the journey when it comes to making good commits. It means that even though you took dead ends (like thinking the cause of a bug is X when X is only a consequence of Y) when trying to solve a hard bug, it is very valuable to keep those peregrination in the project history. It first makes it harder to [review](http://engineering.zenpayroll.com/this-is-how-we-zenpayroll-our-development-workflow/) the changes in the first place and once in the main trunk it will be harder to understand what the actual fix is.
-git is flexible and allows different [workflows](http://tomayko.com/writings/the-thing-about-git):
+Unlike the maxim, the [destination](http://sethrobertson.github.io/GitBestPractices/#sausage) is more important than the journey when it comes to making good commits. It means that even though you took dead ends (like thinking the cause of a bug is X when X is only a consequence of Y) when trying to solve a hard bug, it is *not* very valuable to keep those peregrination in a commit:
 
-* keeping all changes unstaged and crafting the commits once everything is implemented (using `git add --patch`)
+1. it first makes it harder to [review](http://engineering.zenpayroll.com/this-is-how-we-zenpayroll-our-development-workflow/) the changes in the first place
+2. and once the fix reaches the main trunk, it will be harder to understand what the actual fix is (thus also making it harder to revert changes in case this is needed).
+
+git is flexible and allows different [workflows](http://tomayko.com/writings/the-thing-about-git) for making clean and readable commits history:
+
+* keeping all changes unstaged and crafting the commits once everything is implemented (using `git add --patch` or [`git add --interactive`](https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging))
 * creating commits along the way and finally rewriting the history to clean things up. Note that it is sometimes easier to reset to a state where all changes are unstaged/uncommitted (see <a href="#reset">Reset</a>).
+
+Finally, one should note that even though keeping details in the commits history is not a lean practice, one may actually keep those details in the [commit message](#what’s-a-good-commit-message).
 
 ### Commented hunks of code
 
@@ -1503,6 +1533,8 @@ Last but not least, a good commit should not contain code that has been commente
 * it goes against the main usage of a vcs i.e. history control that allow to retrieve past hunks that are no longer in the trunk.
 
 ## What’s a good commit message?
+
+Commit messages are utterly important as they are the human counter part to a good commits history.
 
 ### Formatting
 
@@ -1515,8 +1547,7 @@ Detailed description of the changes introduced by the commit
 (using at most 72 chars wide columns and markdown style)
 ```
 
-Following this format will produce readable `git log` outputs and display nicely with git tools and services.
-
+Following this format will produce readable [`git log`](http://git-scm.com/docs/git-log) outputs and display nicely with git tools and services.
 
 ### Content
 
@@ -1531,8 +1562,8 @@ The description is like the backcover, providing more in-depth detail about the 
 
 As every line of code in repository comes from a unique commit, writing good commit messages will provide a [documentation](http://mislav.uniqpath.com/2014/02/hidden-documentation/) covering all the code:
 
-* `git whatchanged path/to/file` lists all commits that changed a particular file
-* `git blame path/to/file` shows what revision and author last modified each line of a file
+* [`git whatchanged path/to/file`](http://git-scm.com/docs/git-whatchanged) lists all commits that changed a particular file
+* [`git blame path/to/file`](http://git-scm.com/docs/git-blame) shows what revision and author last modified each line of a file
 * `git log --topo-order --graph -u -L$line,$line:path/to/file` will show all commits modifying the line `$line` of a file.
 
 The advantage of this is that messages cannot go out-of-sync. Whenever a line will be updated, the associated commit message will provide an up-to-date version. And those 3 commands provide fine documentation granularity from a project level (`git whatchanged`), to a file level (`git blame`) and finally a line level (`git log --topo-order`).

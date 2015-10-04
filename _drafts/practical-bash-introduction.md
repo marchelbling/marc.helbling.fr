@@ -116,6 +116,8 @@ $ echo $(( "${foo}" + 1 ))
 
 ## Special variables
 
+See http://tldp.org/LDP/abs/html/internalvariables.html
+
 * `$0`: name of the script.
 * `$1 $2`: command line arguments given to the script. `$1` is the first argument, `$2` the second and so on.
 * `$#`: How many command line arguments were given to the script.
@@ -228,6 +230,12 @@ remote
 
 ```
 
+# Useful binaries
+
+* `nm`: list symbols in an object file
+* `objdump` (`otool` on OSX)):  display information from object files
+* `hexdump`:
+* `ld`: [linker](https://github.com/0xAX/linux-insides/blob/master/Misc/linkers.md)
 
 # References
 

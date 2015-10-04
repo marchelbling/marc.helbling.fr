@@ -12,6 +12,7 @@ Links:
 * http://www.protocolostomy.com/2011/01/02/python-3-informal-string-formatting-performance-comparison/
 * => https://paolobernardi.wordpress.com/2012/11/06/python-string-concatenation-vs-list-join/
 * http://stackoverflow.com/a/25433007/626278
+* maybe list some possibly surprising behavior like `https://docs.python.org/2/library/os.html#os.listdir`
 
 Formatting strings is one of the most used features in most languages and Python is no exception. Be
 it for logging, template generation, database query, string formatting is everywhere!

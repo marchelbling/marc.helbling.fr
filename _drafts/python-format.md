@@ -6,22 +6,14 @@ tags: [python, internals]
 description: Diving into python formatting syntax and performance
 ---
 
-Links:
-
-* http://plumberjack.blogspot.co.uk/2010/10/supporting-alternative-formatting.html
-* http://www.protocolostomy.com/2011/01/02/python-3-informal-string-formatting-performance-comparison/
-* => https://paolobernardi.wordpress.com/2012/11/06/python-string-concatenation-vs-list-join/
-* http://stackoverflow.com/a/25433007/626278
-* maybe list some possibly surprising behavior like `https://docs.python.org/2/library/os.html#os.listdir`
-
 Formatting strings is one of the most used features in most languages and Python is no exception. Be
 it for logging, template generation, database query, string formatting is everywhere!
 
 
 Python string interpolation comes in 2 flavors:
 
-* “old” syntax: `'%s' % (content,)`; the original format quite inspired by the C `printf` syntax
-* “new” syntax: `'{}'.format(content)`; a new [flexible](https://mkaz.com/2012/10/10/python-string-format/) [syntax](http://pyformat.info/) introduced in Python 2.6 (see [PEP 3101](https://www.python.org/dev/peps/pep-3101))
+* “[old](https://docs.python.org/2.7/library/stdtypes.html#string-formatting-operations)” syntax: `'%s' % (content,)`; the original format quite inspired by the C `printf` syntax
+* “[new](https://docs.python.org/2.7/library/string.html#format-string-syntax)” syntax: `'{}'.format(content)`; a new [flexible](https://mkaz.com/2012/10/10/python-string-format/) [syntax](http://pyformat.info/) introduced in Python 2.6 (see [PEP 3101](https://www.python.org/dev/peps/pep-3101))
 such as failing to display tuples and dictionaries correctly”. However both syntaxes work with
 python3.
 
@@ -38,7 +30,7 @@ This post is not intended to be an [introduction](https://developers.google.com/
 * both methods can be used in a functional way:
     * `map('%(foo)s'.__mod__, [{'foo': 'one'}, {'foo': 'two'}, {'foo': 'three'}])`
     * `map('{}'.format, ['one', 'two', 'three'])`
-* both will raise when called with less arguments than ‘expected’
+* both will raise when called with *less* arguments than ‘expected’
     * `'%s %s' % ('foo',)` ⟹   `TypeError: not enough arguments for format string`
     * `'{} {}'.format('foo')` ⟹   `IndexError: tuple index out of range`
 
@@ -48,23 +40,19 @@ This post is not intended to be an [introduction](https://developers.google.com/
   i.e. `'%s' % ((1, 2),)`
 * the new syntax allows argument reference using indexes i.e. `'{0} {1} {2} {1}'.format(1, 2, 3)`
   (note that one must use consecutive indices with `0` as first index)
-* the old syntax is strict regarding the number of arguments passed
+* the old syntax will raise if formatting is called with *more* arguments than needed
     * `'%s %s' % ('foo', 'bar', 'baz')` will raise a `TypeError` exception
     * `'{} {}'.format('foo', 'bar', 'baz')` will print `'foo bar'`, discarding `bar`
-* printing `%` requires to type `'%%'` with the old syntax
-* printing `{` (resp. `}`) requires to type `'{​{'` (resp. `'}​}'`) with the new syntax
+* printing `%` requires to type `%%` with the old syntax
+* printing `{` (resp. `}`) requires to type `{​{` (resp. `}​}`) with the new syntax
 * **for python 2.x**, `format` is more [restrictive](http://stackoverflow.com/a/12252460/626278) than `%` regarding `unicode` and `str` mix
-    * `str.format(str)` ⟶   `str`
-    * `str % str` ⟶   `str`
 
-    * `str.format(unicode)` ⟶   `UnicodeEncodeError`
-    * `str % unicode` ⟶   `unicode`
-
-    * `unicode.format(str)` ⟶   `UnicodeEncodeError`
-    * `unicode % str` ⟶   `UnicodeEncodeError`
-
-    * `unicode.format(unicode)` ⟶   `unicode`
-    * `unicode % unicode` ⟶   `unicode`
+|                               |   | `format`               |   | `%`                  |
+|-------------------------------|---|------------------------|---|----------------------|
+| `str` **`op`** `str`          |   | `str`                  |   | `str`                |
+| `str` **`op`** `unicode`      |   | `UnicodeEncodeError`   |   | `unicode`            |
+| `unicode` **`op`** `str`      |   | `UnicodeEncodeError`   |   | `UnicodeEncoreError` |
+| `unicode` **`op`**  `unicode` |   | `unicode`              |   | `unicode`            |
 
 ```python
 >>> '{}'.format('é')
@@ -95,7 +83,14 @@ u'\xe9'
 
 ## Implementation
 
-[code](https://docs.python.org/devguide/setup.html#directory-structure)
+[code](https://docs.python.org/devguide/setup.html#directory-structure):
+
+* [`str`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c)
+* [`unicode`](https://hg.python.org/cpython/file/2.7/Objects/unicodeobject.c)
+* [`string.format`](https://hg.python.org/cpython/file/2.7/Objects/stringlib/string_format.h)
+* [`%`](): [`string_mod`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c#l3750) calls
+  [`PyString_format`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c#l4231)
+
 
 * https://docs.python.org/2.7/library/string.html
     * https://hg.python.org/cpython/file/2.7/Lib/string.py
@@ -171,3 +166,12 @@ Let’s look at raw performance
 
 
 https://docs.python.org/2.7/howto/unicode.html#unicode-filenames
+
+
+## References
+
+* [Supporting alternative formatting styles in logging](http://plumberjack.blogspot.co.uk/2010/10/supporting-alternative-formatting.html)
+* [Python 3: Informal String Formatting Performance Comparison](http://www.protocolostomy.com/2011/01/02/python-3-informal-string-formatting-performance-comparison/)
+* [Python: string concatenation VS list join](https://paolobernardi.wordpress.com/2012/11/06/python-string-concatenation-vs-list-join)
+* [[StackOverflow] Python string formatting: % vs. .format](http://stackoverflow.com/a/25433007/626278)
+* [The stringlib Library](http://effbot.org/zone/stringlib.htm)

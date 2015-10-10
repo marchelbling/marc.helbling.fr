@@ -160,7 +160,7 @@ See official [builtins](http://www.gnu.org/software/bash/manual/html_node/Bash-B
 # Pipes & Redirects
 
 http://vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html
-https://gist.github.com/mrchlblng/dd72ae78d4cd6845a038
+https://gist.github.com/marchelbling/dd72ae78d4cd6845a038
 
 # Traps
 

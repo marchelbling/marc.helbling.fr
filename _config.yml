@@ -4,8 +4,8 @@
 safe: true
 
 baseurl: /
-url: http://mrchlblng.me
-name: mrchlblng
+url: http://marc.helbling.fr
+name: marchelbling
 description:  A blog you should read *later*
 
 # Site source

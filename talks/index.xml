@@ -24,7 +24,7 @@
 &lt;p&gt;Software engineer@&lt;a href=&quot;http://sketchfab.com&quot;&gt;sketchfab.com&lt;/a&gt;&lt;/p&gt;
 &lt;center&gt;&lt;iframe width=&quot;480&quot; height=&quot;320&quot; src=&quot;https://sketchfab.com/models/263ba71a43aa4347a12893006a70b314/embed?autospin=0.25&amp;amp;autostart=0&amp;amp;ui_infos=0&amp;amp;ui_controls=0&amp;amp;ui_stop=0&amp;amp;transparent=1&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot; mozallowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot; onmousewheel=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/center&gt;
 
-&lt;p&gt;Course material: &lt;a href=&quot;http://mrchlblng.me/2014/09/practical-git-introduction/&quot;&gt;a practical git introduction&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Course material: &lt;a href=&quot;http://marc.helbling.fr/2014/09/practical-git-introduction/&quot;&gt;a practical git introduction&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;why-&quot;&gt;why?&lt;/h1&gt;
 &lt;center&gt;&lt;img src=&quot;phd101212s.gif&quot; width=&quot;390px&quot;&gt;&lt;/center&gt;
 
@@ -549,7 +549,7 @@ Detailed description of the changes introduced by the commit
 &lt;li&gt;use tags to keep knowledge of versions&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&quot;time-to-practice-&quot;&gt;time to practice!&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595&quot;&gt;https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595&quot;&gt;https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595&lt;/a&gt;&lt;/p&gt;
  </content>
   </entry>
 </feed>

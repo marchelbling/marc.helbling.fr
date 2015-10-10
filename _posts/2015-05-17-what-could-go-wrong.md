@@ -113,7 +113,7 @@ set +e
   [`std::acos`](http://www.cplusplus.com/reference/cmath/acos/) function will return
   `NaN` outside [-1; 1]. Make sure you know this and you control values sent to those functions.
 * depending on serialization format, exceptional values like `NaN` and `±inf` may not be
-  [supported](http://mrchlblng.me/2015/02/writing-json-c++/).
+  [supported](http://marc.helbling.fr/2015/02/writing-json-c++/).
 * [floats](https://randomascii.wordpress.com/category/floating-point/) repartition is irregular
   (and, in spite of IEEE-754, numerical behaviors may depend a *lot* on your
   [platform](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/))
@@ -210,8 +210,8 @@ AssertionError: this is false
 * if people complain a lot on the tools or processes (or the lack of it), search for solutions.
   Being [agile](http://blog.toolshed.com/2015/05/the-failure-of-agile.html) is about being able to
   adapt and make everyone in the company, from developers to product managers, work efficiently
-  together. Simplify tool chains. [Educate](http://mrchlblng.me/2014/09/practical-git-introduction/)
-  people about their tools. Automate tasks. Write [hooks](https://gist.github.com/mrchlblng/7358077).
+  together. Simplify tool chains. [Educate](http://marc.helbling.fr/2014/09/practical-git-introduction/)
+  people about their tools. Automate tasks. Write [hooks](https://gist.github.com/marchelbling/7358077).
   Make people happy with their work environment.
 
 

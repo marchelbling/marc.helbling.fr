@@ -149,7 +149,7 @@ This document intends to be a progressive introduction going from beginner’s u
 Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
 Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit raw text (which means *not* MS Word).
 
-This document might be regularly updated; see the [history](https://github.com/mrchlblng/mrchlblng.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://mrchlblng.me/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/mrchlblng/d103ef2ab0bbd89b2595).
+This document might be regularly updated; see the [history](https://github.com/marchelbling/marchelbling.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://marc.helbling.fr/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595).
 
 
 
@@ -1298,12 +1298,12 @@ Until now, we have been working locally. As the repository is now clean, we are 
 By default no remote server is defined. We will use a repository declared on [GitHub](https://github.com/) as our remote called `origin`:
 
 ```bash
-$ git remote add origin git@github.com:mrchlblng/bonjour.git
+$ git remote add origin git@github.com:marchelbling/bonjour.git
 
 $ git remote show origin
 * remote origin
-  Fetch URL: git@github.com:mrchlblng/bonjour.git
-  Push  URL: git@github.com:mrchlblng/bonjour.git
+  Fetch URL: git@github.com:marchelbling/bonjour.git
+  Push  URL: git@github.com:marchelbling/bonjour.git
   HEAD branch: (unknown)
 ```
 
@@ -1329,7 +1329,7 @@ Delta compression using up to 4 threads.
 Compressing objects: 100% (5/5), done.
 Writing objects: 100% (8/8), 738 bytes | 0 bytes/s, done.
 Total 8 (delta 0), reused 0 (delta 0)
-To git@github.com:mrchlblng/bonjour.git
+To git@github.com:marchelbling/bonjour.git
  * [new branch]      master -> master
 ```
 
@@ -1347,7 +1347,7 @@ remote: Counting objects: 4, done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 4 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (4/4), done.
-From github.com:mrchlblng/bonjour
+From github.com:marchelbling/bonjour
  * [new branch]      english    -> origin/english
 ```
 
@@ -1397,7 +1397,7 @@ $ git commit --amend -m "add english/american data"
 
 $ git push origin english
  ! [rejected]        english -> english (non-fast-forward)
-error: failed to push some refs to 'git@github.com:mrchlblng/bonjour.git'
+error: failed to push some refs to 'git@github.com:marchelbling/bonjour.git'
 hint: Updates were rejected because the tip of your current branch is behind
 hint: its remote counterpart. Integrate the remote changes (e.g.
 hint: 'git pull ...') before pushing again.
@@ -1414,7 +1414,7 @@ $ git push --force origin english
 Counting objects: 1, done.
 Writing objects: 100% (1/1), 192 bytes | 0 bytes/s, done.
 Total 1 (delta 0), reused 0 (delta 0)
-To git@github.com:mrchlblng/bonjour.git
+To git@github.com:marchelbling/bonjour.git
  + 0ffd492...ea761bc english -> english (forced update)
 ```
 
@@ -1762,7 +1762,7 @@ and/or defined as an alias!
 
 Hooks have to be *executable* and should be placed in the `.git/hooks` folder. Hooks thus can *not* be enforced within a repository. Some typical usage for hooks is:
 
-* check commit message format (see e.g. a [hook for pivotal](https://gist.github.com/mrchlblng/7358077) enforcing branch name convention in the `pre-commit` hook and referencing pivotal story id in the `prepare-commit-msg` hook)
+* check commit message format (see e.g. a [hook for pivotal](https://gist.github.com/marchelbling/7358077) enforcing branch name convention in the `pre-commit` hook and referencing pivotal story id in the `prepare-commit-msg` hook)
 * automatically run test suite locally; depending on the project policy, this could be done for every commit or simply before pushing code to a remote
 * automatically triggering project build/deployment when the remote is updated.
 

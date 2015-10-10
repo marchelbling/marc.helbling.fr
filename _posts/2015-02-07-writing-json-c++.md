@@ -505,4 +505,4 @@ The exercice can be refined a lot: beautification, support for heterogenous type
 It deals with real world issues (and tradeoffs) and is typically the kind of stuff that should probably be taught (more) to students.
 
 
-Code available as a [gist](https://gist.github.com/mrchlblng/658f6c3f7c882974eb96).
+Code available as a [gist](https://gist.github.com/marchelbling/658f6c3f7c882974eb96).

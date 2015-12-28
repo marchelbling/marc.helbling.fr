@@ -17,7 +17,7 @@ phase but a reminder of what to think about *before* starting to code:
   they be handled?
 * quality: how can we measure the ‘success’ of the code?
 
-as well as a list of possibly overlooked langague fallacies/corner cases.
+as well as a list of possibly overlooked language fallacies/corner cases.
 Also we often only think in terms of code but [organizational
 debt](http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/) is
 just as real as the technical debt however it seems to be often more neglected; people more easily
@@ -81,7 +81,7 @@ set +e
 ### Development environment
 
 * user rights and privileges are well known; however, in a rush (or not) it is very easy to forget this and
-  perform some server changes while being logged as `root` that will break part of a service (typically runned as `www-data`).
+  perform some server changes while being logged as `root` that will break part of a service (typically ran as `www-data`).
   Never log as `root`.
 * not using a common environment locally and in production may cause undetected bugs e.g. the setup
   uses some bash script with non-POSIX commands, either the command themselves or some options might

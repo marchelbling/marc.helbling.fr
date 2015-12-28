@@ -31,14 +31,14 @@ Most of the time, recruitment processes just suck:
 * either companies or recruitment agencies ask you to be available on office hours and for long
   times. This is plain [wrong](http://www.recruitingblogs.com/m/blogpost?id=502551%3ABlogPost%3A1466641).
   Even if I’m willing to change job, it doesn’t mean that I’m not involved in my current position.
-  Recruiting is one of the most important apsect of a company so it is your responsibility to adapt.
-* [salary negotiation](http://www.kalzumeus.com/2012/01/23/salary-negotiation/) is a biaised game
-  where the interviewee is often being tricked. The compay is not looking for your ‘real’ value but
+  Recruiting is one of the most important aspect of a company so it is your responsibility to adapt.
+* [salary negotiation](http://www.kalzumeus.com/2012/01/23/salary-negotiation/) is a biased game
+  where the interviewee is often being tricked. The company is not looking for your ‘real’ value but
   the lowest salary they can pay you. Neglecting the salary will often lower your motivation to perform
   at the job very soon. Do *not* lower your salary expectations and even better, do not reveal your
   expectations first.
 
-Knowing this, job interviews are an exercice that requires a good preparation.
+Knowing this, job interviews are an exercise that requires a good preparation.
 
 # Screen interviews
 
@@ -46,7 +46,7 @@ The first step will probably be a phone call with some HR. Be prepared to explai
 
 You might then have a technical screen interview where you’ll be asked some questions such as:
 
-* explain the lastest project you’ve been working on
+* explain the latest project you’ve been working on
 * do you code at home?
 * explain differences between a thread and a process
 * explain what a hash table is, what it is used for and how it is implemented
@@ -100,11 +100,11 @@ Here are some questions you may encounter:
 
 # In the end
 
-You may have or not an offer. You may try to negociate your salary but I won’t be of any help on that. However, just some final remarks:
+You may have or not an offer. You may try to negotiate your salary but I won’t be of any help on that. However, just some final remarks:
 
 * ask questions about working conditions and philosophy: [working long hours](http://alexstechthoughts.com/post/55085393173/stop-glorifying-hard-work-and-long-hours) or [crunch mode](http://chadfowler.com/blog/2014/01/22/the-crunch-mode-antipattern/) might not be what you are looking for, people might work on their own when you feel good in a collaborative workplace etc.
 * do *not* take a negative response personally. First time you hear ‘no’ it might be difficult (you might like reading [The Now Habit](http://www.amazon.com/The-Now-Habit-Overcoming-Procrastination/dp/1585425524)). Analyze what may have gone wrong to do a better job next time (remember that in the anti loop case you are not really the cause). You may ask some feedback about what you could have done better;
-* working with people requires *trust*. You should probably not want to work in a company where you don’t feel you can trust your manager or colleagues. This is [a rule](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html) your interviewer should apply butyou should do the same as an interviewee;
+* working with people requires *trust*. You should probably not want to work in a company where you don’t feel you can trust your manager or colleagues. This is [a rule](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html) your interviewer should apply but you should do the same as an interviewee;
 * if the company forgot to give you an answer, send them an email. A company not taking the time to give you an answer (which often is a standard email) is just neglecting its most important mission so it is likely a company that you do *not* want to work for.
 
 # Resources

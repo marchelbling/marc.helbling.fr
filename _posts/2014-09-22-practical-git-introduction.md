@@ -100,7 +100,7 @@ From [wikipedia](http://en.wikipedia.org/wiki/Revision_control):
 Use cases are numerous:
 
 * thesis writing with multiple people going back and forth on document structure or content;
-* a resume translated in multiple languages or adapted for different types of carreer;
+* a resume translated in multiple languages or adapted for different types of career;
 * or, the reason for this blog post, handling software code written by a group of people.
 
 
@@ -119,7 +119,7 @@ There has been [three](http://ericsink.com/vcbe/html/history_of_version_control.
     * [git](http://git-scm.com)
     * [mercurial](http://mercurial.selenic.com/)
 
-Centralized versioning probably still represents the mostly used approach currently. However, decentralized repositories enable greater flexibility as no access to the central repo is required at all time and new solutions have improved branching a lot, making it very easy to have distinct histories living at the same time.
+Centralized versioning probably still represents the mostly used approach currently. However, decentralized repositories enable greater flexibility as no access to the central repository is required at all time and new solutions have improved branching a lot, making it very easy to have distinct histories living at the same time.
 
 ## Why git?
 
@@ -359,10 +359,10 @@ So we can see that:
 
 * a “tree” contains pointers to “blobs” and other trees and a name for each pointer
 * a “blob” is bunch of bytes representing user content (text, images etc.)
-* both trees and blobs store a [file mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29) (i.e. a [`chmod`](http://linux.die.net/man/1/chmod)); note however that the file owernship ([`chown`](http://linux.die.net/man/1/chown)) will depend on the user that performs the git commands and is up to the final user
+* both trees and blobs store a [file mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29) (i.e. a [`chmod`](http://linux.die.net/man/1/chmod)); note however that the file ownership ([`chown`](http://linux.die.net/man/1/chown)) will depend on the user that performs the git commands and is up to the final user
 * git performs deduplication based on content: if file `foo` and file `bar` are a copy of each other
     * they will be represented by the same blob
-    * the tree will point to two blobs with the same id but refering different names and possibly different file modes
+    * the tree will point to two blobs with the same id but referring different names and possibly different file modes
 
 There are 4 git objects (listed from “low” to “high” level) that can be described as:
 
@@ -402,7 +402,7 @@ bonjour
 salut
 ```
 
-The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independantly of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)). This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)” that represent content ‘delta’s to optimize disk usage.
+The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)). This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)” that represent content ‘delta’s to optimize disk usage.
 Time to examine how the data is actually stored.
 
 ```bash
@@ -521,7 +521,7 @@ $ git log --graph --oneline
 * 45de2f7 First commit
 ```
 
-we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced one commit by an other commit. We could fear that any git command have a direct and impactful consequence.
+we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced one commit by an other commit. We could fear that any git command have a direct and irreversible impact.
 
 However git keeps a reflog which is a record of all commits that were referenced at some point.
 
@@ -678,7 +678,7 @@ Now that we have two distinct branches, we should make sure that the changes int
 
 * `git diff --cached`: changes that have been staged
 * `git diff A B`: changes  (computed using the [longest common subsequence algorithm](http://cbx33.github.io/gitt/afterhours3-1.html) algorithm)
-* `git diff A...B`: changes from common ancester of `A` and `B` to `B`
+* `git diff A...B`: changes from common ancestor of `A` and `B` to `B`
 
 ### Comparing commits
 
@@ -789,7 +789,7 @@ $ git log --graph --oneline
 
 ### Fast forward
 
-When merging, we explicitely asked git to create a merge commit using the `--no-ff` flag. However, looking at the commit graph, we see that it is (almost) equivalent to the simplified one
+When merging, we explicitly asked git to create a merge commit using the `--no-ff` flag. However, looking at the commit graph, we see that it is (almost) equivalent to the simplified one
 
 ```bash
 * yyyyyyy add modern french data
@@ -910,8 +910,8 @@ index cd1a280,5a932d1..0000000
 We now have the full picture:
 
 * there was no content before attempting to merge;
-* the `master` branch wants to add "wesh" in the modern section;
-* the `modern-french` branch wants to add a "slang" section.
+* the `master` branch wants to add “wesh” in the modern section;
+* the `modern-french` branch wants to add a “slang” section.
 
 This conflicts is easy to [solve](https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/) by editing the file and keeping both changes and thus having the following
 
@@ -1215,7 +1215,7 @@ $ git branch --move modern-french master
 
 ## Rebase caveats
 
-Rewriting history can lead to predictible yet unexpected results.
+Rewriting history can lead to predictable yet unexpected results.
 
 Suppose we create a new file with some lines and a commit for each line.
 
@@ -1263,7 +1263,7 @@ This will give the following conflict diff
 ++>>>>>>> 631a301... third
 ```
 
-This is fully predictible: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit `A` to commit `B` (i.e. `git diff A B`). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. `git diff A...B`).
+This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit `A` to commit `B` (i.e. `git diff A B`). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. `git diff A...B`).
 
 Let’s say that we resolved the conflict with the following
 
@@ -1307,7 +1307,7 @@ $ git remote show origin
   HEAD branch: (unknown)
 ```
 
-We see two new verbs, “Fetch” to retrieve modification *from* the remote repository and “Push” to publish our local modification *to* a remote repository. This local/remote binding is callled the [refspec](http://git-scm.com/book/en/v2/Git-Internals-The-Refspec). By default, the “Fetch” URL is the same as the “Push” URL but this may be easily [configured](http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html) if needed.
+We see two new verbs, “Fetch” to retrieve modification *from* the remote repository and “Push” to publish our local modification *to* a remote repository. This local/remote binding is called the [refspec](http://git-scm.com/book/en/v2/Git-Internals-The-Refspec). By default, the “Fetch” URL is the same as the “Push” URL but this may be easily [configured](http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html) if needed.
 
 As we did not interact (to fetch or push) with the `origin` remote yet, the `HEAD` branch is unknown.
 
@@ -1316,7 +1316,7 @@ As we did not interact (to fetch or push) with the `origin` remote yet, the `HEA
 
 `git push origin local:remote` will push the `local` branch as the `remote` branch onto the `origin` remote (where `remote` is equal to `local` by default).
 
-git might be [configured](http://stackoverflow.com/a/948397/626278) to shorten the command line to push changes upstream. However care should be taken that this configuration depends a lot on the git version being used (and you might depend on multiple versions when working with distinct servers) so as a safe rule of thumb, always invoke `git push origin local` to push the `local` branch to the `origin` remote. Actually pushing changes is not the action that you perform most of the time and it will keep you out of any [embarrasing mistake](https://groups.google.com/forum/#!msg/jenkinsci-dev/-myjRIPcVwU/qOAqXGaRioIJ).
+git might be [configured](http://stackoverflow.com/a/948397/626278) to shorten the command line to push changes upstream. However care should be taken that this configuration depends a lot on the git version being used (and you might depend on multiple versions when working with distinct servers) so as a safe rule of thumb, always invoke `git push origin local` to push the `local` branch to the `origin` remote. Actually pushing changes is not the action that you perform most of the time and it will keep you out of any [embarrassing mistake](https://groups.google.com/forum/#!msg/jenkinsci-dev/-myjRIPcVwU/qOAqXGaRioIJ).
 
 Note that if `local` is empty (i.e. `git push origin :remote`), the `remote` branch will be deleted from the `origin` remote.
 
@@ -1488,7 +1488,7 @@ The arguments mostly fall back to
 * `git merge` keeps original context but create a clumsy history that can be difficult to read and makes `git bisect` more [difficult to use](http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits)
 * `git rebase` ends up in a linear history but rewrites history by computing incremental patches and thus modifies the original authored commits.
 
-It used to be about only merge or only rebase but usage is evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necesarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
+It used to be about only merge or only rebase but usage is evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necessarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
 
 * a private branch is your own responsibility and its history may be altered to meet the project quality standards
 * a public branch is a collective responsibility and thus history should be taken with care as changing it may offend people.
@@ -1612,7 +1612,7 @@ When one needs to reset something in git, it should first analyze what exactly s
 ## Cherry pick
 
 It is sometimes handy to be able to apply a single commit from another branch e.g. to report a patch.
-[`git cherry-pick`](https://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html) will do just that and apply the `sha1` commit content in a new commit on the current branch. The commit object will be distinct. However this is not considered as rewriting history since the commit did previsouly not exist in the branch.
+[`git cherry-pick`](https://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html) will do just that and apply the `sha1` commit content in a new commit on the current branch. The commit object will be distinct. However this is not considered as rewriting history since the commit did previously not exist in the branch.
 
 ## Stash
 
@@ -1622,7 +1622,7 @@ When stashing, you should always save a message (`git stash -m "..."`) to keep s
 
 ## Bisect
 
-When some bug or regression is found in a repository, we used to perform dichotomy thourgh history to find when *it* was introduced. [`git bisect`](https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html) [automates](http://robots.thoughtbot.com/git-bisect) the process.
+When some bug or regression is found in a repository, we used to perform dichotomy through history to find when *it* was introduced. [`git bisect`](https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html) [automates](http://robots.thoughtbot.com/git-bisect) the process.
 
 
 We first need to start the session by setting the interval that should be tested, flagging the last known commit that is known to not have the bug as good and a bad commit
@@ -1690,7 +1690,7 @@ $ git config --global merge.conflictstyle diff3
 
 ```
 
-One of the most useful configuration is colors that will make reading any `git diff` ouputs easier to read (note that this is the default for git≥1.8.4):
+One of the most useful configuration is colors that will make reading any `git diff` outputs easier to read (note that this is the default for git≥1.8.4):
 
 ```bash
 $ git config --global ui.color=auto
@@ -1712,7 +1712,7 @@ $ git config --global --set help.autocorrect=5
   $ git config --global alias.co checkout
   ```
 
-* introduce a personnalized command using constant arguments; a typical usage is a custom display of commit history:
+* introduce a personalized command using constant arguments; a typical usage is a custom display of commit history:
 
   ```bash
   $ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
@@ -1720,7 +1720,7 @@ $ git config --global --set help.autocorrect=5
 
 * invoke custom commands with possible arguments (git≥[1.5.3](https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments)) and possibly piping with non-git commands
     * listing recent commits using the bash [`head`](http://ss64.com/bash/head.html) command (arguments will apply on the `head` command i.e. `git head -5` will list the last 5 commits)
-    * [fixuping](http://stackoverflow.com/a/21148981/626278) a commit by commiting and rebasing automatically
+    * [fixuping](http://stackoverflow.com/a/21148981/626278) a commit by committing and rebasing automatically
 
  ```bash
 $ git config--global alias.head "git log --oneline --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' | head"

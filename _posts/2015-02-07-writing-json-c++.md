@@ -9,9 +9,9 @@ description: A case study of a real life C++ exercice (written naively).
 Writing a valid json file looks simple. Except that if the json file contains real world data coming from unknown sources, it might not be that simple. The [json](http://json.org) format does not support everything that you could expect for numerical values and strings.
 
 More specifically, a numerical value involves digits in json. This prevents from having `inf` or `nan` serialized in json.
-Strings prefered encoding is UTF-8 with some restrinction. Quotes `"` and backslash `\` have to be escaped but [control characters](http://en.wikipedia.org/wiki/Unicode_control_characters) should be encoded with their unicode 4 hex digits representation.
+Strings preferred encoding is UTF-8 with some restriction. Quotes `"` and backslash `\` have to be escaped but [control characters](http://en.wikipedia.org/wiki/Unicode_control_characters) should be encoded with their unicode 4 hex digits representation.
 
-As the C++ standard library does not implement JSON, it makes it a good exercice putting into practice a bit of template functions and STL usage.
+As the C++ standard library does not implement JSON, it makes it a good exercise putting into practice a bit of template functions and STL usage.
 
 
 ## json stream
@@ -290,9 +290,9 @@ Notice that we here benefit from the possibility of changing the function signat
 
 Manipulating text encodings is a pain in C++ (at least to my knowledge). The standard library mostly offers conversion between locale facets i.e. “class[es] describing a locale feature set associated to a specific cultural aspect." (see [locale/facet](http://www.cplusplus.com/reference/locale/locale/facet/)). The basic `std::string` type is a simple `char` i.e. byte container with no constraint and `std::wstring` is tightly bound to the system locale which is not always very useful.
 
-To conform with the RFC 4627, we need to make sure every string is UTF-8 encoded and `\`, `/`, `\b`, `\f`, `\n`, `\r` and `\t` must be escaped and other control characters must be “unicode escaped” i.e. represented using `\\uxxxx`. We will suppose that input data is *mostly* UTF-8 encoded and will replace bad byte sequence by `\ufffd`. For the sake of the exercice, we will not use any library for this. [utfcpp](http://utfcpp.sourceforge.net/) or [poco](https://github.com/pocoproject/poco) would do the job.
+To conform with the RFC 4627, we need to make sure every string is UTF-8 encoded and `\`, `/`, `\b`, `\f`, `\n`, `\r` and `\t` must be escaped and other control characters must be “unicode escaped” i.e. represented using `\\uxxxx`. We will suppose that input data is *mostly* UTF-8 encoded and will replace bad byte sequence by `\ufffd`. For the sake of the exercise, we will not use any library for this. [utfcpp](http://utfcpp.sourceforge.net/) or [poco](https://github.com/pocoproject/poco) would do the job.
 
-One important point when considering text decoding/encoding is wether the sequence should be considered signed or not. In cour case, UTF-8 decoding/encoding will only require bit masks and shifts so the signedness does not matter.
+One important point when considering text decoding/encoding is wether the sequence should be considered signed or not. In our case, UTF-8 decoding/encoding will only require bit masks and shifts so the sign does not matter.
 
 Let’s first write a naive UTF-8 decoder; we will parse the string and transform byte sequence to code points:
 
@@ -499,10 +499,10 @@ std::string sanitize(std::string const& input) const {
 
 # Conclusion
 
-Even though it may be a better choice to use an existing library for production code (see [language libraries](http://json.org/)), writing a json serializer is a good exerice as it involves a lot of C++ mechanisms (templates, function overload, recursion etc.) and “standards” (JSON, IEEE 754, Unicode).
+Even though it may be a better choice to use an existing library for production code (see [language libraries](http://json.org/)), writing a json serializer is a good exercise as it involves a lot of C++ mechanisms (templates, function overload, recursion etc.) and “standards” (JSON, IEEE 754, Unicode).
 
-The exercice can be refined a lot: beautification, support for heterogenous types, deserializer etc.
-It deals with real world issues (and tradeoffs) and is typically the kind of stuff that should probably be taught (more) to students.
+The exercice can be refined a lot: beautification, support for heterogeneous types, deserializer etc.
+It deals with real world issues (and trade-offs) and is typically the kind of stuff that should probably be taught (more) to students.
 
 
 Code available as a [gist](https://gist.github.com/marchelbling/658f6c3f7c882974eb96).

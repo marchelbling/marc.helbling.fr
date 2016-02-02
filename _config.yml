@@ -13,22 +13,17 @@ source: .
 # Where to put the compiled site
 destination: ./_site
 
-markdown: redcarpet
-# see http://stackoverflow.com/a/16126840/626278:
-redcarpet:
- extensions: ["tables", "strikethrough", "with_toc_data"]
-highlighter: pygments
-
 ## Markdown engine
-#markdown: kramdown
-#kramdown:
-#    auto_ids: true
-#    auto_id_stripping: true
-#    input: GFM
-#    syntax_highlighter: rouge
-#    syntax_highlighter_opts:
-#      css_class: 'highlight'
-#highlighter: rouge
+markdown: kramdown
+kramdown:
+    auto_ids: true
+    auto_id_stripping: true
+    input: GFM
+    syntax_highlighter: rouge
+    syntax_highlighter_opts:
+        css_class: 'highlight'
+
+highlighter: rouge
 
 # Exclude these files from compilation
 exclude: [Gemfile, Gemfile.lock, CNAME, README.md, vendor]
@@ -38,6 +33,3 @@ lsi: false
 
 # Permalink style
 permalink: /:year/:month/:title
-
-# posts per page
-paginate: 3

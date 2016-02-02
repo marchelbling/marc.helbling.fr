@@ -1454,7 +1454,7 @@ There is no single answer to that question. Mostly because the answer depends on
 > <cite>[Linus Torvald](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744)</cite>
 
 
-</br>Most worflows maintain different contexts with careful synchronization points and the typical synchronization for a web app will look like:
+<br>Most workflows maintain different contexts with careful synchronization points and the typical synchronization for a web app will look like:
 
 * the `master` branch should always be stable and reflect the code running in production
 * the `develop` branch hosts developments between  2 releases
@@ -1578,7 +1578,7 @@ Here is a short list of useful options that applies to many git commands
 * `--patch`: work on hunks instead of full files
 * `--cached`: apply command to the staging area instead of repository objects
 * `--stat`: display a diffstat only i.e. for each file modified it shows the number of deletions and additions
-* `git [command] [options] -- file/to/path`: using ` -- file/to/path/` will only apply `git [command] [options]` to `file/to/path`. Note that a regexp might be used e.g. `-- '*.[ch]'` will perform the command on all C files and headers.
+* `git [command] [options] -- file/to/path`: using `-- file/to/path/` will only apply `git [command] [options]` to `file/to/path`. Note that a regexp might be used e.g. `-- '*.[ch]'` will perform the command on all C files and headers.
 * some commands accept date/time filters such as `--since`, `--until`, `--before` or `--after`; the [“approxidate”](http://alexpeattie.com/blog/working-with-dates-in-git/) [parser](https://github.com/git/git/blob/master/date.c) will accept absolute date (e.g. `"2014-01-01"` or `"Jan 01 10:00:00 2014 +01"`) or relative ones (e.g. `"3.weeks.ago"` or `"last monday"`).
 * commands that do not directly accept date/time filters can still be used with dates through the `branch@{approxidate}` construct e.g. `git diff --stat master@{1.week.ago} master` will display a diffstat of changes committed on the `master` during the last week.
 
@@ -1708,21 +1708,21 @@ $ git config --global --set help.autocorrect=5
 
 * use shorter names for commands frequently typed; a common example is to alias `checkout` with `co`
 
-  ```bash
-  $ git config --global alias.co checkout
-  ```
+```bash
+$ git config --global alias.co checkout
+```
 
 * introduce a personalized command using constant arguments; a typical usage is a custom display of commit history:
 
-  ```bash
-  $ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-  ```
+```bash
+$ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+```
 
 * invoke custom commands with possible arguments (git≥[1.5.3](https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments)) and possibly piping with non-git commands
     * listing recent commits using the bash [`head`](http://ss64.com/bash/head.html) command (arguments will apply on the `head` command i.e. `git head -5` will list the last 5 commits)
     * [fixuping](http://stackoverflow.com/a/21148981/626278) a commit by committing and rebasing automatically
 
- ```bash
+```bash
 $ git config--global alias.head "git log --oneline --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' | head"
 
 $ git config --global alias.fixup "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && sha_to_patch=$( git rev-parse $1 ) && git commit --fixup=${sha_to_patch} && git rebase -i --autosquash ${sha_to_patch}^' -"

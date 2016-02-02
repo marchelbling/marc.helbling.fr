@@ -200,6 +200,7 @@ http://stackoverflow.com/questions/4185017/maximum-number-of-bash-arguments-max-
 ## Parallel
 
 http://www.gnu.org/software/parallel/
++ `-P` option of [`xargs`](http://web.archive.org/web/20101202135616/http://teddziuba.com/2010/10/taco-bell-programming.html)
 
 
 ## Executing a script remotely
@@ -246,3 +247,4 @@ remote
 * [The Unix Shell’s Humble If ](http://robots.thoughtbot.com/the-unix-shells-humble-if)
 * [Shell programming with bash](http://matt.might.net/articles/bash-by-example/)
 * [How “Exit Traps” Can Make Your Bash Scripts Way More Robust And Reliable](http://redsymbol.net/articles/bash-exit-traps/)
+* [sh tricks](http://www.etalabs.net/sh_tricks.html)

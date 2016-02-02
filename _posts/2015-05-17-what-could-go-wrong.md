@@ -57,8 +57,8 @@ set +e
 * when using pointer wrappers, make sure you actually test the pointer value rather than the
   wrapper.
 * when 'using' namespace, you might not be aware of what version of a function you actually call. Do
-  not use `using namespace foo` (example with stl vs stdlib `sqrt`). Recall that compiler prefers
-  overloaded function over template version.
+  not use `using namespace foo` (especially since the compiler prefers overloaded function over template
+  function which could result in the not expected function being called)
 
 
 ### Data
@@ -118,6 +118,14 @@ set +e
   (and, in spite of IEEE-754, numerical behaviors may depend a *lot* on your
   [platform](https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/))
   and if you don’t take that into account, expect unexpected behaviors.
+
+
+### Images
+
+* most image operations (e.g. resizing) should be performed in a linear space; you need to know in which
+  colorspace are the  pixels expressed (most probably [sRGB](https://gamedevdaily.io/the-srgb-learning-curve-773b7f68cf7a))
+* transparency in an image should always be expressed in a linear space and should be premultiplied
+  against colors to avoid nasty border effects ([1](http://entropymine.com/imageworsener/resizealpha), [2](www.realtimerendering.com/blog/gpus-prefer-premultiplication)).
 
 
 ### Python

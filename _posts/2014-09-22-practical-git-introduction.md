@@ -88,20 +88,21 @@ In just a few years, [git](http://git-scm.com/) has become the dominant version 
 
 ## Why a Version Control System?
 
-People not already using a [version control system](http://en.wikipedia.org/wiki/Revision_control) (vcs) often perform some manual operations to keep incremental revisions of some work. Keeping iterative versions of a document or a collection of documents may be done through naming schemes like [`[filename]_v{0-9}+.doc`](http://www.phdcomics.com/comics/archive/phd101212s.gif) or `[timestamp]_[filename]_[comment].zip` (where e.g. using the [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format for dates will sort version).
-However it becomes quickly cumbersome to easily see compare versions, to undo some modification or to work in parallel on the same document and not mentionning the possibility of making a mistake when freezing a version.
+When not relying on a dedicated tool to keep track of versions, one has to employ strategies such as using naming schemes like [`[filename]_v{0-9}+.doc`](http://www.phdcomics.com/comics/archive/phd101212s.gif) or `[timestamp]_[filename]_[comment].zip` (where e.g. using the [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format for dates will sort version) to keep track of things.
 
-This is where a vcs becomes handy if not mandatory to use. A [vcs](http://mikemcquaid.com/2014/01/18/why-use-version-control/) will store version of a collection of documents without modifying their apparent filenames, allow to undo/redo some modification and keep a context in which modification were performed (e.g. an author, timestamp, comment for the modification).
+Simple things such as comparing versions, undoing some modifications or working on a same document in parallel quickly become very cumbersome. 
+
+This is where a [version control system](http://en.wikipedia.org/wiki/Revision_control) (vcs) becomes handy if not mandatory to use. A [vcs](http://mikemcquaid.com/2014/01/18/why-use-version-control/) is a tool that will store versions of a collection of documents. It does *not* change the document filenames, allows to undo/redo some modification and keeps a “context” for each modification set (e.g. an author, timestamp, comment for the modification etc.).
 
 From [wikipedia](http://en.wikipedia.org/wiki/Revision_control):
 
 > Version control is the management of changes to collections of documents. Changes are usually identified by a number or letter code termed the “revision”. Revisions can be compared, restored, and with some types of files, merged.
 
-Use cases are numerous:
+Use cases for using a vcs are multiple when text is involved e.g.
 
-* thesis writing with multiple people going back and forth on document structure or content;
-* a resume translated in multiple languages or adapted for different types of career;
-* or, the reason for this blog post, handling software code written by a group of people.
+* when writing a thesis requiring structure and content modifications;
+* when maintaining multiple versions of one's résumé, be it in distinct languages or when targeting multiple industries;
+* when writing software code within a group of co-workers.
 
 
 ## A short history of vcs
@@ -123,7 +124,7 @@ Centralized versioning probably still represents the mostly used approach curren
 
 ## Why git?
 
-Versioning code is not a new problem. Alternatives to git, such as [subversion (svn)](https://subversion.apache.org/), [concurrent versions system (cvs)](http://savannah.nongnu.org/projects/cvs), [perforce](http://www.perforce.com/) are “old” vcs softwares. Wether git is better than those softwares or not will not be discussed here. However let’s list some of the attractive features provided by git:
+Version control is not a new problem. Alternatives to git are numerous and wether git is better than those alternatives will not be discussed here. However let’s just list some of the attractive features provided by git:
 
 * free/open source/binaries available for all major platforms
 * decentralized
@@ -133,7 +134,7 @@ Versioning code is not a new problem. Alternatives to git, such as [subversion (
     * fast (most operations are performed locally)
     * reliable (data is mostly immutable)
 * flexible regarding workflows
-* with the help of [github](https://github.com), it is now  becoming *the* standard decentralized vcs
+* with the help of [github](https://github.com) (and also [bitbucket](https://bitbucket) or [gitlab](https://gitlab.com)) , it is now  becoming *the* standard decentralized vcs
 * [git](https://git.wiki.kernel.org/index.php/Git_FAQ#Why_the_.27Git.27_name.3F) philosophy is to perform simple operations and let complex ones — that actually occur not so frequently — to the user so it does no black magic
 
 > One of the things that makes Git a pleasure to use for me is that I actually trust what Git does, because what Git does in the end is very, very stupid.
@@ -144,7 +145,7 @@ Versioning code is not a new problem. Alternatives to git, such as [subversion (
 ## About this document
 
 This document intends to be a progressive introduction going from beginner’s usage (understanding what a commit is, handling branches), to intermediate usage (writing clean commits and being able to manipulate the commits history) and hopefully advanced usage.
- It takes a “learn the hard way” path: it only makes use of the command line and exposes some internals. This could be seen as an engineering failure, however git internals are pretty quick to cover and git is a very good example of how very few low-level objects can offer powerful high-level actions.
+It takes a “learn the hard way” path: it only makes use of the command line and exposes some internals. Having to dive into git internals could be seen as an engineering failure, however those are pretty quick to cover and git is a very good example of how a very few low-level objects can offer powerful high-level user features.
 
 Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
 Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit raw text (which means *not* MS Word).
@@ -165,7 +166,7 @@ Before running git commands, we need:
 As mentioned previously, it is necessary to have a text editor installed (and presumably the [`EDITOR`](http://askubuntu.com/questions/432524/how-do-i-find-and-set-my-editor-environment-variable) environment variable). Setting up the command-line [tab completion](#command-line-completion) script might also ease typing a lot.
 
 
-Let’s create a dummy repository
+Let’s start by initializing a new repository
 
 ```bash
 $ git init $HOME/bonjour
@@ -194,8 +195,10 @@ $ tree -a -I hooks
 
 ## A note on revision control UX
 
-Newcomers to revision control systems are often confused about how the vcs changes the way they interact with the filesystem. The good news is: it basically changes nothing! One should still edit and modify files and folders as if they were not under revision control and simply create a new revision whenever desired. Some other commands will usually allow to visualize a previous revision, compare some revisions, come back to a previous revision etc.
-In git, this commands will use the information stored in the `.git` folder that we will inspect.
+Newcomers to revision control systems are often confused about how the vcs changes the way they interact with the filesystem. The good news is: it basically changes nothing!
+
+One should still edit and modify files and folders as if they were not under revision control and simply create a new revision whenever desired. Some other commands will usually allow to visualize a previous revision, compare some revisions, come back to a previous revision etc.
+In git, these commands will use the information stored in the `.git` folder that we will inspect.
 
 # git basics
 
@@ -287,7 +290,7 @@ Untracked files:
   en/
 ```
 
-Notice that we do not have to stage all local modifications. Once we are done selecting changes to be committed, we may actually commit those changes.
+Notice that we do not have to stage all local modifications. Once we are done selecting the changes that belong to a new revision, we may actually commit those changes.
 
 ```bash
 $ git commit -m "Create french data file"
@@ -303,8 +306,8 @@ This example is really simple; a more realistic workflow would be:
 3. go to 1. until staged changes perform the desired goal
 4. commit the changes.
 
-
 Now that we have two commits, we may look at how git handles our data internally to better understand git mechanics.
+
 
 ## Data store
 
@@ -360,9 +363,9 @@ So we can see that:
 * a “tree” contains pointers to “blobs” and other trees and a name for each pointer
 * a “blob” is bunch of bytes representing user content (text, images etc.)
 * both trees and blobs store a [file mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29) (i.e. a [`chmod`](http://linux.die.net/man/1/chmod)); note however that the file ownership ([`chown`](http://linux.die.net/man/1/chown)) will depend on the user that performs the git commands and is up to the final user
-* git performs deduplication based on content: if file `foo` and file `bar` are a copy of each other
+* git performs deduplication based on content: if file `foo` is an exact copy of the file `bar`
     * they will be represented by the same blob
-    * the tree will point to two blobs with the same id but referring different names and possibly different file modes
+    * the tree will point to 2 blobs with the same id but referring different names and possibly different file modes
 
 There are 4 git objects (listed from “low” to “high” level) that can be described as:
 
@@ -402,7 +405,9 @@ bonjour
 salut
 ```
 
-The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)). This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)” that represent content ‘delta’s to optimize disk usage.
+The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for [git≥1.9.0](https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt)).
+This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “[packfiles](http://git-scm.com/book/en/Git-Internals-Packfiles)” that represent content ‘delta’s to optimize disk usage.
+
 Time to examine how the data is actually stored.
 
 ```bash
@@ -426,7 +431,9 @@ git physically stores content using zlib-compressed files containing:
 3. a null byte
 4. the actual content
 
-The commit files follow the same construction. [Tree storage](http://stackoverflow.com/a/21599232/626278) is slightly different. The zlib compression will however prevent from using too much disk space for storing commits (especially if blobs represent large files).
+The commit files follow the same construction. [Tree storage](http://stackoverflow.com/a/21599232/626278) is slightly different.
+
+The zlib compression will optimize git disk usage for storing commits (especially if blobs represent large files).
 
 The last important point for this quest is to understand how git names his internal files. Those names correspond to a cryptographic hash of the object. The hash function used is [SHA-1](http://en.wikipedia.org/wiki/SHA-1) and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
 You may have noticed that when referencing git [objects](http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/), we did not always used a 40 digits long value every time. git allows to use a shorter sub-sha1 *prefix*, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.
@@ -454,6 +461,7 @@ $ tree .git/objects/ --matchdirs -P bd
 ```
 
 git shards objects into 16×16=256 subfolders to grant a [faster access](http://thread.gmane.org/gmane.comp.version-control.git/69322) to a given sha1. This matters as all manipulations in git involve a sha1 (sometimes through <a href="#branches">aliases</a>).
+
 In the end, we have spent a bit of time looking at how git stores *loose* objects i.e. how git stores its objects in individual files. This helped us getting the big picture of the internal storage.
 
 We will not dig the [packfile](http://schacon.github.io/gitbook/7_the_packfile.html) [format](https://www.kernel.org/pub/software/scm/git/docs/technical/pack-format.txt) which is an optimization to avoid cluttering the disk by regrouping objects together (typically by invoking `git gc`).
@@ -462,13 +470,14 @@ We will not dig the [packfile](http://schacon.github.io/gitbook/7_the_packfile.h
 ## Immutability
 
 When creating our last commit, we made an horrible typo. git allows to amend the last commit using `git commit --amend`.  If the staging area contains any modification, they will be added to the commit.
-In our case, we just want to fix our typo so we do not add anything to the staging area:
+
+In our case, we just want to fix our typo in the commit message, so we do not add anything to the staging area:
 
 ```bash
 $ git commit --amend
 ```
 
-opens our favorite editor (as defined by the `$EDITOR` environment variable) where we may edit the commit message
+opens our favorite editor (as defined by the [`$EDITOR`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#Basic-Client-Configuration) environment variable) where we may edit the commit message
 
 ```bash
 #!EDITOR
@@ -521,9 +530,9 @@ $ git log --graph --oneline
 * 45de2f7 First commit
 ```
 
-we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced one commit by an other commit. We could fear that any git command have a direct and irreversible impact.
+we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit a new commit. We could fear that any git command have a direct and irreversible impact.
 
-However git keeps a reflog which is a record of all commits that were referenced at some point.
+However git keeps a [reflog](https://git-scm.com/docs/git-reflog) which is a record of all commits that were referenced at some point.
 
 ```bash
 $ git reflog
@@ -541,8 +550,8 @@ Note however that git has [garbage](https://www.kernel.org/pub/software/scm/git/
 
 * git is a functional DAG where nodes represents filetrees with metadata and keep a link to their parents
 * staging area is the bridge between local file tree and git data store
-* git internal data stored efficiently and safely in the `.git` folder
-* git commands performed by passing sha1 prefixes that identify objects uniquely
+* git internal data is stored efficiently and safely in the `.git` folder
+* git commands are performed by passing sha1 prefixes that identify objects uniquely
 * when lost, run `git status`
 * `git reflog` records a reference to all created commits even when no longer reachable
 * don’t mess with the `.git` folder!
@@ -551,9 +560,7 @@ Note however that git has [garbage](https://www.kernel.org/pub/software/scm/git/
 
 # Branches and remotes
 
-
 ## Branches
-
 
 As we have seen in the previous section, git is a graph and you may have noticed that `git status` names branches:
 
@@ -585,7 +592,7 @@ index 1cd909e..bd61b2c 100644
 
 ```
 
-we realize that a branch simply is a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in
+we realize that a branch is simply a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in
 
 ```bash
 $ tree .git/refs/heads/
@@ -722,7 +729,7 @@ we see that we have been structuring our data and adding new content in two comm
 ## Merging
 
 As we are happy with the changes introduced in our new branch, we may now make our work available in the repository trunk.
-There are multiple strategies to perform this, the most basic one being a merge commit. In its simplest — yet most common — form, a merge will take 2 branches and create a commit having the branches respective HEADs for parents through a merge.
+There are multiple strategies to perform this, the most basic one being a merge commit. In its simplest — yet most common — form, a merge will take 2 branches and create a commit having the branches respective `HEAD`s as parents through a merge.
 
 ### Three-way merge
 
@@ -786,6 +793,8 @@ $ git log --graph --oneline
 * 13d1b4b Create french data file
 * 45de2f7 First commit
 ```
+
+One thing to notice is that the merge commit (62cbf27) is linked to 2 (parent) commits: dd0f5d6 and 5a40d5a. [Referencing](#referencing-parent-commits) a merge commit ancestors may therefore be ambiguous in some contexts.
 
 ### Fast forward
 
@@ -875,7 +884,8 @@ index cd1a280,5a932d1..0000000
 ```
 
 We see the content from the `master` branch materialized in a block delimited by
-`<<<<<<<` and `=======` and the content of `modern-french` is delimited by `=======` and `>>>>>>>`. By default, git only shows `HEAD` (on the top of a conflict) and `MERGE_HEAD` (on the bottom of a conflict). Visualizing the `ORIG_HEAD` content is a matter of configuration and may be achieved by setting `git config --local merge.conflictstyle diff3`:
+`<<<<<<<` and `=======` and the content of `modern-french` is delimited by `=======` and `>>>>>>>`. By default, git only shows `HEAD` (on the top of a conflict) and `MERGE_HEAD` (on the bottom of a conflict).
+Visualizing the `ORIG_HEAD` content is a matter of configuration and may be achieved by setting `git config --local merge.conflictstyle diff3`:
 
 ```bash
 $ git merge --abort
@@ -927,7 +937,7 @@ $  git diff
 
 ```
 
-To finalize the resolution, we may now stage our changes and commit them
+To finish the conflict resolution, we may now stage our changes and commit them
 
 ```bash
 $ git add -u && git commit
@@ -959,10 +969,11 @@ $ git log --graph --oneline
 
 ```
 
-It is important to note that when not sure about the resolution of a conflict:
+It is important to note that when feeling unsure about the resolution of a conflict:
 
 * reflog keeps previous states so it will always be possible to undo things
 * the conflict resolution can be aborted using `git merge --abort`.
+
 
 ## Rebasing
 
@@ -1106,7 +1117,7 @@ $ git log --graph --oneline
 
 We have thus linearized our commit history by rebasing the `modern-french` branch onto the `master` branch.
 
-As for the `merge` command
+Once again:
 
 * `git reflog` would enable to undo a faulty rebase if needed
 * at any conflict resolution, `git rebase --abort` would stop the rebase process and put the branch back at its original state (all rebase information is stored in the `.git/rebase-merge/` folder)
@@ -1127,7 +1138,7 @@ Those changes probably deserve to belong to the same commit. `git rebase --inter
 * squash commits together
 * edit commits
 * remove commits
-* swap commits.
+* reorder commits.
 
 In our case we want to squash commits `075ce36` and `7a48ea2`:
 
@@ -1153,7 +1164,7 @@ pick b588260 add french slang
 #  x, exec = run command (the rest of the line) using bash
 ```
 
-We may notice that commits order is reversed compared to the output of `git log` command and older commits are first in the list.
+It is important to note that the commits order is reversed compared to the output of `git log` command; the first commits listed are the oldest one.
 
 We just need to change the line
 
@@ -1309,7 +1320,7 @@ $ git remote show origin
 
 We see two new verbs, “Fetch” to retrieve modification *from* the remote repository and “Push” to publish our local modification *to* a remote repository. This local/remote binding is called the [refspec](http://git-scm.com/book/en/v2/Git-Internals-The-Refspec). By default, the “Fetch” URL is the same as the “Push” URL but this may be easily [configured](http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html) if needed.
 
-As we did not interact (to fetch or push) with the `origin` remote yet, the `HEAD` branch is unknown.
+As we did not interact (to fetch or push) with the `origin` remote yet, the `HEAD` or upstream branch is unknown.
 
 
 ### Push
@@ -1364,7 +1375,7 @@ $ tree .git/refs/ --matchdirs -P remotes/origin
 └── tags
 ```
 
-It is important to understand that fetching a remote will *not* modify the working tree. Also s a consequence of the remote namespacing, to reference a remote (thus hopefully up to date) branch we should prefix it with the remote name
+It is important to understand that fetching a remote will *not* modify the working tree. Also, as a consequence of the remote namespacing, to reference a remote branch we should prefix it with the remote name
 
 ```bash
 $ git checkout -b english origin/english
@@ -1428,7 +1439,7 @@ We here see that pushing a rewritten history (`git commit --amend` or `git rebas
 * `git merge` (and most “merging-like” commands) relies on three-way merge by default
 * `git rebase` enables to rewrite history
     * `git rebase foo` will move current branch commits onto `foo` branch (note that in case of conflict `ours` and `theirs` can feel inverted as `git rebase foo` checkouts the `foo` branch under the hood)
-    * `git rebase --interactive sha1^` will allow to edit/squash/remove/swap all commits from `sha1` to `HEAD`
+    * `git rebase --interactive sha1^` will allow to edit/squash/remove/reorder all commits from `sha1` to `HEAD`
     * rebasing rewrites history and creates new commit objects
 * comparing branches for merge/rebase should be done with `git diff A...B` to take into account the common ancestor
 * retrieving remote updates is the user responsibility
@@ -1448,7 +1459,7 @@ Creating branches with git is very cheap and should therefore be used without fe
 
 There is no single answer to that question. Mostly because the answer depends on type nature of the project: a [web app](http://nvie.com/posts/a-successful-git-branching-model/) runs a single ever up-to-date version when a [desktop app](https://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html) may have multiple versions supported at a given time. The former may however be seen as a simple particular case of the latter.
 
-> Don’t merge _upstream_ code at random points.</br>
+> Don’t merge _upstream_ code at random points.<br>
 > Don’t merge _downstream_ code at random points either.
 >
 > <cite>[Linus Torvald](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744)</cite>
@@ -1551,7 +1562,7 @@ Following this format will produce readable [`git log`](http://git-scm.com/docs/
 
 ### Content
 
-The commit message is like a (technical) book cover: it should give a good insight of what the commit is actually about.
+The commit summary is like a (technical) book cover: it should give a good insight of what the commit is actually about.
 The description is like the backcover, providing more in-depth detail about the commit itself (and possibly listing dead ends encountered). It should answer the following [questions](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message):
 
 * Why is this change necessary?
@@ -1616,7 +1627,7 @@ It is sometimes handy to be able to apply a single commit from another branch e.
 
 ## Stash
 
-It sometimes happen that you need to quickly change context (e.g. to fix some bug in production). To avoid creating a dummy commit with all current staged and unstaged diff, you may use [`git stash`](https://www.kernel.org/pub/software/scm/git/docs/git-stash.html). This will push a new stash in the stash stack.
+It sometimes happen that you need to quickly change context (e.g. to fix some bug in production). To avoid creating a dummy commit with all current staged and unstaged diff, you may use [`git stash`](https://www.kernel.org/pub/software/scm/git/docs/git-stash.html). This will push a new stash in the stash stack. Changes will be stored but not in the context of a branch.
 
 When stashing, you should always save a message (`git stash -m "..."`) to keep some context to what you were previously doing. The risk is that you might completely forget that you stashed some modification.
 
@@ -1687,7 +1698,6 @@ We have also been changing the merge conflict output to show the `ORIG_HEAD`:
 
 ```bash
 $ git config --global merge.conflictstyle diff3
-
 ```
 
 One of the most useful configuration is colors that will make reading any `git diff` outputs easier to read (note that this is the default for git≥1.8.4):
@@ -1789,7 +1799,7 @@ Depending on the server configuration, the following protocols may be available:
 
 Other technical considerations such as corporate firewall preventing traffic through some ports might make the [https](https://help.github.com/articles/which-remote-url-should-i-use/) protocol useful in most cases.
 
-[Major](https://bitbucket.org/) [commercial](https://gitorious.org) git [hosting](https://github.com) solutions support at least ssh and https protocols.
+[Major](https://bitbucket.org/) [commercial](https://gitlab.com) git [hosting](https://github.com) solutions support at least ssh and https protocols.
 
 
 ## GUIs and plugins

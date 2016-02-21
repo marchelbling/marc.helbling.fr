@@ -1,7 +1,10 @@
+// check https://github.com/sjl/stevelosh/blob/master/media/js/sjl.js
+// and http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
+// for an example of dynamic section display
 var TocItem = function ( node, parent ) {
     this.node = node;
     this.parent = parent;
-    this.tagName = ( this.node || { tagName: 'H0' } ).tagName
+    this.tagName = ( this.node || { tagName: 'H0' } ).tagName;
 };
 
 TocItem.prototype.add = function( node ) {
@@ -57,7 +60,7 @@ function buildTocStructureForNode( node, max_depth ) {
     var root = new TocItem();
 
     var previous = root;
-    for( i = 0 ; i < children.length ; i ++ ) {
+    for( var i = 0 ; i < children.length ; i ++ ) {
         var child = children[i];
         if( child.tagName == previous.tagName ) {
             parent = previous.parent;
@@ -84,31 +87,31 @@ function buildArticleToc( from, depth ) {
 };
 
 
-function foldableToc( toc ) {
-    var div = document.createElement("div");
-    div.appendChild( document.createTextNode( "Content" ) );
-    div.id = 'toc';
-    div.className = 'nav-toc';
-    div.appendChild( toc );
-
-    // from http://www.justexample.com/wp/expand-and-collapse-html-list/
-    var foldOnClick() = function() {
-      if( this.parentNode ){
-          var childList = this.parentNode.getElementsByTagName( 'UL' );
-          for(var j = 0; j < childList.length ; j ++){
-              var currentState = childList[ j ].style.display;
-              if( currentState=="none" ){
-                  childList[ j ].style.display = "block";
-              }
-              else{
-                  childList[ j ].style.display = "none";
-              }
-            }
-        }
-    };
-    makeOLFoldable( toc, foldOnClick );
-    return div;
-};
+// function foldableToc( toc ) {
+//     var div = document.createElement("div");
+//     div.appendChild( document.createTextNode( "Content" ) );
+//     div.id = 'toc';
+//     div.className = 'nav-toc';
+//     div.appendChild( toc );
+//
+//     // from http://www.justexample.com/wp/expand-and-collapse-html-list/
+//     var foldOnClick() = function() {
+//       if( this.parentNode ){
+//           var childList = this.parentNode.getElementsByTagName( 'UL' );
+//           for(var j = 0; j < childList.length ; j ++){
+//               var currentState = childList[ j ].style.display;
+//               if( currentState=="none" ){
+//                   childList[ j ].style.display = "block";
+//               }
+//               else{
+//                   childList[ j ].style.display = "none";
+//               }
+//             }
+//         }
+//     }
+//     makeOLFoldable( toc, foldOnClick );
+//     return div;
+// };
 
 var left = document.querySelector("body header");
 var deets = document.querySelector("body header div.deets")

@@ -13,6 +13,7 @@ Strings preferred encoding is UTF-8 with some restriction. Quotes `"` and backsl
 
 As the C++ standard library does not implement JSON, it makes it a good exercise putting into practice a bit of template functions and STL usage.
 
+Note: for a benchmark of existing C++ libraries dealing with json, see the [nativejson benchmark](https://github.com/miloyip/nativejson-benchmark).
 
 ## json stream
 

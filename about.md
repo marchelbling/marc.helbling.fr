@@ -8,4 +8,4 @@ I call myself a software engineer. I defended a Ph.D thesis entitled [Virtual sc
 
 The posts on this blog are unusually living things. The focus being more quality than quantity, posts may therefore be frequently updated/rewritten without any warning.
 
-These pages are currently built with [Jekyll](https://github.com/mojombo/jekyll). The original design was inspired *cough* a lot by [Alex Pearce](http://alexpearce.me)'s blog. You can check out the [source on GitHub](https://github.com/marchelbling/marchelbling.github.io).
+These pages are currently built with [Jekyll](https://github.com/mojombo/jekyll). The original design was inspired *cough* a lot by [Alex Pearce](http://alexpearce.me)'s and [Tufte-style jeykyll](http://clayh53.github.io/tufte-jekyll/articles/15/tufte-style-jekyll-blog) blogs. You can check out the [source on GitHub](https://github.com/marchelbling/marchelbling.github.io).

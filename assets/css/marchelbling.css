@@ -37,6 +37,7 @@ body {
   font-family: Georgia;
   font-size: 1.05em;
   font-variant-ligatures: common-ligatures;
+  counter-reset: sidenote-counter;
 }
 
 li:not(:last-child) {
@@ -105,7 +106,7 @@ code {
   vertical-align: 0.1em;
 }
 
-.columns, .blog {
+.columns, .content {
   overflow: hidden;
   _overflow: hidden;
   zoom: 1;
@@ -136,20 +137,23 @@ header h2 {;
   font-size: 1.2em;
 }
 
-.blog {
-  width: 600px;
+.content {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }
 
-article div.cf h1 a {
+.text {
+  width: 66%;
+}
+
+article div.post-meta h1 a {
   color: #333;
   border-bottom: 1px solid #eee;
   font-size: 1.6em;
   line-height: 1.25em;
 }
 
-article div.cf h2 {
+article div.post-meta h2 {
   float: left;
   width: 100%;
   color: #999;
@@ -160,9 +164,8 @@ article div.cf h2 {
 }
 
 .rev {
-  text-align: right;
-  float: right;
-  color: #999;
+    margin-left: 20px;
+    font-size: 0.9em;
 }
 
 .rev a {
@@ -293,8 +296,57 @@ a code {
   border-color: #0077cc;
 }
 
-article .body {
+article .text {
   clear: both;
+}
+
+input.margin-toggle {
+  display: none;
+}
+
+.sidenote, .marginnote {
+  float: right;
+  clear: right;
+  width: 40%;
+  margin-right: -50%;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.1; /* changed to bring line heights into rational pattern */
+  vertical-align: baseline;
+  position: relative;
+}
+
+label.sidenote-number {
+  display: inline;
+}
+
+label.margin-toggle:not(.sidenote-number) {
+  display: none;
+}
+
+.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after, .sidenote:before {
+  content: counter(sidenote-counter) " ";
+  font-family: et-bembo-roman-old-style;
+  color: #303840; //added color
+  position: relative;
+  vertical-align: baseline;
+}
+
+.sidenote-number:after {
+  content: counter(sidenote-counter);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem;
+}
+
+.sidenote:before {
+    content: counter(sidenote-counter) ".\000a0"; /* this is unicode for a non-breaking space */
+    color: #303840;
+    top: 0rem; /* removed superscripting for numerical reference in sidenote */
 }
 
 @media screen and (max-width: 1060px) {
@@ -302,7 +354,7 @@ article .body {
     margin: 20px 0 0 20px;
   }
 
-  .blog {
+  .content {
     margin: 20px 0 0 0;
   }
 }
@@ -312,7 +364,7 @@ article .body {
     width: 20%;
   }
 
-  .blog {
+  .content {
     width: 70%;
   }
 }
@@ -334,8 +386,20 @@ article .body {
     display: none;
   }
 
-  .blog {
+  .content {
     width: 100%;
     padding: 0;
+  }
+
+  .text {
+    width: 100%;
+  }
+
+  .sidenote, .marginnote {
+    clear: both;
+  }
+
+  label.sidenote-number {
+    display: none;
   }
 }

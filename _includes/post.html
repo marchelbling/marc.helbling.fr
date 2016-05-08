@@ -1,10 +1,10 @@
 <article class="post">
-  <div class="cf">
+  <div class="post-meta">
     <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
-    <h2>{{ page.date | date: "%A %d, %B %Y" }} in <b><a href="/search.html?category={{ page.category | downcase }}">{{ page.category }}</a></b> <span class="rev">(<a href="https://github.com/marchelbling/marchelbling.github.io/commits/master/{{ page.path }}">revisions</a>)<span></h2>
+    <h2>{{ page.date | date: "%A %d, %B %Y" }} in <b><a href="/search.html?category={{ page.category | downcase }}">{{ page.category }}</a></b> <span class="rev"> (<a href="https://github.com/marchelbling/marchelbling.github.io/commits/master/{{ page.path }}">revisions</a>) <span></h2>
   </div>
 
-  <div class="body">
+  <div class="text">
     {% if content %}
     {{ content }}
     {% else %}
@@ -12,7 +12,7 @@
     {% endif %}
   </div>
 
-  <ul class="tags cf">
+  <ul class="post-meta tags">
     {% for tag in page.tags %}
     <li><a href="/search.html?tags={{ tag }}">{{ tag | downcase }}</a></li>
     {% endfor %}

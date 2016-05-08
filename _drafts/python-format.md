@@ -14,8 +14,8 @@ Python string interpolation comes in 2 flavors:
 
 * “[old](https://docs.python.org/2.7/library/stdtypes.html#string-formatting-operations)” syntax: `'%s' % (content,)`; the original format quite inspired by the C `printf` syntax
 * “[new](https://docs.python.org/2.7/library/string.html#format-string-syntax)” syntax: `'{}'.format(content)`; a new [flexible](https://mkaz.com/2012/10/10/python-string-format/) [syntax](http://pyformat.info/) introduced in Python 2.6 (see [PEP 3101](https://www.python.org/dev/peps/pep-3101))
-such as failing to display tuples and dictionaries correctly”. However both syntaxes work with
-python3.
+
+Both syntaxes work with python3.
 
 This post is not intended to be an [introduction](https://developers.google.com/edu/python/strings) to string usage in Python but will look at differences and performance of these 2 syntaxes.
 
@@ -42,7 +42,7 @@ This post is not intended to be an [introduction](https://developers.google.com/
   (note that one must use consecutive indices with `0` as first index)
 * the old syntax will raise if formatting is called with *more* arguments than needed
     * `'%s %s' % ('foo', 'bar', 'baz')` will raise a `TypeError` exception
-    * `'{} {}'.format('foo', 'bar', 'baz')` will print `'foo bar'`, discarding `bar`
+    * `'{} {}'.format('foo', 'bar', 'baz')` will print `'foo bar'`, discarding `baz`
 * printing `%` requires to type `%%` with the old syntax
 * printing `{` (resp. `}`) requires to type `{​{` (resp. `}​}`) with the new syntax
 * **for python 2.x**, `format` is more [restrictive](http://stackoverflow.com/a/12252460/626278) than `%` regarding `unicode` and `str` mix
@@ -85,7 +85,7 @@ u'\xe9'
 
 [code](https://docs.python.org/devguide/setup.html#directory-structure):
 
-* [`str`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c)
+* [`str`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c#l168)
 * [`unicode`](https://hg.python.org/cpython/file/2.7/Objects/unicodeobject.c)
 * [`string.format`](https://hg.python.org/cpython/file/2.7/Objects/stringlib/string_format.h)
 * [`%`](): [`string_mod`](https://hg.python.org/cpython/file/2.7/Objects/stringobject.c#l3750) calls

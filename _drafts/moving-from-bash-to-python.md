@@ -63,3 +63,7 @@ Rewrite legacy code in an 'appropriate' way:
 # Monitor
 
 monitoring + way to reproduce the issue easily
+
+# Links
+
+* [A bite of Python](https://access.redhat.com/blogs/766093/posts/2592591): some security notes on the `subprocess` library

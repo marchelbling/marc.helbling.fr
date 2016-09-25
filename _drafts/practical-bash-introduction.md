@@ -241,6 +241,7 @@ remote
 # References
 
 * [Bash Reference Manual](http://www.gnu.org/software/bash/manual/bashref.html)
+* [(Google) Shell style guide](https://google.github.io/styleguide/shell.xml)
 * [Command-line tools can be 235x faster than your Hadoop cluster](http://aadrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html)
 * [Pipes and Filters](http://blog.petersobot.com/pipes-and-filters)
 * [Defensive BASH Programming](http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/)
@@ -248,3 +249,4 @@ remote
 * [Shell programming with bash](http://matt.might.net/articles/bash-by-example/)
 * [How “Exit Traps” Can Make Your Bash Scripts Way More Robust And Reliable](http://redsymbol.net/articles/bash-exit-traps/)
 * [sh tricks](http://www.etalabs.net/sh_tricks.html)
+* [advancing in the bash shell](http://samrowe.com/wordpress/advancing-in-the-bash-shell/)

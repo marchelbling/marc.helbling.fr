@@ -95,6 +95,11 @@ function decrypt_backup {
 }
 ```
 
+
+## Photo storage:
+
+* sms attachements: `Library/SMS/Attachments/*`
+
 ## Finding all known numbers for a contact
 
 People tend to change phone numbers (be it because they change job and use their professional number

@@ -1,16 +1,26 @@
-Well, *MAYBE* you should read this later...
+# marc.helbling.fr
 
-# Running locally
+Static site built with [Hugo](https://gohugo.io). Current theme is: [malt](https://github.com/marchelbling/malt).
 
-See https://help.github.com/articles/using-jekyll-with-pages/:
+## Requirements
 
-* `(gem list | grep bundler >/dev/null) || gem install bundler`
-* `bundle exec jekyll serve`
-* http://localhost:4000
+* Docker
+* make
 
-# Adding side/margin notes
+## Running locally
 
-To not require a local build, those elements require some HTML tags:
+```
+$ make
+```
 
-*  side note (numbered): `<label for="sn-id" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-id" class="margin-toggle"><span class="sidenote">blabla</span>`
-* margin note (not numbered): `/<label for="mn-id" class="margin-toggle"></label><input type="checkbox" id="mn-id" class="margin-toggle"/><span class="marginnote">blabla</span>`
+## Building
+
+```
+$ make clean && make generate
+```
+
+## Deploying
+
+```
+$ make deploy
+```

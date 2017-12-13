@@ -6,7 +6,7 @@ description: A walk-through git (main) commands
 tags:
 - vcs
 - git
-title: A practical git introduction
+title: A practical introduction to git
 url: practical-git-introduction/
 aliases: [/2014/09/22/practical-git-introduction]
 ---
@@ -1404,21 +1404,18 @@ There is no single answer to that question. Mostly because the answer depends on
 
 #### Alternatives
 
-See [discussion](https://news.ycombinator.com/item?id=9744059)
+Choosing the right workflow is complicated (see [discussion](https://news.ycombinator.com/item?id=9744059)). There are lots of alternatives:
 
-* http://endoflineblog.com/gitflow-considered-harmful
-* https://about.gitlab.com/2014/09/29/gitlab-flow/
-* https://www.atlassian.com/git/tutorials/comparing-workflows
-* https://guides.github.com/introduction/flow/
+* [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) (see some [cons](http://endoflineblog.com/gitflow-considered-harmful))
+* [Gitlab flow](https://about.gitlab.com/2014/09/29/gitlab-flow/)
+* [GitHub flow](https://guides.github.com/introduction/flow/)
+* [centralized flow](https://www.atlassian.com/git/tutorials/comparing-workflows#centralized-workflow) (mimics svn behavior)
+* [feature branch flow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
+* [forking flow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
 
-* centralized flow (rebase everything similar to svn)
-* branch flow
-* git flow
-* downstream flow
-* github flow
-* fork flow
+Choosing the right mostly depends on the product and the team. No one size fits all solution. The rule of thumb: it should just not get in the way of developers/devops (as long as the team can be considered knowledgeable enough regarding git features).
 
-The question now becomes: how should branches be synchronized?
+Let’s focus on how should branches be synchronized?
 
 ### Merge or rebase?
 
@@ -1807,3 +1804,4 @@ A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-
 * [git for computer scientists](http://eagain.net/articles/git-for-computer-scientists/)
 * [git pretty (cheat sheet)](http://justinhileman.info/article/git-pretty/)
 * [Working with dates in git](http://alexpeattie.com/blog/working-with-dates-in-git/)
+* [High-level problems with git](https://gregoryszorc.com/blog/2017/12/11/high-level-problems-with-git-and-how-to-fix-them/)

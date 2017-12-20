@@ -136,7 +136,7 @@ In git, these commands will use the information stored in the `.git` folder that
 
 Before diving quickly into git internals, let’s create our first commit:
 
-```
+```shell
 $ git status
 On branch master
 
@@ -198,7 +198,7 @@ The staging area is an important aspect of git as it is what connects the local 
 It is described by `git status` as *"changes to be committed"* and thus it is important to think of it as a commit draft.
 
 
-```
+```shell
 $ mkdir {fr,en}
 
 $ echo 'bonjour' > fr/data
@@ -222,7 +222,7 @@ Untracked files:
 
 Notice that we do not have to stage all local modifications. Once we are done selecting the changes that belong to a new revision, we may actually commit those changes.
 
-```
+```shell
 $ git commit -m "Create french data file"
 [master 13d1b4b] Create french data file
  1 file changed, 1 insertion(+)
@@ -245,7 +245,7 @@ Now that we have two commits, we may look at how git handles our data internally
 
 After creating a commit, `git` displays a unique id for the newly created commit. We may use some git commands to inspect this [data](http://git-scm.com/book/en/Git-Internals-Git-Objects)
 
-```
+```shell
 $ git cat-file -t 13d1b4b
 commit
 
@@ -270,7 +270,7 @@ From this, we see that a [commit](http://git-scm.com/docs/git-commit-tree) refer
 
 This is the high level definition of a commit in git. We need to go one more step into internals and inspect the “tree” object to have a better picture of how git structures data.
 
-```
+```shell
 $ git cat-file tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
 100644 README.mdF??Bd???"?C-%D?J?x40000 fr\bbS?"}nC??WJ!
 
@@ -310,7 +310,7 @@ There are 4 git objects (listed from “low” to “high” level) that can be 
 As git handles history of files, we may ask ourselves how does git stores incremental differences for our data.
 To test this, let’s add some content in an existing file
 
-```
+```shell
 $ echo "salut" >> fr/data
 
 $ git add -u
@@ -322,7 +322,7 @@ $ git commit -m "Add more frensh data"
 
 and inspect the resulting blob object
 
-```
+```shell
 $ git ls-tree 456a082
 100644 blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
 040000 tree 3d9ba4d12442602bd81928438f80810622b9fd56	fr
@@ -340,7 +340,7 @@ This could seem inefficient as for each file, git will keep a copy of the full c
 
 Time to examine how the data is actually stored.
 
-```
+```shell
 $ cat .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
 xK??OR04aH????/-?*N?)-?S?a
 
@@ -368,7 +368,7 @@ The zlib compression will optimize git disk usage for storing commits (especiall
 The last important point for this quest is to understand how git names his internal files. Those names correspond to a cryptographic hash of the object. The hash function used is [SHA-1](http://en.wikipedia.org/wiki/SHA-1) and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
 You may have noticed that when referencing git [objects](http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/), we did not always used a 40 digits long value every time. git allows to use a shorter sub-sha1 *prefix*, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.
 
-```
+```shell
 $ cat fr/data | git hash-object --stdin
 bd61b2ccb39197cc3a66b43f52a6fed66a237a29
 
@@ -403,13 +403,13 @@ When creating our last commit, we made an horrible typo. git allows to amend the
 
 In our case, we just want to fix our typo in the commit message, so we do not add anything to the staging area:
 
-```
+```shell
 $ git commit --amend
 ```
 
 opens our favorite editor (as defined by the [`$EDITOR`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#Basic-Client-Configuration) environment variable) where we may edit the commit message
 
-```
+```shell
 #!EDITOR
 Add more french data
 
@@ -427,7 +427,7 @@ Add more french data
 
 and simply save our modification.
 
-```
+```shell
 [master dd0f5d6] Add more french data
  Date: Sun Oct 12 16:19:08 2014 +0200
  1 file changed, 1 insertion(+)
@@ -435,7 +435,7 @@ and simply save our modification.
 
 We see that git creates a *new* commit object `dd0f5d6` (remember that the sha1 involves the commit message and timestamps).
 
-```
+```shell
 $ git cat-file commit dd0f5d6
 tree 77a832b508bd5d2fb7c1eb8999e6e0a9f926434d
 parent 13d1b4b062b7a7308553bc504dda2d43d32525ba
@@ -453,7 +453,7 @@ We will later see that this is an important property to have in mind when multip
 
 If we look at our commit tree
 
-```
+```shell
 $ git log --graph --oneline
 * dd0f5d6 Add more french data
 * 13d1b4b Create french data file
@@ -464,7 +464,7 @@ we see that we created 3 commits until now. Amending our last commit did not add
 
 However git keeps a [reflog](https://git-scm.com/docs/git-reflog) which is a record of all commits that were referenced at some point.
 
-```
+```shell
 $ git reflog
 dd0f5d6 HEAD@{0}: commit (amend): Add more french data
 456a082 HEAD@{1}: commit: Add more frensh data
@@ -494,7 +494,7 @@ Note however that git has [garbage](https://www.kernel.org/pub/software/scm/git/
 
 As we have seen in the previous section, git is a graph and you may have noticed that `git status` names branches:
 
-```
+```shell
 $ git status
 On branch master
 nothing to commit, working directory clean
@@ -506,7 +506,7 @@ $ git branch
 By default, git creates a branch called `master`.
 If we inspect this object
 
-```
+```shell
 $ git cat-file -t master
 commit
 
@@ -524,7 +524,7 @@ index 1cd909e..bd61b2c 100644
 
 we realize that a branch is simply a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in
 
-```
+```shell
 $ tree .git/refs/heads/
 .git/refs/heads/
 └── master
@@ -536,7 +536,7 @@ dd0f5d6500d72d54747dec1dc4139f13b5fdb8f2
 
 git also keeps an alias for current branch last commit as [`HEAD`](http://git-scm.com/book/en/Git-Internals-Git-References) (with a special case for [`detached HEAD`](http://git-scm.com/docs/git-checkout#_detached_head)).
 
-```
+```shell
 $ git show --oneline HEAD
 dd0f5d6 Add more french data
 diff --git a/fr/data b/fr/data
@@ -555,7 +555,7 @@ ref: refs/heads/master
 
 Creating new branch is very easy with git:
 
-```
+```shell
 $ git branch structure-data
 
 $ git branch
@@ -583,7 +583,7 @@ index 1cd909e..bd61b2c 100644
 
 We see that our brand new branch points exactly to the same commit as our `master` branch. This is the default behavior when creating a new branch; it is assumed that the new branch will start from `HEAD` and may be changed by passing the desired branching commit sha1 as a second argument i.e. `git branch new_branch new_branch_HEAD_commit`.
 
-```
+```shell
 $ echo -e "# old\n\nbonjour\nsalut" > fr/data
 
 $ git add fr/data && git commit -m "add 'old' header to french data"
@@ -630,7 +630,7 @@ Now that we have two distinct branches, we should make sure that the changes int
 
 If we compare our branch content with the `master` branch:
 
-```
+```shell
 $ git diff master structure-data
 diff --git a/fr/data b/fr/data
 index bd61b2c..ea35d1f 100644
@@ -685,7 +685,7 @@ This short overview of how the three-way merge works assume that `ORIG_HEAD` is 
 
 So, after running
 
-```
+```shell
 $ git merge --no-ff structure-data
 > Merge branch 'structure-data'
 >
@@ -712,7 +712,7 @@ yo
 
 the commit tree now looks like
 
-```
+```shell
 $ git log --graph --oneline
 * 62cbf27 Merge branch 'structure-data'
 |\
@@ -730,7 +730,7 @@ One thing to notice is that the merge commit (62cbf27) is linked to 2 (parent) c
 
 When merging, we explicitly asked git to create a merge commit using the `--no-ff` flag. However, looking at the commit graph, we see that it is (almost) equivalent to the simplified one
 
-```
+```shell
 * yyyyyyy add modern french data
 * xxxxxxx add 'old' header to french data
 |
@@ -746,7 +746,7 @@ Indeed, in this case, `HEAD` and `ORIG_HEAD` pointed to the same commits hence `
 
 We have seen that in some situations, the three-way merge results in a situation where the merge content may not be automatically deduced. This is called a merge conflict. Let’s create a conflict:
 
-```
+```shell
 $ git checkout -b modern-french
 Switched to a new branch 'modern-french'
 
@@ -774,7 +774,7 @@ $ git add -u && git commit -m "add more modern data"
 
 Let’s see what happens when we try to merge:
 
-```
+```shell
 $ git merge modern-french
 Auto-merging fr/data
 CONFLICT (content): Merge conflict in fr/data
@@ -817,7 +817,7 @@ We see the content from the `master` branch materialized in a block delimited by
 `<<<<<<<` and `=======` and the content of `modern-french` is delimited by `=======` and `>>>>>>>`. By default, git only shows `HEAD` (on the top of a conflict) and `MERGE_HEAD` (on the bottom of a conflict).
 Visualizing the `ORIG_HEAD` content is a matter of configuration and may be achieved by setting `git config --local merge.conflictstyle diff3`:
 
-```
+```shell
 $ git merge --abort
 
 $ git merge modern-french
@@ -855,7 +855,7 @@ We now have the full picture:
 
 This conflicts is easy to [solve](https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/) by editing the file and keeping both changes and thus having the following
 
-```
+```shell
 $  git diff
  +wesh
 + jourbon
@@ -869,7 +869,7 @@ $  git diff
 
 To finish the conflict resolution, we may now stage our changes and commit them
 
-```
+```shell
 $ git add -u && git commit
 > Merge branch 'modern-french'
 >
@@ -880,7 +880,7 @@ $ git add -u && git commit
 
 and look at our commit tree
 
-```
+```shell
 $ git log --graph --oneline
 *   b20ab97 Merge branch 'modern-french'
 |\
@@ -909,7 +909,7 @@ It is important to note that when feeling unsure about the resolution of a confl
 
 Once again, it feels like the graph
 
-```
+```shell
 *   b20ab97 Merge branch 'modern-french'
 |\
 | * e6defd6 add french slang
@@ -920,7 +920,7 @@ Once again, it feels like the graph
 
 could make more sense as
 
-```
+```shell
 |
 * yyyyyyy add french slang
 * xxxxxxx add new modern data
@@ -931,7 +931,7 @@ could make more sense as
 
 Indeed, the purpose of the `modern-french` branch was just to add new content; we could debate about the reason why we would create a new branch as we are continuing previous work. So let’s rewind our repository to where it was before merging
 
-```
+```shell
 
 $ git reset --hard 075ce36
 
@@ -967,7 +967,7 @@ There are 3 main differences with `git merge`:
 
 Let’s try to rebase `modern-french` onto `master`:
 
-```
+```shell
 $ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: add new modern data
@@ -1005,7 +1005,7 @@ index cd1a280,89bb164..0000000
 
 When applying the commits, git uses the three-way merge algorithm which explains that we have a conflict similar to the one we had with a merge. We edit the conflict as previously:
 
-```
+```shell
 $ git diff
 diff --cc fr/data
 index cd1a280,89bb164..0000000
@@ -1021,7 +1021,7 @@ index cd1a280,89bb164..0000000
 
 and then stage our modification to continue the rebase process
 
-```
+```shell
 $ git add -u && git rebase --continue
 Applying: add new modern data
 Applying: add french slang
@@ -1057,7 +1057,7 @@ Once again:
 
 By rebasing our branch, we have avoided a merge commit. However, we now have two successive commits that seem to bring similar changes
 
-```
+```shell
 * 7a48ea2 add new modern data
 * 075ce36 add more modern data
 ```
@@ -1072,13 +1072,13 @@ Those changes probably deserve to belong to the same commit. `git rebase --inter
 
 In our case we want to squash commits `075ce36` and `7a48ea2`:
 
-```
+```shell
 $ git rebase --interactive 075ce36^
 ```
 
 will present all child commits that may be rewritten:
 
-```
+```shell
 pick 075ce36 add more modern data
 pick 7a48ea2 add new modern data
 pick b588260 add french slang
@@ -1098,19 +1098,19 @@ It is important to note that the commits order is reversed compared to the outpu
 
 We just need to change the line
 
-```
+```shell
 pick 7a48ea2 add new modern data
 ```
 
 into (note that changing anything else that the verb at the beginning of a line will have no effect)
 
-```
+```shell
 fixup 7a48ea2 add new modern data
 ```
 
 and save the change
 
-```
+```shell
 $ git rebase --interactive 075ce36^
 [detached HEAD df55562] add more modern data
  Date: Wed Oct 22 22:45:05 2014 +0200
@@ -1120,7 +1120,7 @@ Successfully rebased and updated refs/heads/modern-french.
 
 We are done rewriting history and now have a clean commit tree:
 
-```
+```shell
 $ git log --graph --oneline
 * cc4b70a add french slang
 * df55562 add more modern data
@@ -1136,7 +1136,7 @@ $ git log --graph --oneline
 
 Now the `modern-french` branch should be renamed into `master` which can be done in multiple ways e.g.
 
-```
+```shell
 $ git checkout master && git reset --hard modern-french
 HEAD is now at cc4b70a add french slang
 
@@ -1146,7 +1146,7 @@ Deleted branch modern-french (was cc4b70a).
 
 or
 
-```
+```shell
 $ git branch -D master
 Deleted branch master (was 075ce36).
 
@@ -1160,7 +1160,7 @@ Rewriting history can lead to predictable yet unexpected results.
 
 Suppose we create a new file with some lines and a commit for each line.
 
-```
+```shell
 $ git checkout -b rewriting-history
 
 $ echo "one" > dummy && git add dummy && git commit -m "first"
@@ -1181,12 +1181,12 @@ $ echo "three" >> dummy && git add dummy && git commit -m "third"
 
 Now let’s say we want to swap commits
 
-```
+```shell
 $ git rebase --interactive HEAD~3
 ```
 and set
 
-```
+```shell
 pick 9041c15 first
 pick 631a301 third
 pick 50c1ff1 second
@@ -1194,7 +1194,7 @@ pick 50c1ff1 second
 
 This will give the following conflict diff
 
-```
+```shell
 ++<<<<<<< HEAD
 ++||||||| parent of 631a301... third
 ++two
@@ -1208,7 +1208,7 @@ This is fully predictable: each commit stores full file snapshots however we ten
 
 Let’s say that we resolved the conflict with the following
 
-```
+```shell
 $ git diff
 diff --cc dummy
 index 5626abf,4cb29ea..0000000
@@ -1222,7 +1222,7 @@ index 5626abf,4cb29ea..0000000
 
 When we continue the rebase, we will again hit a conflict:
 
-```
+```shell
 ++<<<<<<< HEAD
  +three
 ++||||||| parent of 50c1ff1... second
@@ -1238,7 +1238,7 @@ We see that we have moved the issue from the common ancestor to the `MERGE_HEAD`
 Until now, we have been working locally. As the repository is now clean, we are now ready to publish our work to the world. git servers can be interacted with through the [`git remote`](https://www.kernel.org/pub/software/scm/git/docs/git-remote.html) command.
 By default no remote server is defined. We will use a repository declared on [GitHub](https://github.com/) as our remote called `origin`:
 
-```
+```shell
 $ git remote add origin git@github.com:marchelbling/bonjour.git
 
 $ git remote show origin
@@ -1263,7 +1263,7 @@ Note that if `local` is empty (i.e. `git push origin :remote`), the `remote` bra
 
 We may push our `master` branch to our `origin` remote
 
-```
+```shell
 $ git push origin master
 Counting objects: 8, done.
 Delta compression using up to 4 threads.
@@ -1282,7 +1282,7 @@ and everyone with an access to the remote can now see our work.
 Until now, we have been working on our own on the repository. As we created a public repository, some changes may have been pushed to our remote. git does not automatically try to get modification from the remote so it is the user responsibility to make sure his repository is up to date.
 The command to retrieve remote changes is `git fetch`:
 
-```
+```shell
 $ git fetch origin
 remote: Counting objects: 4, done.
 remote: Compressing objects: 100% (2/2), done.
@@ -1294,7 +1294,7 @@ From github.com:marchelbling/bonjour
 
 We can see that a new branch `english` has been pushed. We see that locally, git refers to it as `origin/english`. Indeed, git keep remote object references in an eponym namespace
 
-```
+```shell
 $ tree .git/refs/ --matchdirs -P remotes/origin
 .git/refs/
 ├── heads
@@ -1307,7 +1307,7 @@ $ tree .git/refs/ --matchdirs -P remotes/origin
 
 It is important to understand that fetching a remote will *not* modify the working tree. Also, as a consequence of the remote namespacing, to reference a remote branch we should prefix it with the remote name
 
-```
+```shell
 $ git checkout -b english origin/english
 Branch english set up to track remote branch english from origin.
 Switched to a new branch 'english'
@@ -1328,7 +1328,7 @@ Often times, we fetch a remote to check for update on our working branch meaning
 
 Let’s say we would like to fix the commit message from the branch we fetched
 
-```
+```shell
 $ git commit --amend -m "add english/american data"
 [english ea761bc] add english/american data
  Author: Linux Tor <tor@linux.org>
@@ -1350,7 +1350,7 @@ By amending, we have just replaced the branch tip commit and whenever a user tri
 * local branch is out-of-sync due to changes pushed to the remote; the reflex should be immediately to [fetch](https://help.github.com/articles/dealing-with-non-fast-forward-errors/) the remote and update the branch
 * history has been rewritten and the sha1 is no longer reachable; we need to force push our local branch to rewrite the remote history:
 
-```
+```shell
 $ git push --force origin english
 Counting objects: 1, done.
 Writing objects: 100% (1/1), 192 bytes | 0 bytes/s, done.
@@ -1478,7 +1478,7 @@ Commit messages are utterly important as they are the human counter part to a go
 
 The structure of a commit message is important. It [should](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) look like:
 
-```
+```shell
 Short commit summary (below 50 chars)
 
 Detailed description of the changes introduced by the commit
@@ -1565,8 +1565,7 @@ When some bug or regression is found in a repository, we used to perform dichoto
 
 We first need to start the session by setting the interval that should be tested, flagging the last known commit that is known to not have the bug as good and a bad commit
 
-```
-
+```shell
 $ git bisect start
 
 $ git bisect bad 456xyz # by default HEAD is assumed
@@ -1578,7 +1577,7 @@ git then iterates over the range of commits using binary search and will wait fo
 
 To automate things further, an executable script or a command checking wether a revision is good or bad may be supplied by
 
-```
+```shell
 $ git bisect run command
 ```
 
@@ -1603,7 +1602,7 @@ git configuration may be done at three levels (listed by order of *descending* p
 
 by invoking
 
-```
+```shell
 git config [--level] --(set|add) section[.subsection]=value
 ```
 
@@ -1615,7 +1614,7 @@ All configurations can either be done through the `git config` command or by dir
 
 We have already seen some configuration as git requires a user to be properly used:
 
-```
+```shell
 $ git config --global --set user.name="My Name"
 
 $ git config --global --set user.email="me@mail.org"
@@ -1623,19 +1622,19 @@ $ git config --global --set user.email="me@mail.org"
 
 We have also been changing the merge conflict output to show the `ORIG_HEAD`:
 
-```
+```shell
 $ git config --global merge.conflictstyle diff3
 ```
 
 One of the most useful configuration is colors that will make reading any `git diff` outputs easier to read (note that this is the default for git≥1.8.4):
 
-```
+```shell
 $ git config --global ui.color=auto
 ```
 
 Finally, git may automatically correct mistyped commands when the error can be unambiguously fixed in the specified number of deci-seconds (0.1 second):
 
-```
+```shell
 $ git config --global --set help.autocorrect=5
 ```
 
@@ -1645,13 +1644,13 @@ $ git config --global --set help.autocorrect=5
 
 * use shorter names for commands frequently typed; a common example is to alias `checkout` with `co`
 
-```
+```shell
 $ git config --global alias.co checkout
 ```
 
 * introduce a personalized command using constant arguments; a typical usage is a custom display of commit history:
 
-```
+```shell
 $ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 ```
 
@@ -1659,7 +1658,7 @@ $ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%
     * listing recent commits using the  [`head`](http://ss64.com//head.html) command (arguments will apply on the `head` command i.e. `git head -5` will list the last 5 commits)
     * [fixuping](http://stackoverflow.com/a/21148981/626278) a commit by committing and rebasing automatically
 
-```
+```shell
 $ git config--global alias.head "git log --oneline --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' | head"
 
 $ git config --global alias.fixup "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && sha_to_patch=$( git rev-parse $1 ) && git commit --fixup=${sha_to_patch} && git rebase -i --autosquash ${sha_to_patch}^' -"
@@ -1667,7 +1666,7 @@ $ git config --global alias.fixup "!sh -c '(git diff-files --quiet || (echo Unst
 
 [Listing](http://stackoverflow.com/a/22183573/626278) all defined aliases may be done with the following command
 
-```
+```shell
 $ git config --get-regexp ^alias\. | sed -e s/^alias\.//
 ```
 
@@ -1780,7 +1779,7 @@ A [gist](https://help.github.com/articles/about-gists/) is a lightweight reposit
 
 A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-with-git-or-imma-edit-your-hunk/on:2011-11-16@20:54:30) is a section of diff displayed using the [unified format](http://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html#Detailed-Unified) e.g.
 
-```
+```shell
 @@@ -1,1 -1,3 +1,2 @@@
   one
  -two

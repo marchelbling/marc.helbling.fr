@@ -44,7 +44,7 @@ think in terms of a product instead of a team building a product.
 * there is no exception mechanism in bash. Every command or function has a [return
   status](http://tldp.org/LDP/abs/html/exit-status.html) telling if it was successful (`0`) or not (`>0`).  *Every* command. It is very easy to forget to test an important status code e.g. with some piped commands. Bash has a special flag to prevent silent failures: [`set -e`](http://www.gnu.org/software/bash/manual/bashref.html#The-Set-Builtin), which may be used either globally (e.g. by using `#!/bin/bash -e` shebang) or on a specific bloc of code i.e.
 
-```bash
+```shell
 
 set -e
 command0 | command 1

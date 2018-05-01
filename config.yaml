@@ -3,7 +3,6 @@ title: /dev/log
 theme: malt
 languageCode: en-us
 disablePathToLower: true
-googleAnalytics: "UA-42443686-2"
 pygmentsCodeFences: true
 pygmentsUseClasses: false
 pygmentsStyle: "tango"

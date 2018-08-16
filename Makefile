@@ -18,18 +18,17 @@ clone-content:
 update-content: clone-content
 	cd $(build_dir) && git fetch origin && git reset --hard @{u}
 
-build:
-	docker build -t marchelbling/hugo .
-
 clean:
 	rm -fr $(build_dir)*
 
 generate: update-theme update-content
-	docker run --user=$(shell id -u):$(shell id -g) -v $(mkfile_dir):$(mkfile_dir) -it marchelbling/hugo sh -c "cd $(src_dir) && hugo -t malt"
+	cd $(src_dir)
+	hugo -t malt
 	cp $(src_dir)CNAME $(build_dir)
 
-local:
-	docker run --user=$(shell id -u):$(shell id -g) -v $(mkfile_dir):$(mkfile_dir) --net=host -it marchelbling/hugo sh -c "cd $(src_dir) && hugo server --disableFastRender -D watch"
+local: update-theme
+	cd $(src_dir)
+	hugo server --disableFastRender -D watch
 
 push:
 	cd $(build_dir) && git add . && git commit -m "Update site build" && git push origin master

@@ -1,11 +1,11 @@
 ---
 date: 2015-05-17T00:00:00Z
-description: An ongoing list of real-life software “failures”
 tags:
 - code
 - devops
 - people
-title: What could go wrong?
+title: "What could go wrong?"
+description: "Some notes of technical or human things that often go wrong at some point. And suggestion to fix that."
 url: what-could-go-wrong/
 aliases: [/2015/05/17/what-could-go-wrong/]
 ---

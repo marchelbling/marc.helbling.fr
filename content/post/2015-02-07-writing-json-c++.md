@@ -1,10 +1,10 @@
 ---
 date: 2015-02-07T00:00:00Z
-description: A case study of a real life C++ exercice (written naively).
 tags:
 - c++
 - json
-title: Writing json in C++
+title: "Writing json in C++"
+description: "A case study of a real-life need expressed as a learning exercice."
 url: writing-json-c
 aliases: [/2015/02/07/writing-json-c]
 ---

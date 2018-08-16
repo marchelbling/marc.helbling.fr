@@ -1,9 +1,9 @@
 ---
 date: 2013-07-13T00:00:00Z
-description: Some return of experience, questions and toughts.
 tags:
 - interview
-title: Job interviews
+title: "Job interviews"
+description: "Some personal notes and questions to prepare for job interviews."
 url: interviews/
 aliases: [/2013/07/13/interviews]
 ---

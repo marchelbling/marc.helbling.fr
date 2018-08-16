@@ -1,10 +1,10 @@
 ---
 date: 2014-09-22T00:00:00Z
-description: A walk-through git (main) commands
 tags:
 - vcs
 - git
-title: A practical introduction to git
+title: "A practical introduction to git"
+description: "A bottom-up git walkthrough: from core objects to daily commands. With confidence."
 url: practical-git-introduction/
 aliases: [/2014/09/22/practical-git-introduction]
 ---

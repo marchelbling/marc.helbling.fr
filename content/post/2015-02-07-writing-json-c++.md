@@ -1,6 +1,4 @@
 ---
-categories:
-- code
 date: 2015-02-07T00:00:00Z
 description: A case study of a real life C++ exercice (written naively).
 tags:

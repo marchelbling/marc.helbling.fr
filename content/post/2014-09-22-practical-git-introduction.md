@@ -1,6 +1,4 @@
 ---
-categories:
-- tools
 date: 2014-09-22T00:00:00Z
 description: A walk-through git (main) commands
 tags:

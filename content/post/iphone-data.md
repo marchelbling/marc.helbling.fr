@@ -1,6 +1,4 @@
 ---
-categories:
-- data
 draft: true
 tags:
 - code

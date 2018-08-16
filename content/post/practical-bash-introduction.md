@@ -1,8 +1,6 @@
 ---
 draft: true
 title: A practical introduction to bash
-categories:
-- tools
 tags:
 - script
 - shell

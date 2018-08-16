@@ -1,8 +1,6 @@
 ---
 title: Galton-Watson
 draft: true
-categories:
-- maths
 tags:
 - probabilities
 - simulation

@@ -1,6 +1,4 @@
 ---
-categories:
-- people
 date: 2013-07-13T00:00:00Z
 description: Some return of experience, questions and toughts.
 tags:

@@ -1,6 +1,4 @@
 ---
-categories:
-- experience
 date: 2015-05-17T00:00:00Z
 description: An ongoing list of real-life software “failures”
 tags:

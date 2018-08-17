@@ -1,5 +1,5 @@
 ---
-date: 2013-07-13T00:00:00Z
+date: 2013-07-13
 tags:
 - interview
 title: "Job interviews"

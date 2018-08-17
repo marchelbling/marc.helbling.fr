@@ -1,5 +1,5 @@
 ---
-date: 2018-08-16:00:00Z
+date: 2018-08-17
 tags:
 - citus
 - postgres

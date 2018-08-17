@@ -1,5 +1,5 @@
 ---
-date: 2015-05-17T00:00:00Z
+date: 2015-05-17
 tags:
 - code
 - devops

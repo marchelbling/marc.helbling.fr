@@ -4,23 +4,17 @@ Static site built with [Hugo](https://gohugo.io). Current theme is: [malt](https
 
 ## Requirements
 
-* Docker
+* hugo
 * make
 
 ## Running locally
 
 ```
-$ make
+$ make local
 ```
 
 ## Building
 
 ```
-$ make clean && make generate
-```
-
-## Deploying
-
-```
-$ make deploy
+$ make generate
 ```

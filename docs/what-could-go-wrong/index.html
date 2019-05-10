@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>What could go wrong? &#9889; /dev/log</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="msvalidate.01" content="AF2CB1331E78B3C8BAE565C82C1AE415" />
+
+        <meta property="og:title" content="What could go wrong?" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="http://marc.helbling.fr/what-could-go-wrong/" />
+    
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
+
+    <link href="http://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="http://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+
+    <link rel="stylesheet" href="http://marc.helbling.fr/css/malt.css">
+
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    <meta name="generator" content="Hugo 0.54.0" />
+</head>
+
+
+    <body>
+        <div id="container">
+            <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a class="main-nav-link" style="font-size: 24px" href="http://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
+        </div>
+    </div>
+</header>
+
+
+            <section id="main" class="outer">
+                <article class="article article-type-post" itemscope itemprop="post">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                <h1 class="article-title" itemprop="name">What could go wrong?</h1>
+            </header>
+        
+
+        <div class="article-meta">
+            
+            
+        </div>
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>When dealing with software, stuff — be it <a href="#code">technical</a> or <a href="#management">human</a> —
+quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.</p>
+
+<p>This is not intended to be a list of technical difficulties encountered during the development
+phase but a reminder of what to think about <em>before</em> starting to code:</p>
+
+<ul>
+<li>specifications: what is the role for the code/people in the project?</li>
+<li>responsibility: what are the edge cases/possible input data that should be expected and how should
+they be handled?</li>
+<li>quality: how can we measure the ‘success’ of the code?</li>
+</ul>
+
+<p>as well as a list of possibly overlooked language fallacies/corner cases.
+Also we often only think in terms of code but <a href="http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/">organizational
+debt</a> is
+just as real as the technical debt however it seems to be often more neglected; people more easily
+think in terms of a product instead of a team building a product.</p>
+
+<h2 id="code">Code</h2>
+
+<blockquote>
+<p>Explicit is better than implicit</p>
+
+<p><cite><a href="https://www.python.org/doc/humor/#the-zen-of-python">The Zen of Python</a></cite></p>
+</blockquote>
+
+<h3 id="bash">Bash</h3>
+
+<ul>
+<li>use <a href="http://www.shellcheck.net/">shellcheck</a>.</li>
+<li>when processing unknown inputs in bash, you always end up with a filename containing
+a space. Or worse. When manipulating a path or a string variable in bash, <em>always</em> use double
+quotes unless you’re 100% sure it will always work correctly.</li>
+<li>there is no exception mechanism in bash. Every command or function has a <a href="http://tldp.org/LDP/abs/html/exit-status.html">return
+status</a> telling if it was successful (<code>0</code>) or not (<code>&gt;0</code>).  <em>Every</em> command. It is very easy to forget to test an important status code e.g. with some piped commands. Bash has a special flag to prevent silent failures: <a href="http://www.gnu.org/software/bash/manual/bashref.html#The-Set-Builtin"><code>set -e</code></a>, which may be used either globally (e.g. by using <code>#!/bin/bash -e</code> shebang) or on a specific bloc of code i.e.</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#204a87">set</span> -e
+command0 <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">command</span> <span style="color:#0000cf;font-weight:bold">1</span>
+command2
+<span style="color:#204a87">set</span> +e</code></pre></div>
+<ul>
+<li>bash script often involve filesystem; even though the kernel only handles bytes, it may easily be
+overlooked that the <a href="http://en.wikipedia.org/wiki/Locale">locale</a> may have an impact on file
+manipulations; e.g. 7z uses the locale when handling archives.</li>
+</ul>
+
+<h3 id="c">C++</h3>
+
+<ul>
+<li>some STL functions require the definition of a <a href="https://www.sgi.com/tech/stl/StrictWeakOrdering.html">strict weak ordering</a> which means that <code>x op y</code> and <code>y op x</code> can not be true at the same time (especially <code>x op x</code> must be false). As the function signature does not impose anything more than taking two instances and returning a boolean, there is no way the compiler could detect that the function is not properly defined.</li>
+<li>when using pointer wrappers, make sure you actually test the pointer value rather than the
+wrapper.</li>
+<li>when &lsquo;using&rsquo; namespace, you might not be aware of what version of a function you actually call. Do
+not use <code>using namespace foo</code> (especially since the compiler prefers overloaded function over template
+function which could result in the not expected function being called)</li>
+</ul>
+
+<h3 id="data">Data</h3>
+
+<ul>
+<li>never trust user data:
+
+<ul>
+<li>safely decode incoming text (you <em>will</em> have non-UTF8 encodings somewhere so you <em>have to</em>
+<a href="http://www.joelonsoftware.com/articles/Unicode.html">understand</a> <a href="http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF">encodings</a>)</li>
+<li>escape data (you will face <a href="https://www.owasp.org/index.php/Code_Injection">code injection</a> at some point)</li>
+</ul></li>
+
+<li><p>never trust “external” data:</p>
+
+<ul>
+<li>data may be partly missing</li>
+<li>data may be malformed</li>
+</ul>
+
+<p>so make sure to clean it before using it.</p></li>
+
+<li><p>if your product rely on a custom data format, this format will very likely evolve with time.
+By the time you make the format change, you will either have to be able to reprocess old data or
+otherwise increase the legacy burden.
+Think about being <a href="http://www.onebigfluke.com/2015/05/the-importance-of-future-proofing.html">future-proof</a> early.</p></li>
+</ul>
+
+<h3 id="development-environment">Development environment</h3>
+
+<ul>
+<li>user rights and privileges are well known; however, in a rush (or not) it is very easy to forget this and
+perform some server changes while being logged as <code>root</code> that will break part of a service (typically ran as <code>www-data</code>).
+Never log as <code>root</code>.</li>
+<li>not using a common environment locally and in production may cause undetected bugs e.g. the setup
+uses some bash script with non-POSIX commands, either the command themselves or some options might
+slightly change between two distinct environments (e.g. <code>sort</code> has a <code>--random-sort</code> option on Linux but not on OSX).
+Use a <a href="https://www.vagrantup.com/">VM</a> or a <a href="http://docker.com/">container</a> to make sure there are
+no discrepancies between your environments.</li>
+<li>when developing new features, we often purely rely on a local setup. This is fine however it will
+mask lots of ‘real usage’ issues. For example, uploading a file locally will likely be instantaneous
+but will take much longer on a distant server. Not considering this could lead to unusable code
+(e.g. synchronous upload that could freeze the whole system). Make sure to test features with a real
+setup early enough.</li>
+<li>a lot of products somehow rely on files. You should know your <a href="http://www.linux.org/threads/filesystem-article-index.6028/">filesystem</a>.
+NFS typically needs to be
+fine <a href="https://wiki.archlinux.org/index.php/NFS/Troubleshooting#Close-to-open.2Fflush-on-close">configured</a>
+depending on your usage requirements.</li>
+</ul>
+
+<h3 id="failures-exceptions">Failures &amp; exceptions</h3>
+
+<ul>
+<li>when bootstrapping a project, it’s tempting to think that it should <a href="http://www.yegor256.com/2015/08/25/fail-fast.html">fail safe</a>
+and not crash to give an <em>impression</em> of robustness to early users. This is probably ok for early development but will soon enough mask
+bugs. Don’t “catch all exceptions” everywhere, let the <a href="https://mazenharake.wordpress.com/2009/09/14/let-it-crash-the-right-way/">code crash</a>,
+monitor, understand the real issues and then fix.</li>
+</ul>
+
+<h3 id="floats">Floats</h3>
+
+<ul>
+<li>mathematical functions have a domain of definition; e.g. the C++
+<a href="http://www.cplusplus.com/reference/cmath/acos/"><code>std::acos</code></a> function will return
+<code>NaN</code> outside [-1; 1]. Make sure you know this and you control values sent to those functions.</li>
+<li>depending on serialization format, exceptional values like <code>NaN</code> and <code>±inf</code> may not be
+<a href="http://marc.helbling.fr/2015/02/writing-json-c++/">supported</a>.</li>
+<li><a href="https://randomascii.wordpress.com/category/floating-point/">floats</a> repartition is irregular
+(and, in spite of IEEE-754, numerical behaviors may depend a <em>lot</em> on your
+<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/">platform</a>)
+and if you don’t take that into account, expect unexpected behaviors.</li>
+</ul>
+
+<h3 id="images">Images</h3>
+
+<ul>
+<li>most image operations (e.g. resizing) should be performed in a linear space; you need to know in which
+colorspace are the  pixels expressed (most probably <a href="https://gamedevdaily.io/the-srgb-learning-curve-773b7f68cf7a">sRGB</a>)</li>
+<li>transparency in an image should always be expressed in a linear space and should be premultiplied
+against colors to avoid nasty border effects (<a href="http://entropymine.com/imageworsener/resizealpha">1</a>, <a href="www.realtimerendering.com/blog/gpus-prefer-premultiplication">2</a>).</li>
+</ul>
+
+<h3 id="python">Python</h3>
+
+<ul>
+<li>everything is an object in Python. Even if small <a href="https://docs.python.org/2/c-api/int.html">integer values</a>  like 0 or
+1 will usually return the same object, this is <a href="http://www.laurentluce.com/posts/python-integer-objects-implementation/">implementation</a>
+dependant; see <a href="https://www.youtube.com/watch?v=sH4XF6pKKmk">“investigating Python wats”</a> for more details.
+Do <em>not</em> use <code>is</code> to test equality if objects are not singleton, <a href="http://blog.lerner.co.il/why-you-should-almost-never-use-is-in-python/">always use
+<code>==</code></a>.</li>
+<li>in Python, <a href="http://intermediatepythonista.com/the-function">functions</a> are first class citizens
+and default values are stored in the <a href="http://effbot.org/zone/default-values.htm"><code>func_default</code></a>
+(<code>__defaults__</code> in Python3) tuple attribute. Using a <em>mutable</em> object (e.g. a <code>list</code> or a <code>dict</code>) is probably one of the most common
+<a href="http://docs.python-guide.org/en/latest/writing/gotchas/#mutable-default-arguments">gotcha</a> that will
+often cause unexpected results as the default value is being reused across distinct calls.
+Typically use <code>None</code> and assign the desired default value in the function body.</li>
+<li>when working with filenames, Python <a href="https://docs.python.org/2.7/howto/unicode.html#unicode-filenames"><code>os.listdir</code></a>
+will behave differently when called with a unicode string or a 8-bit string:</li>
+</ul>
+
+<blockquote>
+<p>If you pass a Unicode string as the path, filenames will be decoded using the filesystem’s
+ encoding and a list of Unicode strings will be returned, while passing an 8-bit path will
+ return the 8-bit versions of the filenames.</p>
+</blockquote>
+
+<p>You should therefore always <a href="http://nedbatchelder.com/text/unipain/unipain.html#1">know</a> what type of string you are currently using and if it is the proper type for what you want to do.</p>
+
+<ul>
+<li><a href="https://docs.python.org/2/reference/simple_stmts.html#the-assert-statement"><code>assert</code></a> is useful ‘debug’
+statement allowing to check that everything is going as expected in a program. This can be useful during a
+data migration to assert that the data being migrated has been correctly processed and the
+statement takes a second parameter to provide a human readable message. The gotcha here would be
+to call <code>assert</code> like a function</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">stdin</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#c00;font-weight:bold">SyntaxWarning</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">assertion</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">always</span> <span style="color:#000">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">perhaps</span> <span style="color:#000">remove</span> <span style="color:#000">parentheses</span><span style="color:#a40000">?</span>
+
+<span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span> <span style="color:#3465a4">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span>
+<span style="color:#000">Traceback</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">most</span> <span style="color:#000">recent</span> <span style="color:#000">call</span> <span style="color:#000">last</span><span style="color:#000;font-weight:bold">):</span>
+<span style="color:#000">File</span> <span style="color:#4e9a06">&#34;&lt;stdin&gt;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">line</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">module</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+<span style="color:#c00;font-weight:bold">AssertionError</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">this</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">false</span></code></pre></div>
+<p>Note that the REPL issues a warning when called with a tuple. However if the assert statement is
+  in a module, you will not see this and if you do not test your script on ‘faulty’ data you may just
+  think that everything went fine when the assertions were actually not testing anything. Always
+  test code thoroughly (especially a data migration) and make sure that safeguards are actually
+  safe.</p>
+
+<h3 id="security-credentials">Security &amp; credentials</h3>
+
+<ul>
+<li>as most staff members will have extra privileges, there are a good target for account hijacking.
+You must enforce strong password/authentication policy for staff members, be it on your service
+or external services like code hosting.</li>
+<li>when dealing with people’s money, be very careful. Double check &amp; test everything. Implement a
+refund system soon enough to prevent angry users to spread a bad reputation about your service.</li>
+<li>when handling sensitive data such as a token or payment information, make sure to never log
+messages with the data in plain text. It is easy to overlook logs and have a security hole.</li>
+<li>when implementing a token based API, be very careful when you communicate about it. It is very
+easy to let your token unencrypted in some slides or video leaving everyone able to use your
+identity easily. And as staff members usually have extra privileges, this could be a big security
+issue.</li>
+</ul>
+
+<h2 id="management">Management</h2>
+
+<blockquote>
+<p>What goes well without saying, goes even better when you say it.</p>
+
+<p><cite><a href="http://en.wikipedia.org/wiki/Charles_Maurice_de_Talleyrand-P%C3%A9rigord">Charles-Maurice
+Talleyrand</a></cite></p>
+</blockquote>
+
+<h3 id="project">Project</h3>
+
+<ul>
+<li><p>when refactoring or rewriting code, do not change every part of the system at once</p>
+
+<ul>
+<li>chances are high that you will loose focus, e.g. to fix some production bugs or another
+priority will pop up or even you will take some vacations; by loosing focus you will likely
+ship bad code</li>
+<li>putting large changes in production can be more difficult hence it could very well delay the
+new code going live</li>
+<li>if things go wrong, you will likely have a harder time finding the root cause of evil</li>
+</ul>
+
+<p>Keeping some legacy code that works during a refactoring does not increase the <a href="http://bigeng.io/post/118399425343/why-the-way-we-look-at-technical-debt-is-wrong">technical
+debt</a>; it just
+allows you to ship code in production more quickly and safely.</p></li>
+
+<li><p>never think of <a href="http://chadfowler.com/blog/2014/01/22/the-crunch-mode-antipattern/">crunch mode</a> as
+a good option. Split important projects in small deliverable steps; if you fail to do so, you are
+the captain of a ship that is drifting. Ensure people stay focused
+on their targets. Eventually consider pressuring the staff to meet the deadline or move the deadline. If you
+ask more with less from your staff, compensate them in some way. This will make everyone know that
+crunch mode is not something considered normal in your company.</p></li>
+
+<li><p>if people complain a lot on the tools or processes (or the lack of it), search for solutions.
+Being <a href="http://blog.toolshed.com/2015/05/the-failure-of-agile.html">agile</a> is about being able to
+adapt and make everyone in the company, from developers to product managers, work efficiently
+together. Simplify tool chains. <a href="http://marc.helbling.fr/2014/09/practical-git-introduction/">Educate</a>
+people about their tools. Automate tasks. Write <a href="https://gist.github.com/marchelbling/7358077">hooks</a>.
+Make people happy with their work environment.</p></li>
+</ul>
+
+<h3 id="team">Team</h3>
+
+<ul>
+<li><a href="https://thinkmarkets.wordpress.com/2009/02/08/on-confidence-andor-trust/">trust</a>.
+A manager should trust her subordinates to produce quality work. Subordinates should trust their
+manager will help everyone give her best. Trust is a bilateral relation that should produce code
+that is controlled (typically by a test suite and <a href="http://kevinlondon.com/2015/05/05/code-review-best-practices.html">code reviews</a>)
+to make everyone confident with it.</li>
+<li><a href="http://boz.com/articles/be-kind.html">care</a>. Listen to your staff and co-workers.
+If you want people to give their best, you need to know and detect if something looks wrong. Do
+<em>not</em> force people to speak but give them real opportunities to do so.</li>
+<li>treat with equality what you consider boring and interesting subjects. Every business has some
+shitty tasks that need to be done. If you overlook or neglect those, people that perform them will
+eventually feel demotivated.</li>
+<li>make people feel <em>responsible</em> for their code. <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">“Eat your own dog
+food”</a> and let people search
+production logs &amp; metrics to follow the impact of their changes and make sure that they have not
+broken unexpected things. Knowing that they have an impact on the product will likely make people
+more involved and as a side effect make them more careful about code they and others write.</li>
+<li>people’s performance is actually often dictated by their <a href="http://www.insead.edu/facultyresearch/research/doc.cfm?did=46698">boss
+management</a>. If you are a manager
+and have difficulties with one or more subordinates do not simply blame them. You are also failing.
+Either you failed recruiting the right person or (more likely) are failing at helping people
+meet what you expect from them:
+
+<ul>
+<li>listen to feedback</li>
+<li>be analytical to find what is not working (possibly ask for an external opinion to make sure
+you are not biaised in your analysis)</li>
+<li>make sure people understand your expectations and their mission</li>
+<li>communicate as clearly as possible</li>
+</ul></li>
+<li>beware of the team culture. Joking (aka trolling) about everything gives the impression that nothing
+really matters and will make people less willing to share ideas or ask for help. Team cohesion is
+very important and you need to make people feel like they <a href="http://blog.jessitron.com/2015/05/fitting-in-v-belonging.html">belong rather than just fit</a>.</li>
+<li><a href="http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/">http://steveblank.com/2015/05/19/organizational-debt-is-like-technical-debt-but-worse/</a></li>
+</ul>
+
+        </div>
+
+        
+            <footer class="article-footer">
+                <ul class="article-tag-list">
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/code">code</a>
+                        </li>
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/devops">devops</a>
+                        </li>
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/people">people</a>
+                        </li>
+                    
+                </ul>
+            </footer>
+        
+    </div>
+</article>
+
+            </section>
+
+            <footer id="footer">
+
+</footer>
+
+        </div>
+    </body>
+</html>

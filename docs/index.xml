@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>/dev/log</title>
+    <link>http://marc.helbling.fr/</link>
+    <description>Recent content on /dev/log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://marc.helbling.fr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Running Citus in Docker</title>
+      <link>http://marc.helbling.fr/running-citus-locally/</link>
+      <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/running-citus-locally/</guid>
+      <description>Citus is an open-source PostgreSQL extension to distribute tables and queries on multiple shards. The extension requires a master node aka the coordinator whose role is to forward queries to workers — that actually store data — and gather results.
+While using CitusCloud to run Citus in production is probably the best idea, it is less true for local or testing environments as network adds latency and concurrent builds require hacks (like creating random schemas for each build).</description>
+    </item>
+    
+    <item>
+      <title>Vim notes &amp; plugins</title>
+      <link>http://marc.helbling.fr/vim-notes/</link>
+      <pubDate>Sun, 30 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/vim-notes/</guid>
+      <description>Basic vim All this is vim built-in and requires no plugin.
+Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual selection (&amp;lt;: shift block to the left, &amp;gt;: shift block to the right) ~: change case ctrl-x + : vim ‘context aware’ complete mode (based on set complete list) in insert mode  ctrl-n/ctrl-p: next/previous word matching prefix (the difference with ctrl-p/ctrl-n is the context awareness) ctrl-f: file names ctrl-l: whole lines ctrl-d: macro definitions (also in included files) ctrl-i: current and included files ctrl-k: words from a dictionary ctrl-t: words from a thesaurus ctrl-]: tags ctrl-v: Vim command line ctrl-o: language aware completion  :set spell [spelllang=fr_fr]/:set nospell: activate/deactivate spell checking :!</description>
+    </item>
+    
+    <item>
+      <title>What could go wrong?</title>
+      <link>http://marc.helbling.fr/what-could-go-wrong/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/what-could-go-wrong/</guid>
+      <description>When dealing with software, stuff — be it technical or human — quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
+This is not intended to be a list of technical difficulties encountered during the development phase but a reminder of what to think about before starting to code:</description>
+    </item>
+    
+    <item>
+      <title>Writing json in C&#43;&#43;</title>
+      <link>http://marc.helbling.fr/writing-json-c/</link>
+      <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/writing-json-c/</guid>
+      <description>Writing a valid json file looks simple. Except that if the json file contains real world data coming from unknown sources, it might not be that simple. The json format does not support everything that you could expect for numerical values and strings.
+More specifically, a numerical value involves digits in json. This prevents from having inf or nan serialized in json. Strings preferred encoding is UTF-8 with some restriction.</description>
+    </item>
+    
+    <item>
+      <title>A practical introduction to git</title>
+      <link>http://marc.helbling.fr/practical-git-introduction/</link>
+      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/practical-git-introduction/</guid>
+      <description>Introduction In just a few years, git has become the dominant version control system in the software industry. Despite its widespread use, it often still appears as either magical or cumbersome when its core concepts are not fully grasped. This post is a walkthrough of practical git usage that will detail how git internally handles things.
+Why a Version Control System? When not relying on a dedicated tool to keep track of versions, one has to employ strategies such as using naming schemes like [filename]_v{0-9}+.</description>
+    </item>
+    
+    <item>
+      <title>👋🏼</title>
+      <link>http://marc.helbling.fr/about/</link>
+      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/about/</guid>
+      <description>My name is Marc Helbling. I’m a software engineer with a Ph.D thesis (“Virtual sculpture using particles system”). I’ve been an early stage engineer in some successful startups. I am now building smart products at Algolia.
+I am mostly interested in building efficient teams and systems, with a special ❤️ when they deal with vertices and polygons.
+The posts on this blog are evolving things so the content may be updated/rewritten without any warning.</description>
+    </item>
+    
+    <item>
+      <title>Job interviews</title>
+      <link>http://marc.helbling.fr/interviews/</link>
+      <pubDate>Sat, 13 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/interviews/</guid>
+      <description>Like it or not, technical interviews are still a reality in the software industry and I don’t expect this to radically change anytime soon.
+Getting a job in a place where you have no connection can prove very hard. The obvious guess: the bigger/hotter the company, the harder. You may try to be original but I’m not sure this works very often for technical positions. From my experience, you better be concise, have a clear message, show why you care about the company you’re applying at and hopefully you’ll have a chance to show them your abilities.</description>
+    </item>
+    
+  </channel>
+</rss>

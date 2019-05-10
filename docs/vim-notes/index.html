@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Vim notes &amp; plugins &#9889; /dev/log</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="msvalidate.01" content="AF2CB1331E78B3C8BAE565C82C1AE415" />
+
+        <meta property="og:title" content="Vim notes &amp; plugins" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="http://marc.helbling.fr/vim-notes/" />
+    
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
+
+    <link href="http://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="http://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+
+    <link rel="stylesheet" href="http://marc.helbling.fr/css/malt.css">
+
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    <meta name="generator" content="Hugo 0.54.0" />
+</head>
+
+
+    <body>
+        <div id="container">
+            <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a class="main-nav-link" style="font-size: 24px" href="http://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
+        </div>
+    </div>
+</header>
+
+
+            <section id="main" class="outer">
+                <article class="article article-type-post" itemscope itemprop="post">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                <h1 class="article-title" itemprop="name">Vim notes &amp; plugins</h1>
+            </header>
+        
+
+        <div class="article-meta">
+            
+            
+        </div>
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h1 id="basic-vim">Basic vim</h1>
+
+<p>All this is vim built-in and requires no plugin.</p>
+
+<h2 id="useful-commands">Useful commands</h2>
+
+<ul>
+<li><code>%</code>: jump to the matching <code>{ .. }</code> or <code>( .. )</code> etc.</li>
+<li><code>=</code>: indent visual selection (<code>&lt;</code>: shift block to the left, <code>&gt;</code>: shift block to the right)</li>
+<li><code>~</code>: change case</li>
+<li><code>ctrl-x</code> + : <a href="https://www.youtube.com/watch?v=3TX3kV3TICU">vim ‘context aware’ complete</a> mode (based on <code>set complete</code> list) in insert mode
+
+<ul>
+<li><code>ctrl-n</code>/<code>ctrl-p</code>: next/previous word matching prefix (the difference with <code>ctrl-p</code>/<code>ctrl-n</code> is the context awareness)</li>
+<li><code>ctrl-f</code>: file names</li>
+<li><code>ctrl-l</code>: whole lines</li>
+<li><code>ctrl-d</code>: macro definitions (also in included files)</li>
+<li><code>ctrl-i</code>: current and included files</li>
+<li><code>ctrl-k</code>: words from a dictionary</li>
+<li><code>ctrl-t</code>: words from a thesaurus</li>
+<li><code>ctrl-]</code>: tags</li>
+<li><code>ctrl-v</code>: Vim command line</li>
+<li><code>ctrl-o</code>: language aware completion</li>
+</ul></li>
+<li><code>:set spell [spelllang=fr_fr]</code>/<code>:set nospell</code>: activate/deactivate spell checking</li>
+<li><code>:!&lt;command&gt;</code>: execute <code>&lt;command&gt;</code> in a shell without leaving vim (e.g. <code>:!make</code>)</li>
+<li><code>:read !&lt;command&gt;</code>: insert result of <code>&lt;command&gt;</code> on next line (e.g. <code>read !ls .</code>)</li>
+<li><code>ctrl-O</code>, <code>ctrl-I</code>: navigate through “<a href="http://vim.wikia.com/wiki/Jumping_to_previously_visited_locations">jump locations</a>” locations, both within current and other opened documents; <code>:jumps</code> to list all jump locations.</li>
+<li><code>.</code>: repeat last command</li>
+</ul>
+
+<h2 id="macros">Macros</h2>
+
+<ol>
+<li><code>q&lt;key&gt;</code>: start recording</li>
+<li>(do commands)</li>
+<li><code>q</code>: stop recording</li>
+<li><code>@&lt;key&gt;</code>: replay macro</li>
+</ol>
+
+<h2 id="advanced-editing-command-mode-ex-ed">Advanced editing (command mode ex/ed)</h2>
+
+<p>The command mode syntax basically reads</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#000;font-weight:bold">:</span>[[<span style="color:#000">start_line</span>]<span style="color:#000;font-weight:bold">,</span>[<span style="color:#000">end_line</span>]]<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">verb</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#4e9a06">/&lt;pattern&gt;/</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">action</span><span style="color:#000;font-weight:bold">&gt;</span></code></pre></div>
+<h3 id="lines-shortcuts">Lines shortcuts</h3>
+
+<ul>
+<li><code>:%</code> ⇔  <code>:1,$</code>: all the lines</li>
+<li><code>.</code>: current line</li>
+<li><code>$</code>: last line</li>
+</ul>
+
+<h3 id="verbs">Verbs</h3>
+
+<ul>
+<li><code>g</code>: match line with pattern</li>
+<li><code>v</code>: reverse match lines</li>
+<li><code>s</code>: substitute</li>
+</ul>
+
+<h3 id="action">Action</h3>
+
+<ul>
+<li><code>d</code>: delete</li>
+<li><code>y</code>: yank</li>
+<li><code>&lt;position&gt;j</code>: join (<code>-1j</code> go up one line and join)</li>
+<li><code>m&lt;position&gt;</code>: move lines (e.g. <code>m$</code> to move at the end of file)</li>
+</ul>
+
+<h3 id="examples">Examples</h3>
+
+<ul>
+<li><code>:%g/foo/s/bar/zzz/g</code>: for every line containing <code>foo</code> substitute all <code>bar</code> with <code>zzz</code>.</li>
+<li><code>:%g/bar/m/baz/+1</code>: moves next <code>bar</code> occurrence 1 line after next <code>baz</code> occurrence</li>
+<li><code>:%g/bar(/ normal nmaf(ldi(`aPa.</code>:
+
+<ol>
+<li><code>g/bar(/</code>  executes the following command on every line that contains &ldquo;bar(&rdquo;</li>
+<li><code>normal</code>   execute the following text as if it was typed in in normal mode</li>
+<li><code>n</code>        goes to the next match of &ldquo;bar(&rdquo; (since the <code>:g</code> command leaves the cursor position at the start of the line)</li>
+<li><code>ma</code>       saves the cursor position in mark a</li>
+<li><code>f(</code>       moves forward to the next opening bracket</li>
+<li><code>l</code>        moves right one character, so the cursor is now inside the brackets</li>
+<li><code>di(</code>      delete all the text inside the brackets</li>
+<li><code>`a</code>     go back to the position saved as mark a (i.e. the first character of &ldquo;bar&rdquo;)</li>
+<li><code>P</code>        paste the deleted text before the current cursor position</li>
+<li><code>a.</code>       go into insert mode and add a &ldquo;.&rdquo;</li>
+</ol></li>
+<li><code>vim convert.csv &quot;+:v/^\&quot;oai:/-1j&quot; &quot;+wq&quot;</code> : <a href="http://superuser.com/a/565566/218469">concatenate lines</a> starting by <code>&quot;oai:</code> with previous line using a <a href="http://unix.stackexchange.com/a/14226">non-interactive script</a></li>
+</ul>
+
+<h1 id="plugins">Plugins</h1>
+
+<p>Vim plugins ecosystem is gigantic and it can feel overwhelming when it comes to actually choosing what plugin to use. Here are some details about my current configuration.</p>
+
+<h2 id="plugin-manager">Plugin manager</h2>
+
+<p>There are lots of vim plugin managers (<a href="https://github.com/VundleVim/Vundle.vim">vundle</a>, <a href="https://github.com/tpope/vim-pathogen">pathogen</a>). All those make testing plugins straightforward and will handle the vim runtimepath and basically allow to simply clone the plugin in a folder and not moving data around. Some are obsolete, some are slow. After testing multiple choices, it feels like <a href="https://github.com/junegunn/vim-plug">vim-plug</a> is just the best alternative:</p>
+
+<ul>
+<li>it&rsquo;s really blazing fast (and I didn&rsquo;t consider this as a big issue until I tried vim-plug)</li>
+<li>it offers multiple hooks like a post-install hook to e.g. call a build script</li>
+</ul>
+
+<h2 id="fuzzy-search">Fuzzy search</h2>
+
+<p>Sublime democratized this feature. Typing full path can be a pain, especially for large projects. For this again, there are multiple alternatives like <a href="https://github.com/kien/ctrlp.vim">ctrlp</a> (rather slow) or <a href="https://github.com/Shougo/unite.vim">unite</a> (very powerful but rather complicated to setup). <a href="https://github.com/junegunn/fzf.vim">fzf</a> (note that this is the same author as vim-plug) is just great. Defaults are sane, it&rsquo;s incredibly fast, and like unite it&rsquo;s highly customizable. The only thing that I&rsquo;m missing &ndash; but that may be possible &ndash; is the configuration of the root search folder.</p>
+
+<h2 id="closing-pairs">Closing pairs</h2>
+
+<p>Closing quotes/brackets/parenthesis can be automated. The feature interest seems obvious but its implementation is not. There are lots of alternatives, each making some assumptions about how clever they should be (e.g. when deleting an open quote). <a href="https://github.com/Raimondi/delimitMate">delitMate</a> is my current choice as even with no specific configuration it doesn&rsquo;t get in my edit way when it doesn&rsquo;t need to.</p>
+
+<h2 id="commenting-lines">Commenting lines</h2>
+
+<p>Commenting/decommenting code is a frequent operation when updating code. Each language has its own comment syntax and having a plugin handle this transparently and easily is a must. I usually operate by visually selecting lines and need a plugin that handle this; <a href="https://github.com/tomtom/tcomment_vim">tcomment</a> works very nicely. The only arguable feature missing is that calling the <code>TComment</code> function is not a command so it prevents from using <code>.</code>. This is not such a big deal as using the tcomment toggle should likely be mapped to a shortcut.</p>
+
+<p>Side note: vim 703+ has a nice option removing comment character when joining commented lines</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">v</span><span style="color:#000;font-weight:bold">:</span><span style="color:#000">version</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">703</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000">v</span><span style="color:#000;font-weight:bold">:</span><span style="color:#000">version</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">703</span> &amp;&amp; <span style="color:#000">has</span><span style="color:#000;font-weight:bold">(</span><span style="color:#8f5902;font-style:italic">&#34;patch541&#34;)</span><span style="color:#a40000">
+</span><span style="color:#a40000"></span>  <span style="color:#000">set</span> <span style="color:#000">formatoptions</span><span style="color:#000;font-weight:bold">+=</span><span style="color:#000">j</span><span style="color:#8f5902;font-style:italic"> &#34; Delete comment character when joining commented lines</span><span style="color:#a40000">
+</span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">endif</span></code></pre></div>
+<h1 id="references">References</h1>
+
+<ul>
+<li><a href="https://danielmiessler.com/study/vim/">A vim Tutorial and Primer</a></li>
+<li><a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">“What is your most productive shortcut with vim”</a></li>
+</ul>
+
+        </div>
+
+        
+            <footer class="article-footer">
+                <ul class="article-tag-list">
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/text">text</a>
+                        </li>
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/vim">vim</a>
+                        </li>
+                    
+                </ul>
+            </footer>
+        
+    </div>
+</article>
+
+            </section>
+
+            <footer id="footer">
+
+</footer>
+
+        </div>
+    </body>
+</html>

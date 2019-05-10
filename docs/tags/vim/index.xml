@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vim on /dev/log</title>
+    <link>http://marc.helbling.fr/tags/vim/</link>
+    <description>Recent content in Vim on /dev/log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 30 Aug 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://marc.helbling.fr/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vim notes &amp; plugins</title>
+      <link>http://marc.helbling.fr/vim-notes/</link>
+      <pubDate>Sun, 30 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://marc.helbling.fr/vim-notes/</guid>
+      <description>Basic vim All this is vim built-in and requires no plugin.
+Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual selection (&amp;lt;: shift block to the left, &amp;gt;: shift block to the right) ~: change case ctrl-x + : vim ‘context aware’ complete mode (based on set complete list) in insert mode  ctrl-n/ctrl-p: next/previous word matching prefix (the difference with ctrl-p/ctrl-n is the context awareness) ctrl-f: file names ctrl-l: whole lines ctrl-d: macro definitions (also in included files) ctrl-i: current and included files ctrl-k: words from a dictionary ctrl-t: words from a thesaurus ctrl-]: tags ctrl-v: Vim command line ctrl-o: language aware completion  :set spell [spelllang=fr_fr]/:set nospell: activate/deactivate spell checking :!</description>
+    </item>
+    
+  </channel>
+</rss>

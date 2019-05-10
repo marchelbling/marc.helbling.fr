@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://marc.helbling.fr/running-citus-locally/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/vim-notes/</loc>
+    <lastmod>2015-08-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/what-could-go-wrong/</loc>
+    <lastmod>2015-05-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/writing-json-c/</loc>
+    <lastmod>2015-02-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/practical-git-introduction/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/about/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/interviews/</loc>
+    <lastmod>2013-07-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/c&#43;&#43;/</loc>
+    <lastmod>2015-02-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/citus/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/code/</loc>
+    <lastmod>2015-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/devops/</loc>
+    <lastmod>2015-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/docker/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/git/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/global/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/interview/</loc>
+    <lastmod>2013-07-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/json/</loc>
+    <lastmod>2015-02-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/people/</loc>
+    <lastmod>2015-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/postgres/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/post/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/</loc>
+    <lastmod>2015-02-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/text/</loc>
+    <lastmod>2015-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/vcs/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://marc.helbling.fr/tags/vim/</loc>
+    <lastmod>2015-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

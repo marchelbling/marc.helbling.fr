@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>A practical introduction to git &#9889; /dev/log</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="msvalidate.01" content="AF2CB1331E78B3C8BAE565C82C1AE415" />
+
+        <meta property="og:title" content="A practical introduction to git" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="http://marc.helbling.fr/practical-git-introduction/" />
+    
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
+
+    <link href="http://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="http://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+
+    <link rel="stylesheet" href="http://marc.helbling.fr/css/malt.css">
+
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    <meta name="generator" content="Hugo 0.54.0" />
+</head>
+
+
+    <body>
+        <div id="container">
+            <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a class="main-nav-link" style="font-size: 24px" href="http://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
+            <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
+        </div>
+    </div>
+</header>
+
+
+            <section id="main" class="outer">
+                <article class="article article-type-post" itemscope itemprop="post">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                <h1 class="article-title" itemprop="name">A practical introduction to git</h1>
+            </header>
+        
+
+        <div class="article-meta">
+            
+            
+        </div>
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<h1 id="introduction">Introduction</h1>
+
+<p>In just a few years, <a href="http://git-scm.com/">git</a> has become the dominant version control system in the software industry. Despite its widespread use, it often still appears as either magical or cumbersome when its core concepts are not fully grasped. This post is a walkthrough of practical git usage that will detail how git internally handles things.</p>
+
+<h2 id="why-a-version-control-system">Why a Version Control System?</h2>
+
+<p>When not relying on a dedicated tool to keep track of versions, one has to employ strategies such as using naming schemes like <a href="http://www.phdcomics.com/comics/archive/phd101212s.gif"><code>[filename]_v{0-9}+.doc</code></a> or <code>[timestamp]_[filename]_[comment].zip</code> (where e.g. using the <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format for dates will sort version) to keep track of things.</p>
+
+<p>Simple things such as comparing versions, undoing some modifications or working on a same document in parallel quickly become very cumbersome.</p>
+
+<p>This is where a <a href="http://en.wikipedia.org/wiki/Revision_control">version control system</a> (vcs) becomes handy if not mandatory to use. A <a href="http://mikemcquaid.com/2014/01/18/why-use-version-control/">vcs</a> is a tool that will store versions of a collection of documents. It does <em>not</em> change the document filenames, allows to undo/redo some modification and keeps a “context” for each modification set (e.g. an author, timestamp, comment for the modification etc.).</p>
+
+<p>From <a href="http://en.wikipedia.org/wiki/Revision_control">wikipedia</a>:</p>
+
+<blockquote>
+<p>Version control is the management of changes to collections of documents. Changes are usually identified by a number or letter code termed the “revision”. Revisions can be compared, restored, and with some types of files, merged.</p>
+</blockquote>
+
+<p>Use cases for using a vcs are multiple when text is involved e.g.</p>
+
+<ul>
+<li>when writing a thesis requiring structure and content modifications;</li>
+<li>when maintaining multiple versions of one&rsquo;s résumé, be it in distinct languages or when targeting multiple industries;</li>
+<li>when writing software code within a group of co-workers.</li>
+</ul>
+
+<h2 id="a-short-history-of-vcs">A short history of vcs</h2>
+
+<p>There has been <a href="http://ericsink.com/vcbe/html/history_of_version_control.html">three</a> main <a href="http://codicesoftware.blogspot.com/2010/11/version-control-timeline.html">eras</a> in the world of version control software:</p>
+
+<ol>
+<li>local repositories operating on a single file (1970’s — 1980’s)
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Source_Code_Control_System">Source Code Control System</a></li>
+<li><a href="http://www.gnu.org/software/rcs/">Revision Control System</a></li>
+</ul></li>
+<li>centralized repositories handling full project (1990’s — )
+
+<ul>
+<li><a href="http://www.nongnu.org/cvs/">Concurrent Versions System</a></li>
+<li><a href="http://www.perforce.com/">Perforce</a></li>
+<li><a href="https://subversion.apache.org/">Subversion</a> (svn)</li>
+</ul></li>
+<li>decentralized repository (2000’s — )
+
+<ul>
+<li><a href="http://git-scm.com">git</a></li>
+<li><a href="http://mercurial.selenic.com/">mercurial</a></li>
+</ul></li>
+</ol>
+
+<p>Centralized versioning probably still represents the mostly used approach currently. However, decentralized repositories enable greater flexibility as no access to the central repository is required at all time and new solutions have improved branching a lot, making it very easy to have distinct histories living at the same time.</p>
+
+<h2 id="why-git">Why git?</h2>
+
+<p>Version control is not a new problem. Alternatives to git are numerous and wether git is better than those alternatives will not be discussed here. However let’s just list some of the attractive features provided by git:</p>
+
+<ul>
+<li>free/open source/binaries available for all major platforms</li>
+<li>decentralized
+
+<ul>
+<li>users keep a local clone, work locally at their own pace and deliver their changes when ready</li>
+<li>every local clone is basically a (potentially partial) backup</li>
+</ul></li>
+<li>handle very large codebase and/or long history (git was built to handle the Linux kernel)
+
+<ul>
+<li>fast (most operations are performed locally)</li>
+<li>reliable (data is mostly immutable)</li>
+</ul></li>
+<li>flexible regarding workflows</li>
+<li>with the help of <a href="https://github.com">github</a> (and also <a href="https://bitbucket">bitbucket</a> or <a href="https://gitlab.com">gitlab</a>) , it is now  becoming <em>the</em> standard decentralized vcs</li>
+<li><a href="https://git.wiki.kernel.org/index.php/Git_FAQ#Why_the_.27Git.27_name.3F">git</a> philosophy is to perform simple operations and let complex ones — that actually occur not so frequently — to the user so it does no black magic</li>
+</ul>
+
+<blockquote>
+<p>One of the things that makes Git a pleasure to use for me is that I actually trust what Git does, because what Git does in the end is very, very stupid.</p>
+
+<p><cite><a href="http://lwn.net/Articles/356626/">Linus Torvald</a></cite></p>
+</blockquote>
+
+<h2 id="about-this-document">About this document</h2>
+
+<p>This document intends to be a progressive introduction going from beginner’s usage (understanding what a commit is, handling branches), to intermediate usage (writing clean commits and being able to manipulate the commits history) and hopefully advanced usage.
+It takes a “learn the hard way” path: it only makes use of the command line and exposes some internals. Having to dive into git internals could be seen as an engineering failure, however those are pretty quick to cover and git is a very good example of how a very few low-level objects can offer powerful high-level user features.</p>
+
+<p>Commands that should be typed are prefixed with the classical shell prompt <code>$</code> and command output always follows.
+Seeing a block starting with <code>#!EDITOR</code> means we are editing from a text editor; if you are not familiar with a source code editor, please first check for <a href="http://www.sublimetext.com/">sublime text</a>, <a href="http://vim.org">vim</a>, <a href="http://www.gnu.org/software/emacs/">emacs</a> or whatever piece of software intended to edit raw text (which means <em>not</em> MS Word).</p>
+
+<p>This document might be regularly updated; see the <a href="https://github.com/marchelbling/marchelbling.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md">history</a> for the list of changes. Some <a href="http://marc.helbling.fr/talks/git.html">slides</a> accompany this writing as well as some <a href="https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595">exerices</a>.</p>
+
+<h2 id="setup">Setup</h2>
+
+<p>Before running git commands, we need:</p>
+
+<ul>
+<li>git installed (preferably ≥ 2.0.0 as the default behavior for some commands has been greatly improved in late versions; see git 2.0.0 <a href="https://git.kernel.org/cgit/git/git.git/tree/Documentation/RelNotes/2.0.0.txt">changelog</a>)</li>
+<li>a git user i.e.:
+
+<ul>
+<li>a name <code>git config --global user.name &quot;My Name&quot;</code></li>
+<li>an email <code>git config --global user.email &quot;me@mail.org&quot;</code></li>
+</ul></li>
+</ul>
+
+<p>As mentioned previously, it is necessary to have a text editor installed (and presumably the <a href="http://askubuntu.com/questions/432524/how-do-i-find-and-set-my-editor-environment-variable"><code>EDITOR</code></a> environment variable). Setting up the command-line <a href="#command-line-completion">tab completion</a> script might also ease typing a lot.</p>
+
+<p>Let’s start by initializing a new repository</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git init <span style="color:#000">$HOME</span>/bonjour
+Initialized empty Git repository in /Users/marc/bonjour/.git/
+
+$ <span style="color:#204a87">cd</span> <span style="color:#000">$HOME</span>/bonjour
+
+$ tree -a -I hooks
+.
+└── .git
+    ├── HEAD
+    ├── config
+    ├── description
+    ├── info
+    │   └── exclude
+    ├── objects
+    │   ├── info
+    │   └── pack
+    └── refs
+        ├── heads
+        └── tags</code></pre></div>
+<p><code>git init</code> just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!</p>
+
+<h2 id="a-note-on-revision-control-ux">A note on revision control UX</h2>
+
+<p>Newcomers to revision control systems are often confused about how the vcs changes the way they interact with the filesystem. The good news is: it basically changes nothing!</p>
+
+<p>One should still edit and modify files and folders as if they were not under revision control and simply create a new revision whenever desired. Some other commands will usually allow to visualize a previous revision, compare some revisions, come back to a previous revision etc.
+In git, these commands will use the information stored in the <code>.git</code> folder that we will inspect.</p>
+
+<h1 id="git-basics">git basics</h1>
+
+<h2 id="first-commit">First commit!</h2>
+
+<p>Before diving quickly into git internals, let’s create our first commit:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git status
+On branch master
+
+Initial commit
+
+nothing to commit <span style="color:#ce5c00;font-weight:bold">(</span>create/copy files and use <span style="color:#4e9a06">&#34;git add&#34;</span> to track<span style="color:#ce5c00;font-weight:bold">)</span>
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;A dummy app listing ways to just say &#39;hello&#39;&#34;</span> &gt; README.md
+
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
+
+	README.md
+
+$ git add README.md
+
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git rm --cached &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
+
+  new file:   README.md
+
+$ git commit -m <span style="color:#4e9a06">&#34;First commit&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>master <span style="color:#ce5c00;font-weight:bold">(</span>root-commit<span style="color:#ce5c00;font-weight:bold">)</span> 45de2f7<span style="color:#ce5c00;font-weight:bold">]</span> First commit
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+ create mode <span style="color:#0000cf;font-weight:bold">100644</span> README.md
+
+$ git status
+On branch master
+nothing to commit, working directory clean</code></pre></div>
+<p>Note that at each step, the <code>git status</code> command provides helpful overview of the current repository state and a <em>contextual</em> help.</p>
+
+<h2 id="staging-area">Staging area</h2>
+
+<p>git uses a two-phase commit:</p>
+
+<ol>
+<li>add desired changes to the staging area</li>
+<li>commit changes.</li>
+</ol>
+
+<p>After having changed some files, we may select the changes that should be committed using:</p>
+
+<ul>
+<li><code>git add</code> to add a new file or some modification in an already tracked file; the <code>--patch</code> option allows to select hunks only</li>
+<li><code>git rm</code> to remove a file from tracking</li>
+<li><code>git mv</code> to rename a file</li>
+</ul>
+
+<p>The staging area is an important aspect of git as it is what connects the local file system to the internal git storage.
+It is described by <code>git status</code> as <em>&ldquo;changes to be committed&rdquo;</em> and thus it is important to think of it as a commit draft.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mkdir <span style="color:#ce5c00;font-weight:bold">{</span>fr,en<span style="color:#ce5c00;font-weight:bold">}</span>
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;bonjour&#39;</span> &gt; fr/data
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;hello&#39;</span> &gt; en/data
+
+$ git add fr/data
+
+$ git status
+On branch master
+Changes to be committed:
+  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git reset HEAD &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
+
+  new file:   fr/data
+
+Untracked files:
+  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
+
+  en/</code></pre></div>
+<p>Notice that we do not have to stage all local modifications. Once we are done selecting the changes that belong to a new revision, we may actually commit those changes.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit -m <span style="color:#4e9a06">&#34;Create french data file&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>master 13d1b4b<span style="color:#ce5c00;font-weight:bold">]</span> Create french data file
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+ create mode <span style="color:#0000cf;font-weight:bold">100644</span> fr/data</code></pre></div>
+<p>This example is really simple; a more realistic workflow would be:</p>
+
+<ol>
+<li>make local changes</li>
+<li>stage meaningful changes/unstage undesired ones (using <code>git reset [--patch] HEAD file</code>)</li>
+<li>go to 1. until staged changes perform the desired goal</li>
+<li>commit the changes.</li>
+</ol>
+
+<p>Now that we have two commits, we may look at how git handles our data internally to better understand git mechanics.</p>
+
+<h2 id="data-store">Data store</h2>
+
+<h3 id="objects">Objects</h3>
+
+<p>After creating a commit, <code>git</code> displays a unique id for the newly created commit. We may use some git commands to inspect this <a href="http://git-scm.com/book/en/Git-Internals-Git-Objects">data</a></p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file -t 13d1b4b
+commit
+
+$ git cat-file commit 13d1b4b
+tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+parent 45de2f713305a9dcd3e82833653153c19081f36e
+author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
+committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
+
+Create french data file</code></pre></div>
+<p>From this, we see that a <a href="http://git-scm.com/docs/git-commit-tree">commit</a> references:</p>
+
+<ul>
+<li>a “tree”: git internal description of the filesystem</li>
+<li>a parent: git is fundamentally a <strong>direct acyclic graph</strong> (<a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a>) in which nodes are commits that references their parent commit(s)</li>
+<li>an author: the person who originally wrote the current commit <em>content</em></li>
+<li>an author date</li>
+<li>a committer: the person who created the git commit on behalf of the author (which, as in our case, may be the same person as the author)</li>
+<li>a committer date</li>
+<li>a message: the description for the changes contained in the commit.</li>
+</ul>
+
+<p>This is the high level definition of a commit in git. We need to go one more step into internals and inspect the “tree” object to have a better picture of how git structures data.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+<span style="color:#0000cf;font-weight:bold">100644</span> README.mdF??Bd???<span style="color:#4e9a06">&#34;?C-%D?J?x40000 fr\bbS?&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>nC??WJ!
+
+$ git ls-tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+<span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
+<span style="color:#0000cf;font-weight:bold">040000</span> tree 5c7f626253bb14227d6e074382ee91574a180f21	fr
+
+$ git cat-file blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e
+A dummy app listing ways to just say <span style="color:#4e9a06">&#39;hello&#39;</span>
+
+$ git ls-tree 5c7f626253bb14227d6e074382ee91574a180f21
+<span style="color:#0000cf;font-weight:bold">100644</span> blob 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3	data
+
+$ git cat-file -p 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3
+bonjour</code></pre></div>
+<p>So we can see that:</p>
+
+<ul>
+<li>a “tree” contains pointers to “blobs” and other trees and a name for each pointer</li>
+<li>a “blob” is bunch of bytes representing user content (text, images etc.)</li>
+<li>both trees and blobs store a <a href="http://en.wikipedia.org/wiki/Modes_%28Unix%29">file mode</a> (i.e. a <a href="http://linux.die.net/man/1/chmod"><code>chmod</code></a>); note however that the file ownership (<a href="http://linux.die.net/man/1/chown"><code>chown</code></a>) will depend on the user that performs the git commands and is up to the final user</li>
+<li>git performs deduplication based on content: if file <code>foo</code> is an exact copy of the file <code>bar</code>
+
+<ul>
+<li>they will be represented by the same blob</li>
+<li>the tree will point to 2 blobs with the same id but referring different names and possibly different file modes</li>
+</ul></li>
+</ul>
+
+<p>There are 4 git objects (listed from “low” to “high” level) that can be described as:</p>
+
+<ul>
+<li>blob: content</li>
+<li>tree: file tree description</li>
+<li>commit: project snapshot with contextual metadata</li>
+<li><a href="http://git-scm.com/docs/git-tag">tag</a>: frozen commit name (we will not cover tags and refer to the <a href="http://git-scm.com/book/en/v2/Git-Basics-Tagging">documentation</a> for more details)</li>
+</ul>
+
+<h3 id="physical-storage">Physical storage</h3>
+
+<p>As git handles history of files, we may ask ourselves how does git stores incremental differences for our data.
+To test this, let’s add some content in an existing file</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;salut&#34;</span> &gt;&gt; fr/data
+
+$ git add -u
+
+$ git commit -m <span style="color:#4e9a06">&#34;Add more frensh data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>master 456a082<span style="color:#ce5c00;font-weight:bold">]</span> Add more frensh data
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>and inspect the resulting blob object</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git ls-tree 456a082
+<span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
+<span style="color:#0000cf;font-weight:bold">040000</span> tree 3d9ba4d12442602bd81928438f80810622b9fd56	fr
+
+$ git ls-tree 3d9ba4d12442602bd81928438f80810622b9fd56
+<span style="color:#0000cf;font-weight:bold">100644</span> blob bd61b2ccb39197cc3a66b43f52a6fed66a237a29	data
+
+$ git cat-file blob bd61b2c
+bonjour
+salut</code></pre></div>
+<p>The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for <a href="https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt">git≥1.9.0</a>).
+This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “<a href="http://git-scm.com/book/en/Git-Internals-Packfiles">packfiles</a>” that represent content ‘delta’s to optimize disk usage.</p>
+
+<p>Time to examine how the data is actually stored.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
+xK??OR04aH????/-?*N?<span style="color:#ce5c00;font-weight:bold">)</span>-?S?a
+
+$ python -c <span style="color:#4e9a06">&#34;&#34;&#34;
+</span><span style="color:#4e9a06">import zlib, sys;
+</span><span style="color:#4e9a06">print repr(zlib.decompress(sys.stdin.read()))
+</span><span style="color:#4e9a06">&#34;&#34;&#34;</span> &lt; .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
+<span style="color:#4e9a06">&#39;blob 14\x00bonjour\nsalut\n&#39;</span>
+
+$ wc -c fr/data
+      <span style="color:#0000cf;font-weight:bold">14</span> fr/data</code></pre></div>
+<p>git physically stores content using zlib-compressed files containing:</p>
+
+<ol>
+<li>the object type (blob, tree, commit or tag)</li>
+<li>the uncompressed data size</li>
+<li>a null byte</li>
+<li>the actual content</li>
+</ol>
+
+<p>The commit files follow the same construction. <a href="http://stackoverflow.com/a/21599232/626278">Tree storage</a> is slightly different.</p>
+
+<p>The zlib compression will optimize git disk usage for storing commits (especially if blobs represent large files).</p>
+
+<p>The last important point for this quest is to understand how git names his internal files. Those names correspond to a cryptographic hash of the object. The hash function used is <a href="http://en.wikipedia.org/wiki/SHA-1">SHA-1</a> and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
+You may have noticed that when referencing git <a href="http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/">objects</a>, we did not always used a 40 digits long value every time. git allows to use a shorter sub-sha1 <em>prefix</em>, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat fr/data <span style="color:#000;font-weight:bold">|</span> git hash-object --stdin
+bd61b2ccb39197cc3a66b43f52a6fed66a237a29
+
+$ tree .git/objects/ --matchdirs -P bd
+.git/objects/
+├── <span style="color:#0000cf;font-weight:bold">13</span>
+├── 1c
+├── 3d
+├── <span style="color:#0000cf;font-weight:bold">45</span>
+├── <span style="color:#0000cf;font-weight:bold">46</span>
+├── 5c
+├── <span style="color:#0000cf;font-weight:bold">77</span>
+├── 7e
+├── bd
+│   └── 61b2ccb39197cc3a66b43f52a6fed66a237a29
+├── cf
+├── info
+└── pack</code></pre></div>
+<p>git shards objects into 16×16=256 subfolders to grant a <a href="http://thread.gmane.org/gmane.comp.version-control.git/69322">faster access</a> to a given sha1. This matters as all manipulations in git involve a sha1 (sometimes through <a href="#branches">aliases</a>).</p>
+
+<p>In the end, we have spent a bit of time looking at how git stores <em>loose</em> objects i.e. how git stores its objects in individual files. This helped us getting the big picture of the internal storage.</p>
+
+<p>We will not dig the <a href="http://schacon.github.io/gitbook/7_the_packfile.html">packfile</a> <a href="https://www.kernel.org/pub/software/scm/git/docs/technical/pack-format.txt">format</a> which is an optimization to avoid cluttering the disk by regrouping objects together (typically by invoking <code>git gc</code>).</p>
+
+<h2 id="immutability">Immutability</h2>
+
+<p>When creating our last commit, we made an horrible typo. git allows to amend the last commit using <code>git commit --amend</code>.  If the staging area contains any modification, they will be added to the commit.</p>
+
+<p>In our case, we just want to fix our typo in the commit message, so we do not add anything to the staging area:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit --amend</code></pre></div>
+<p>opens our favorite editor (as defined by the <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#Basic-Client-Configuration"><code>$EDITOR</code></a> environment variable) where we may edit the commit message</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8f5902;font-style:italic">#!EDITOR
+</span><span style="color:#8f5902;font-style:italic"></span>Add more french data
+
+<span style="color:#8f5902;font-style:italic"># Please enter the commit message for your changes. Lines starting</span>
+<span style="color:#8f5902;font-style:italic"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
+#
+<span style="color:#8f5902;font-style:italic"># Date:      Sun Oct 12 16:19:08 2014 +0200</span>
+#
+<span style="color:#8f5902;font-style:italic"># On branch master</span>
+#
+<span style="color:#8f5902;font-style:italic"># Changes to be committed:</span>
+<span style="color:#8f5902;font-style:italic"># modified:   fr/data</span>
+#</code></pre></div>
+<p>and simply save our modification.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ce5c00;font-weight:bold">[</span>master dd0f5d6<span style="color:#ce5c00;font-weight:bold">]</span> Add more french data
+ Date: Sun Oct <span style="color:#0000cf;font-weight:bold">12</span> <span style="color:#0000cf;font-weight:bold">16</span>:19:08 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>We see that git creates a <em>new</em> commit object <code>dd0f5d6</code> (remember that the sha1 involves the commit message and timestamps).</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file commit dd0f5d6
+tree 77a832b508bd5d2fb7c1eb8999e6e0a9f926434d
+parent 13d1b4b062b7a7308553bc504dda2d43d32525ba
+author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413123548</span> +0200
+committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413725760</span> +0200
+
+Add more french data</code></pre></div>
+<p>This means that a commit is <a href="http://www.brainshave.com/talks/immutable-data-trees">immutable</a>; any modification creates a new commit instead of modifying the existing one thus making git a <a href="http://www.jayway.com/2013/03/03/git-is-a-purely-functional-data-structure/">functional</a> DAG.
+We will later see that this is an important property to have in mind when multiple people are working on the same repository. The benefit is that every object is uniquely defined and when you manipulate a sha1 you do not have to worry about not having the correct content.</p>
+
+<h2 id="reflog">Reflog</h2>
+
+<p>If we look at our commit tree</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit a new commit. We could fear that any git command have a direct and irreversible impact.</p>
+
+<p>However git keeps a <a href="https://git-scm.com/docs/git-reflog">reflog</a> which is a record of all commits that were referenced at some point.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git reflog
+dd0f5d6 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>amend<span style="color:#ce5c00;font-weight:bold">)</span>: Add more french data
+456a082 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">}</span>: commit: Add more frensh data
+13d1b4b HEAD@<span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">}</span>: commit: Create french data file
+45de2f7 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>initial<span style="color:#ce5c00;font-weight:bold">)</span>: First commit</code></pre></div>
+<p>Any action that has been <strong>committed</strong> can be retrieved later, even if it is no longer referenced in the commit tree. This allows to undo bad commands very easily and may serve as a safety net.</p>
+
+<p>Note however that git has <a href="https://www.kernel.org/pub/software/scm/git/docs/git-gc.html">garbage</a> <a href="http://alblue.bandlem.com/2011/11/git-tip-of-week-gc-and-pruning-this.html">collection</a> commands that will remove unreachable objects. By default those commands will not remove objects that were created in the last 2 weeks.</p>
+
+<h2 id="git-basics-tl-dr">git basics: tl;dr</h2>
+
+<ul>
+<li>git is a functional DAG where nodes represents filetrees with metadata and keep a link to their parents</li>
+<li>staging area is the bridge between local file tree and git data store</li>
+<li>git internal data is stored efficiently and safely in the <code>.git</code> folder</li>
+<li>git commands are performed by passing sha1 prefixes that identify objects uniquely</li>
+<li>when lost, run <code>git status</code></li>
+<li><code>git reflog</code> records a reference to all created commits even when no longer reachable</li>
+<li>don’t mess with the <code>.git</code> folder!</li>
+</ul>
+
+<h1 id="branches-and-remotes">Branches and remotes</h1>
+
+<h2 id="branches">Branches</h2>
+
+<p>As we have seen in the previous section, git is a graph and you may have noticed that <code>git status</code> names branches:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git status
+On branch master
+nothing to commit, working directory clean
+
+$ git branch
+* master</code></pre></div>
+<p>By default, git creates a branch called <code>master</code>.
+If we inspect this object</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file -t master
+commit
+
+$ git show --oneline master
+dd0f5d6 Add more french data
+diff --git a/fr/data b/fr/data
+index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+--- a/fr/data
++++ b/fr/data
+@@ -1 +1,2 @@
+ bonjour
++salut</code></pre></div>
+<p>we realize that a branch is simply a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ tree .git/refs/heads/
+.git/refs/heads/
+└── master
+
+$ cat .git/refs/heads/master
+dd0f5d6500d72d54747dec1dc4139f13b5fdb8f2</code></pre></div>
+<p>git also keeps an alias for current branch last commit as <a href="http://git-scm.com/book/en/Git-Internals-Git-References"><code>HEAD</code></a> (with a special case for <a href="http://git-scm.com/docs/git-checkout#_detached_head"><code>detached HEAD</code></a>).</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git show --oneline HEAD
+dd0f5d6 Add more french data
+diff --git a/fr/data b/fr/data
+index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+--- a/fr/data
++++ b/fr/data
+@@ -1 +1,2 @@
+ bonjour
++salut
+
+$ cat .git/HEAD
+ref: refs/heads/master</code></pre></div>
+<p>Creating new branch is very easy with git:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git branch structure-data
+
+$ git branch
+  structure-data
+* master
+
+$ git checkout structure-data
+Switched to branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+
+$ git branch
+* structure-data
+  master
+
+$ git show --oneline HEAD
+dd0f5d6 Add more french data
+diff --git a/fr/data b/fr/data
+index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+--- a/fr/data
++++ b/fr/data
+@@ -1 +1,2 @@
+ bonjour
++salut</code></pre></div>
+<p>We see that our brand new branch points exactly to the same commit as our <code>master</code> branch. This is the default behavior when creating a new branch; it is assumed that the new branch will start from <code>HEAD</code> and may be changed by passing the desired branching commit sha1 as a second argument i.e. <code>git branch new_branch new_branch_HEAD_commit</code>.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;# old\n\nbonjour\nsalut&#34;</span> &gt; fr/data
+
+$ git add fr/data <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add &#39;old&#39; header to french data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>structure-data dd0109a<span style="color:#ce5c00;font-weight:bold">]</span> add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+
+
+$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# modern\n\nyo&#34;</span> &gt;&gt; fr/data
+
+$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add modern french data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>structure-data 5a40d5a<span style="color:#ce5c00;font-weight:bold">]</span> add modern french data
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">4</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<h2 id="comparing">Comparing</h2>
+
+<p>Now that we have two distinct branches, we should make sure that the changes introduced by our new branch match the intended specification. We therefore need to see the differences in content and commits.</p>
+
+<h3 id="referencing-parent-commits">Referencing parent commits</h3>
+
+<ul>
+<li><code>abc123^</code> parent commit of commit <code>abc123</code></li>
+<li><code>abc123^^</code> grandparent commit of commit <code>abc123</code></li>
+<li>more generally <code>abc123~n</code>
+
+<ul>
+<li><code>abc123~1</code> ⇔  <code>abc123^</code></li>
+<li><code>abc123~2</code> ⇔  <code>abc123^^</code></li>
+</ul></li>
+</ul>
+
+<h3 id="comparing-content">Comparing content</h3>
+
+<ul>
+<li><code>git diff --cached</code>: changes that have been staged</li>
+<li><code>git diff A B</code>: changes  (computed using the <a href="http://cbx33.github.io/gitt/afterhours3-1.html">longest common subsequence algorithm</a> algorithm)</li>
+<li><code>git diff A...B</code>: changes from common ancestor of <code>A</code> and <code>B</code> to <code>B</code></li>
+</ul>
+
+<h3 id="comparing-commits">Comparing commits</h3>
+
+<ul>
+<li><code>git branch --contains sha1</code>: list all branches containing the commit <code>sha1</code></li>
+<li><code>git log A --not B</code>: list commits contained in branch <code>A</code> that are not in branch <code>B</code></li>
+</ul>
+
+<h3 id="comparing-branches">Comparing branches</h3>
+
+<ul>
+<li><code>git branch --merged</code>: list branches that are reachable in the current branch history</li>
+<li><code>git branch --no-merged</code>: list branches that are not reachable in current branch history</li>
+</ul>
+
+<p>If we compare our branch content with the <code>master</code> branch:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff master structure-data
+diff --git a/fr/data b/fr/data
+index bd61b2c..ea35d1f <span style="color:#0000cf;font-weight:bold">100644</span>
+--- a/fr/data
++++ b/fr/data
+@@ -1,2 +1,8 @@
++# old
++
+ bonjour
+ salut
++
++# modern
++
++yo
+
+$ git log --oneline structure-data --not master
+5a40d5a add modern french data
+dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+
+$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git branch --merged
+* master</code></pre></div>
+<p>we see that we have been structuring our data and adding new content in two commits that are ready to be merged.</p>
+
+<h2 id="merging">Merging</h2>
+
+<p>As we are happy with the changes introduced in our new branch, we may now make our work available in the repository trunk.
+There are multiple strategies to perform this, the most basic one being a merge commit. In its simplest — yet most common — form, a merge will take 2 branches and create a commit having the branches respective <code>HEAD</code>s as parents through a merge.</p>
+
+<h3 id="three-way-merge">Three-way merge</h3>
+
+<p><a href="http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging">Three-way merge</a> is a central algorithm in git. As its name suggests, it involves 3 distinct commits:</p>
+
+<ul>
+<li>the <code>MERGE_HEAD</code> commit i.e. the modification that we want to merge</li>
+<li>the <code>HEAD</code> commit i.e. the branch in which the <code>MERGE_HEAD</code> will be merged i.e. the branch on which the <code>git merge</code> command is called</li>
+<li>the <code>ORIG_HEAD</code> commit i.e. the <em>best common ancester</em> of <code>MERGE_HEAD</code> and <code>HEAD</code> that will serve as the reference.</li>
+</ul>
+
+<p>The result of a three-way merge will <a href="http://www.quora.com/How-does-Git-merge-work/answer/Anders-Kaseorg">look like</a>: <code>HEAD + (MERGE_HEAD - ORIG_HEAD)</code></p>
+
+<table>
+<thead>
+<tr>
+<th><code>HEAD</code></th>
+<th><code>+</code></th>
+<th><code>MERGE_HEAD</code></th>
+<th><code>-</code></th>
+<th><code>ORIG_HEAD</code></th>
+<th>→</th>
+<th>result</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>foo</td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td>foo</td>
+</tr>
+
+<tr>
+<td>foo</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>foo</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td></td>
+<td></td>
+<td>foo</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>foo</td>
+<td></td>
+<td></td>
+<td></td>
+<td>foo</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>foo</td>
+<td></td>
+<td>bar</td>
+<td></td>
+<td>baz</td>
+<td></td>
+<td><em>conflict</em></td>
+</tr>
+</tbody>
+</table>
+
+<p>This short overview of how the three-way merge works assume that <code>ORIG_HEAD</code> is unique which can be wrong when merge commits are involved too. By default, git uses the <code>merge-recursive</code> strategy that is a three-way merge where the <code>ORIG_HEAD</code> is a (virtual) merge commits for all common ancestors.</p>
+
+<p>So, after running</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge --no-ff structure-data
+&gt; Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+&gt;
+&gt; <span style="color:#8f5902;font-style:italic"># Please enter a commit message to explain why this merge is necessary,</span>
+&gt; <span style="color:#8f5902;font-style:italic"># especially if it merges an updated upstream into a topic branch.</span>
+&gt; #
+&gt; <span style="color:#8f5902;font-style:italic"># Lines starting with &#39;#&#39; will be ignored, and an empty message aborts</span>
+&gt; <span style="color:#8f5902;font-style:italic"># the commit.</span>
+Merge made by the <span style="color:#4e9a06">&#39;recursive&#39;</span> strategy.
+ fr/data <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">6</span> ++++++
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">6</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+
+$ cat fr/data
+<span style="color:#8f5902;font-style:italic"># old</span>
+
+bonjour
+salut
+
+<span style="color:#8f5902;font-style:italic"># modern</span>
+
+yo</code></pre></div>
+<p>the commit tree now looks like</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
+* 62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>/
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>One thing to notice is that the merge commit (62cbf27) is linked to 2 (parent) commits: dd0f5d6 and 5a40d5a. <a href="#referencing-parent-commits">Referencing</a> a merge commit ancestors may therefore be ambiguous in some contexts.</p>
+
+<h3 id="fast-forward">Fast forward</h3>
+
+<p>When merging, we explicitly asked git to create a merge commit using the <code>--no-ff</code> flag. However, looking at the commit graph, we see that it is (almost) equivalent to the simplified one</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">* yyyyyyy add modern french data
+* xxxxxxx add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>Indeed, in this case, <code>HEAD</code> and <code>ORIG_HEAD</code> pointed to the same commits hence <code>HEAD</code> may just be updated to <code>MERGE_HEAD</code>. Wether one should prevent fast-forward merges or not is a matter of workflow and we will discuss this point a bit later.</p>
+
+<h3 id="resolving-conflicts">Resolving conflicts</h3>
+
+<p>We have seen that in some situations, the three-way merge results in a situation where the merge content may not be automatically deduced. This is called a merge conflict. Let’s create a conflict:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b modern-french
+Switched to a new branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;jourbon&#34;</span> &gt;&gt; fr/data
+
+$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add new modern data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>modern-french 81defc8<span style="color:#ce5c00;font-weight:bold">]</span> add new modern data
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+
+$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# slang\n\nchenu reluit&#34;</span> &gt;&gt; fr/data
+
+$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add french slang&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>modern-french e6defd6<span style="color:#ce5c00;font-weight:bold">]</span> add french slang
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">5</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+
+$ git checkout master
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;wesh&#34;</span> &gt;&gt; fr/data
+
+$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add more modern data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>master 075ce36<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>Let’s see what happens when we try to merge:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge modern-french
+Auto-merging fr/data
+CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
+
+$ git status
+On branch master
+Your branch is up-to-date with <span style="color:#4e9a06">&#39;origin/master&#39;</span>.
+You have unmerged paths.
+  <span style="color:#ce5c00;font-weight:bold">(</span>fix conflicts and run <span style="color:#4e9a06">&#34;git commit&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+
+Unmerged paths:
+  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to mark resolution<span style="color:#ce5c00;font-weight:bold">)</span>
+
+	both modified:   fr/data
+
+$ git diff
+diff --cc fr/data
+index cd1a280,5a932d1..0000000
+--- a/fr/data
++++ b/fr/data
+@@@ -6,4 -6,9 +6,13 @@@ salu
+  <span style="color:#8f5902;font-style:italic"># modern</span>
+
+  yo
+++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+ +wesh
+++<span style="color:#ce5c00;font-weight:bold">=======</span>
++ jourbon
++
++
++ <span style="color:#8f5902;font-style:italic"># slang</span>
++
++ chenu reluit
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french</code></pre></div>
+<p>We see the content from the <code>master</code> branch materialized in a block delimited by
+<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>=======</code> and the content of <code>modern-french</code> is delimited by <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>. By default, git only shows <code>HEAD</code> (on the top of a conflict) and <code>MERGE_HEAD</code> (on the bottom of a conflict).
+Visualizing the <code>ORIG_HEAD</code> content is a matter of configuration and may be achieved by setting <code>git config --local merge.conflictstyle diff3</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge --abort
+
+$ git merge modern-french
+Auto-merging fr/data
+CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
+
+$ git diff
+diff --cc fr/data
+index cd1a280,5a932d1..0000000
+--- a/fr/data
++++ b/fr/data
+@@@ -6,4 -6,9 +6,14 @@@ salu
+  <span style="color:#8f5902;font-style:italic"># modern</span>
+
+  yo
+++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+ +wesh
+++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
+++<span style="color:#ce5c00;font-weight:bold">=======</span>
++ jourbon
++
++
++ <span style="color:#8f5902;font-style:italic"># slang</span>
++
++ chenu reluit
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french</code></pre></div>
+<p>We now have the full picture:</p>
+
+<ul>
+<li>there was no content before attempting to merge;</li>
+<li>the <code>master</code> branch wants to add “wesh” in the modern section;</li>
+<li>the <code>modern-french</code> branch wants to add a “slang” section.</li>
+</ul>
+
+<p>This conflicts is easy to <a href="https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/">solve</a> by editing the file and keeping both changes and thus having the following</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$  git diff
+ +wesh
++ jourbon
++
++
++ <span style="color:#8f5902;font-style:italic"># slang</span>
++
++ chenu reluit</code></pre></div>
+<p>To finish the conflict resolution, we may now stage our changes and commit them</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit
+&gt; Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+&gt;
+&gt; Conflicts:
+&gt;   fr/data
+<span style="color:#ce5c00;font-weight:bold">[</span>master b20ab97<span style="color:#ce5c00;font-weight:bold">]</span> Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span></code></pre></div>
+<p>and look at our commit tree</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
+*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
+<span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
+* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
+<span style="color:#000;font-weight:bold">|</span>/
+*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>/
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>It is important to note that when feeling unsure about the resolution of a conflict:</p>
+
+<ul>
+<li>reflog keeps previous states so it will always be possible to undo things</li>
+<li>the conflict resolution can be aborted using <code>git merge --abort</code>.</li>
+</ul>
+
+<h2 id="rebasing">Rebasing</h2>
+
+<p>Once again, it feels like the graph</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
+<span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
+* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
+<span style="color:#000;font-weight:bold">|</span>/</code></pre></div>
+<p>could make more sense as</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#000;font-weight:bold">|</span>
+* yyyyyyy add french slang
+* xxxxxxx add new modern data
+<span style="color:#000;font-weight:bold">|</span>
+*  075ce36 add more modern data
+<span style="color:#000;font-weight:bold">|</span></code></pre></div>
+<p>Indeed, the purpose of the <code>modern-french</code> branch was just to add new content; we could debate about the reason why we would create a new branch as we are continuing previous work. So let’s rewind our repository to where it was before merging</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git reset --hard 075ce36
+
+$ git checkout modern-french <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git log --graph --oneline
+* e6defd6 add french slang
+* 81defc8 add new modern data
+*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>/
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>What we would like to achieve is to change the parent commit of 81defc8 to <code>master</code>’s HEAD (075ce36). git allows to move a series of commit (or branch) and replay them on another commit (or branch) with the <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rebase.html"><code>git rebase</code></a> command.</p>
+
+<p><code>git rebase</code> <a href="http://git-scm.com/book/ch3-6.html">works</a> by</p>
+
+<ol>
+<li>going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto),</li>
+<li>getting the diff introduced by each commit of the branch you’re on, saving those diffs to temporary files,</li>
+<li>resetting the current branch to the same commit as the branch you are rebasing onto,</li>
+<li>and finally applying each change in turn.</li>
+</ol>
+
+<p>There are 3 main differences with <code>git merge</code>:</p>
+
+<ol>
+<li><code>git rebase</code> does <em>not</em> create any additional commit object</li>
+<li>when running <code>git rebase other</code> from the <code>current</code> branch, git will checkout the <code>other</code> branch before (re)applying the commits of the <code>current</code> branch. Practically this means that the <code>other</code> branch will stand for <code>ORIG_HEAD</code> and <code>current</code> branch for <code>MERGE_HEAD</code></li>
+<li>git will drop a commit for which the computed diff is now empty.</li>
+</ol>
+
+<p>Let’s try to rebase <code>modern-french</code> onto <code>master</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: add new modern data
+Using index info to reconstruct a base tree...
+M	fr/data
+Falling back to patching base and <span style="color:#0000cf;font-weight:bold">3</span>-way merge...
+Auto-merging fr/data
+CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+Failed to merge in the changes.
+Patch failed at <span style="color:#0000cf;font-weight:bold">0001</span> add new modern data
+The copy of the patch that failed is found in:
+   /private/tmp/bonjour/.git/rebase-apply/patch
+
+When you have resolved this problem, run <span style="color:#4e9a06">&#34;git rebase --continue&#34;</span>.
+If you prefer to skip this patch, run <span style="color:#4e9a06">&#34;git rebase --skip&#34;</span> instead.
+To check out the original branch and stop rebasing, run <span style="color:#4e9a06">&#34;git rebase --abort&#34;</span>.
+
+$ git diff
+diff --cc fr/data
+index cd1a280,89bb164..0000000
+--- a/fr/data
++++ b/fr/data
+@@@ -6,4 -6,4 +6,9 @@@ salu
+  <span style="color:#8f5902;font-style:italic"># modern</span>
+
+  yo
+++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+ +wesh
+++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
+++<span style="color:#ce5c00;font-weight:bold">=======</span>
++ jourbon
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; add new modern data</code></pre></div>
+<p>When applying the commits, git uses the three-way merge algorithm which explains that we have a conflict similar to the one we had with a merge. We edit the conflict as previously:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff
+diff --cc fr/data
+index cd1a280,89bb164..0000000
+--- a/fr/data
++++ b/fr/data
+@@@ -6,4 -6,4 +6,5 @@@ salu
+  <span style="color:#8f5902;font-style:italic"># modern</span>
+
+  yo
+ +wesh
++ jourbon</code></pre></div>
+<p>and then stage our modification to continue the rebase process</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git rebase --continue
+Applying: add new modern data
+Applying: add french slang
+Using index info to reconstruct a base tree...
+M	fr/data
+Falling back to patching base and <span style="color:#0000cf;font-weight:bold">3</span>-way merge...
+Auto-merging fr/data
+
+$ git log --graph --oneline
+* b588260 add french slang
+* 7a48ea2 add new modern data
+* 075ce36 add more modern data
+*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>/
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>We have thus linearized our commit history by rebasing the <code>modern-french</code> branch onto the <code>master</code> branch.</p>
+
+<p>Once again:</p>
+
+<ul>
+<li><code>git reflog</code> would enable to undo a faulty rebase if needed</li>
+<li>at any conflict resolution, <code>git rebase --abort</code> would stop the rebase process and put the branch back at its original state (all rebase information is stored in the <code>.git/rebase-merge/</code> folder)</li>
+<li>also, if a commit no longer makes sense due to changes in the upstream branch, <code>git rebase --skip</code> will skip the now obsolete commit.</li>
+</ul>
+
+<h3 id="rewriting-history">Rewriting history</h3>
+
+<p>By rebasing our branch, we have avoided a merge commit. However, we now have two successive commits that seem to bring similar changes</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">* 7a48ea2 add new modern data
+* 075ce36 add more modern data</code></pre></div>
+<p>Those changes probably deserve to belong to the same commit. <code>git rebase --interactive</code> enables to rewrite a set of commits interactively e.g.</p>
+
+<ul>
+<li>reword a commit message</li>
+<li>squash commits together</li>
+<li>edit commits</li>
+<li>remove commits</li>
+<li>reorder commits.</li>
+</ul>
+
+<p>In our case we want to squash commits <code>075ce36</code> and <code>7a48ea2</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive 075ce36^</code></pre></div>
+<p>will present all child commits that may be rewritten:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 075ce36 add more modern data
+pick 7a48ea2 add new modern data
+pick b588260 add french slang
+
+<span style="color:#8f5902;font-style:italic"># Rebase 62cbf27..b588260 onto 62cbf27</span>
+#
+<span style="color:#8f5902;font-style:italic"># Commands:</span>
+<span style="color:#8f5902;font-style:italic">#  p, pick = use commit</span>
+<span style="color:#8f5902;font-style:italic">#  r, reword = use commit, but edit the commit message</span>
+<span style="color:#8f5902;font-style:italic">#  e, edit = use commit, but stop for amending</span>
+<span style="color:#8f5902;font-style:italic">#  s, squash = use commit, but meld into previous commit</span>
+<span style="color:#8f5902;font-style:italic">#  f, fixup = like &#34;squash&#34;, but discard this commit&#39;s log message</span>
+<span style="color:#8f5902;font-style:italic">#  x, exec = run command (the rest of the line) using</span> </code></pre></div>
+<p>It is important to note that the commits order is reversed compared to the output of <code>git log</code> command; the first commits listed are the oldest one.</p>
+
+<p>We just need to change the line</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 7a48ea2 add new modern data</code></pre></div>
+<p>into (note that changing anything else that the verb at the beginning of a line will have no effect)</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">fixup 7a48ea2 add new modern data</code></pre></div>
+<p>and save the change</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive 075ce36^
+<span style="color:#ce5c00;font-weight:bold">[</span>detached HEAD df55562<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
+ Date: Wed Oct <span style="color:#0000cf;font-weight:bold">22</span> <span style="color:#0000cf;font-weight:bold">22</span>:45:05 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+Successfully rebased and updated refs/heads/modern-french.</code></pre></div>
+<p>We are done rewriting history and now have a clean commit tree:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
+* cc4b70a add french slang
+* df55562 add more modern data
+*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+<span style="color:#000;font-weight:bold">|</span>/
+* dd0f5d6 Add more french data
+* 13d1b4b Create french data file
+* 45de2f7 First commit</code></pre></div>
+<p>Now the <code>modern-french</code> branch should be renamed into <code>master</code> which can be done in multiple ways e.g.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git reset --hard modern-french
+HEAD is now at cc4b70a add french slang
+
+$ git branch --delete modern-french
+Deleted branch modern-french <span style="color:#ce5c00;font-weight:bold">(</span>was cc4b70a<span style="color:#ce5c00;font-weight:bold">)</span>.</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git branch -D master
+Deleted branch master <span style="color:#ce5c00;font-weight:bold">(</span>was 075ce36<span style="color:#ce5c00;font-weight:bold">)</span>.
+
+$ git branch --move modern-french master</code></pre></div>
+<h2 id="rebase-caveats">Rebase caveats</h2>
+
+<p>Rewriting history can lead to predictable yet unexpected results.</p>
+
+<p>Suppose we create a new file with some lines and a commit for each line.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b rewriting-history
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;one&#34;</span> &gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;first&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 9041c15<span style="color:#ce5c00;font-weight:bold">]</span> first
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+ create mode <span style="color:#0000cf;font-weight:bold">100644</span> dummy
+
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;two&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;second&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 50c1ff1<span style="color:#ce5c00;font-weight:bold">]</span> second
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+
+$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;three&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;third&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 631a301<span style="color:#ce5c00;font-weight:bold">]</span> third
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>Now let’s say we want to swap commits</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive HEAD~3</code></pre></div>
+<p>and set</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 9041c15 first
+pick 631a301 third
+pick 50c1ff1 second</code></pre></div>
+<p>This will give the following conflict diff</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 631a301... third
+++two
+++<span style="color:#ce5c00;font-weight:bold">=======</span>
++ two
++ three
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 631a301... third</code></pre></div>
+<p>This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit <code>A</code> to commit <code>B</code> (i.e. <code>git diff A B</code>). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. <code>git diff A...B</code>).</p>
+
+<p>Let’s say that we resolved the conflict with the following</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff
+diff --cc dummy
+index 5626abf,4cb29ea..0000000
+--- a/dummy
++++ b/dummy
+@@@ -1,1 -1,3 +1,2 @@@
+  one
+ -two
++ three</code></pre></div>
+<p>When we continue the rebase, we will again hit a conflict:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+ +three
+++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 50c1ff1... second
+++<span style="color:#ce5c00;font-weight:bold">=======</span>
++ two
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 50c1ff1... second</code></pre></div>
+<p>We see that we have moved the issue from the common ancestor to the <code>MERGE_HEAD</code>, which in a rebase, is the parent commit and created a conflict cascade.</p>
+
+<h2 id="remotes">Remotes</h2>
+
+<p>Until now, we have been working locally. As the repository is now clean, we are now ready to publish our work to the world. git servers can be interacted with through the <a href="https://www.kernel.org/pub/software/scm/git/docs/git-remote.html"><code>git remote</code></a> command.
+By default no remote server is defined. We will use a repository declared on <a href="https://github.com/">GitHub</a> as our remote called <code>origin</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git remote add origin git@github.com:marchelbling/bonjour.git
+
+$ git remote show origin
+* remote origin
+  Fetch URL: git@github.com:marchelbling/bonjour.git
+  Push  URL: git@github.com:marchelbling/bonjour.git
+  HEAD branch: <span style="color:#ce5c00;font-weight:bold">(</span>unknown<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>We see two new verbs, “Fetch” to retrieve modification <em>from</em> the remote repository and “Push” to publish our local modification <em>to</em> a remote repository. This local/remote binding is called the <a href="http://git-scm.com/book/en/v2/Git-Internals-The-Refspec">refspec</a>. By default, the “Fetch” URL is the same as the “Push” URL but this may be easily <a href="http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html">configured</a> if needed.</p>
+
+<p>As we did not interact (to fetch or push) with the <code>origin</code> remote yet, the <code>HEAD</code> or upstream branch is unknown.</p>
+
+<h3 id="push">Push</h3>
+
+<p><code>git push origin local:remote</code> will push the <code>local</code> branch as the <code>remote</code> branch onto the <code>origin</code> remote (where <code>remote</code> is equal to <code>local</code> by default).</p>
+
+<p>git might be <a href="http://stackoverflow.com/a/948397/626278">configured</a> to shorten the command line to push changes upstream. However care should be taken that this configuration depends a lot on the git version being used (and you might depend on multiple versions when working with distinct servers) so as a safe rule of thumb, always invoke <code>git push origin local</code> to push the <code>local</code> branch to the <code>origin</code> remote. Actually pushing changes is not the action that you perform most of the time and it will keep you out of any <a href="https://groups.google.com/forum/#!msg/jenkinsci-dev/-myjRIPcVwU/qOAqXGaRioIJ">embarrassing mistake</a>.</p>
+
+<p>Note that if <code>local</code> is empty (i.e. <code>git push origin :remote</code>), the <code>remote</code> branch will be deleted from the <code>origin</code> remote.</p>
+
+<p>We may push our <code>master</code> branch to our <code>origin</code> remote</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git push origin master
+Counting objects: <span style="color:#0000cf;font-weight:bold">8</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+Delta compression using up to <span style="color:#0000cf;font-weight:bold">4</span> threads.
+Compressing objects: <span style="color:#0000cf;font-weight:bold">100</span>% <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span>/5<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+Writing objects: <span style="color:#0000cf;font-weight:bold">100</span>% <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">8</span>/8<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">738</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
+Total <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>
+To git@github.com:marchelbling/bonjour.git
+ * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      master -&gt; master</code></pre></div>
+<p>and everyone with an access to the remote can now see our work.</p>
+
+<h3 id="fetch">Fetch</h3>
+
+<p>Until now, we have been working on our own on the repository. As we created a public repository, some changes may have been pushed to our remote. git does not automatically try to get modification from the remote so it is the user responsibility to make sure his repository is up to date.
+The command to retrieve remote changes is <code>git fetch</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git fetch origin
+remote: Counting objects: <span style="color:#0000cf;font-weight:bold">4</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+remote: Compressing objects: <span style="color:#0000cf;font-weight:bold">100</span>% <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span>/2<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+remote: Total <span style="color:#0000cf;font-weight:bold">4</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>
+Unpacking objects: <span style="color:#0000cf;font-weight:bold">100</span>% <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4</span>/4<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+From github.com:marchelbling/bonjour
+ * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      english    -&gt; origin/english</code></pre></div>
+<p>We can see that a new branch <code>english</code> has been pushed. We see that locally, git refers to it as <code>origin/english</code>. Indeed, git keep remote object references in an eponym namespace</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ tree .git/refs/ --matchdirs -P remotes/origin
+.git/refs/
+├── heads
+├── remotes
+│   └── origin
+│       ├── english
+│       └── master
+└── tags</code></pre></div>
+<p>It is important to understand that fetching a remote will <em>not</em> modify the working tree. Also, as a consequence of the remote namespacing, to reference a remote branch we should prefix it with the remote name</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b english origin/english
+Branch english <span style="color:#204a87">set</span> up to track remote branch english from origin.
+Switched to a new branch <span style="color:#4e9a06">&#39;english&#39;</span></code></pre></div>
+<h3 id="pull">Pull</h3>
+
+<p>Often times, we fetch a remote to check for update on our working branch meaning that we want to update both git objects and our working tree. This means that we would actually like to fetch changes and apply them. This is what <code>git pull</code> does:</p>
+
+<ol>
+<li>it fetches changes from the remote defined by the local branch refspec</li>
+<li>it updates our working tree
+
+<ul>
+<li>by merging our local branch with the remote version</li>
+<li>or by rebasing local branch on the remote branch when invoking <code>git pull --rebase</code>.</li>
+</ul></li>
+</ol>
+
+<h3 id="force-push">Force push</h3>
+
+<p>Let’s say we would like to fix the commit message from the branch we fetched</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit --amend -m <span style="color:#4e9a06">&#34;add english/american data&#34;</span>
+<span style="color:#ce5c00;font-weight:bold">[</span>english ea761bc<span style="color:#ce5c00;font-weight:bold">]</span> add english/american data
+ Author: Linux Tor &lt;tor@linux.org&gt;
+ Date: Sun Nov <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#0000cf;font-weight:bold">20</span>:19:35 <span style="color:#0000cf;font-weight:bold">2014</span> +0100
+ <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">20</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+ create mode <span style="color:#0000cf;font-weight:bold">100644</span> en/data
+
+$ git push origin english
+ ! <span style="color:#ce5c00;font-weight:bold">[</span>rejected<span style="color:#ce5c00;font-weight:bold">]</span>        english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>non-fast-forward<span style="color:#ce5c00;font-weight:bold">)</span>
+error: failed to push some refs to <span style="color:#4e9a06">&#39;git@github.com:marchelbling/bonjour.git&#39;</span>
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes <span style="color:#ce5c00;font-weight:bold">(</span>e.g.
+hint: <span style="color:#4e9a06">&#39;git pull ...&#39;</span><span style="color:#ce5c00;font-weight:bold">)</span> before pushing again.
+hint: See the <span style="color:#4e9a06">&#39;Note about fast-forwards&#39;</span> in <span style="color:#4e9a06">&#39;git push --help&#39;</span> <span style="color:#204a87;font-weight:bold">for</span> details.</code></pre></div>
+<p>By amending, we have just replaced the branch tip commit and whenever a user tries to push a local branch to an existing remote branch, git will check that the remote branch <code>HEAD</code> is still reachable in the branch being pushed and will fail if it is unreachable. This may happen in 2 cases:</p>
+
+<ul>
+<li>local branch is out-of-sync due to changes pushed to the remote; the reflex should be immediately to <a href="https://help.github.com/articles/dealing-with-non-fast-forward-errors/">fetch</a> the remote and update the branch</li>
+<li>history has been rewritten and the sha1 is no longer reachable; we need to force push our local branch to rewrite the remote history:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git push --force origin english
+Counting objects: <span style="color:#0000cf;font-weight:bold">1</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+Writing objects: <span style="color:#0000cf;font-weight:bold">100</span>% <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span>/1<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">192</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
+Total <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>
+To git@github.com:marchelbling/bonjour.git
+ + 0ffd492...ea761bc english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>forced update<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>We here see that pushing a rewritten history (<code>git commit --amend</code> or <code>git rebase</code>) should be done with care and we will discuss workflows in the next section.</p>
+
+<h2 id="branches-and-remotes-tl-dr">Branches and remotes: tl;dr</h2>
+
+<ul>
+<li>branches are simply references to commits</li>
+<li><code>HEAD</code> references the tip commit for current branch</li>
+<li><code>git merge</code> (and most “merging-like” commands) relies on three-way merge by default</li>
+<li><code>git rebase</code> enables to rewrite history
+
+<ul>
+<li><code>git rebase foo</code> will move current branch commits onto <code>foo</code> branch (note that in case of conflict <code>ours</code> and <code>theirs</code> can feel inverted as <code>git rebase foo</code> checkouts the <code>foo</code> branch under the hood)</li>
+<li><code>git rebase --interactive sha1^</code> will allow to edit/squash/remove/reorder all commits from <code>sha1</code> to <code>HEAD</code></li>
+<li>rebasing rewrites history and creates new commit objects</li>
+</ul></li>
+<li>comparing branches for merge/rebase should be done with <code>git diff A...B</code> to take into account the common ancestor</li>
+<li>retrieving remote updates is the user responsibility</li>
+<li>merge/rebase commands should usually reference branches from remote namespace</li>
+<li><strong>never</strong> force push without
+
+<ul>
+<li>having checked if changes were pushed to the remote</li>
+<li>fully specifying the remote/branch (to avoid force pushing wrong branches)</li>
+</ul></li>
+</ul>
+
+<h1 id="good-practices">Good practices</h1>
+
+<h2 id="workflow">Workflow</h2>
+
+<h3 id="branching-flow">Branching flow</h3>
+
+<p>Creating branches with git is very cheap and should therefore be used without fear. The question is then: how should the branches relate to one another?</p>
+
+<p>There is no single answer to that question. Mostly because the answer depends on type nature of the project: a <a href="http://nvie.com/posts/a-successful-git-branching-model/">web app</a> runs a single ever up-to-date version when a <a href="https://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html">desktop app</a> may have multiple versions supported at a given time. The former may however be seen as a simple particular case of the latter.</p>
+
+<blockquote>
+<p>Don’t merge <em>upstream</em> code at random points.<br>
+Don’t merge <em>downstream</em> code at random points either.</p>
+
+<p><cite><a href="http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744">Linus Torvald</a></cite></p>
+</blockquote>
+
+<p><br>Most workflows maintain different contexts with careful synchronization points and the typical synchronization for a web app will look like:</p>
+
+<ul>
+<li>the <code>master</code> branch should always be stable and reflect the code running in production</li>
+<li>the <code>develop</code> branch hosts developments between  2 releases</li>
+<li>new features should branch off/get integrated in the <code>develop</code> branch</li>
+<li>hotfixes should branch off <code>master</code> and be integrated in both <code>master</code> and <code>develop</code> branches.</li>
+</ul>
+
+<h4 id="alternatives">Alternatives</h4>
+
+<p>Choosing the right workflow is complicated (see <a href="https://news.ycombinator.com/item?id=9744059">discussion</a>). There are lots of alternatives:</p>
+
+<ul>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/">gitflow</a> (see some <a href="http://endoflineblog.com/gitflow-considered-harmful">cons</a>)</li>
+<li><a href="https://about.gitlab.com/2014/09/29/gitlab-flow/">Gitlab flow</a></li>
+<li><a href="https://guides.github.com/introduction/flow/">GitHub flow</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows#centralized-workflow">centralized flow</a> (mimics svn behavior)</li>
+<li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">feature branch flow</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow">forking flow</a></li>
+</ul>
+
+<p>Choosing the right mostly depends on the product and the team. No one size fits all solution. The rule of thumb: it should just not get in the way of developers/devops (as long as the team can be considered knowledgeable enough regarding git features).</p>
+
+<p>Let’s focus on how should branches be synchronized?</p>
+
+<h3 id="merge-or-rebase">Merge or rebase?</h3>
+
+<p>The <a href="https://blog.sourcetreeapp.com/2012/08/21/merge-or-rebase/">“merge or rebase”</a> <a href="http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/">question</a> <a href="http://stackoverflow.com/questions/804115/when-do-you-use-git-rebase-instead-of-git-merge">is</a> <a href="http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions">one</a> <a href="http://blog.experimentalworks.net/2009/03/merge-vs-rebase-a-deep-dive-into-the-mysteries-of-revision-control/">of</a> <a href="http://www.derekgourlay.com/archives/428">the</a> <a href="http://mislav.uniqpath.com/2013/02/merge-vs-rebase/">most</a> <a href="http://softwareswirl.blogspot.fr/2009/04/truce-in-merge-vs-rebase-war.html">debated</a> <a href="https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa">one</a>.</p>
+
+<p>The arguments mostly fall back to</p>
+
+<ul>
+<li><code>git merge</code> keeps original context but create a clumsy history that can be difficult to read and makes <code>git bisect</code> more <a href="http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits">difficult to use</a></li>
+<li><code>git rebase</code> ends up in a linear history but rewrites history by computing incremental patches and thus modifies the original authored commits.</li>
+</ul>
+
+<p>It used to be about only merge or only rebase but usage is evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a <a href="http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744">good</a> <a href="http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/">practice</a>. Private does not necessarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push <em>your</em> branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:</p>
+
+<ul>
+<li>a private branch is your own responsibility and its history may be altered to meet the project quality standards</li>
+<li>a public branch is a collective responsibility and thus history should be taken with care as changing it may offend people.</li>
+</ul>
+
+<p>The question is now: how should a private branch be integrated in the public history? There is no really better solution; however it seems that people are tending to use a merge in order to keep an <a href="https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa#032f">identifiable</a> view of the former private branch. Also some tools like GitHub make opiniated choice and when using a Pull Request workflow with the service interface, branches may only be merged.</p>
+
+<p>To summarize what seems to become the dominant branch lifecycle in git:</p>
+
+<blockquote>
+<p><a href="http://gitguru.com/2009/02/03/rebase-v-merge-in-git/">Rebases</a> are how changes should pass from the top of hierarchy downwards and merges are how they flow back upwards.</p>
+</blockquote>
+
+<h2 id="what-s-a-good-commit">What’s a good commit?</h2>
+
+<p>Good commits help managing the project in the long run.  Let’s look at how to best structure changes to make a useful commit and a clean history.</p>
+
+<h3 id="atomicity">Atomicity</h3>
+
+<p>A good commit is about atomicity. Not unlike Unix philosophy, a commit should do <a href="http://dev.solita.fi/2013/07/04/whats-in-a-good-commit.html">one thing</a> and one thing well. The reason is that it will allow to undo a precise change very easily, and it will provide a kind of documentation about how the system works in its whole.</p>
+
+<p>A commit message where the conjunction ‘and’ appears is probably not very atomic. Nonetheless, doing only one thing does <em>not</em> necessarily mean that a good commit should impact only a single file. Typically making a change in the code base will require a test suite update which probably resides in different files than the ‘main’ code itself.</p>
+
+<h3 id="hiding-sausage-making">Hiding sausage making</h3>
+
+<p>Unlike the maxim, the <a href="http://sethrobertson.github.io/GitBestPractices/#sausage">destination</a> is more important than the journey when it comes to making good commits. It means that even though you took dead ends (like thinking the cause of a bug is X when X is only a consequence of Y) when trying to solve a hard bug, it is <em>not</em> very valuable to keep those peregrination in a commit:</p>
+
+<ol>
+<li>it first makes it harder to <a href="http://engineering.zenpayroll.com/this-is-how-we-zenpayroll-our-development-workflow/">review</a> the changes in the first place</li>
+<li>and once the fix reaches the main trunk, it will be harder to understand what the actual fix is (thus also making it harder to revert changes in case this is needed).</li>
+</ol>
+
+<p>git is flexible and allows different <a href="http://tomayko.com/writings/the-thing-about-git">workflows</a> for making clean and readable commits history:</p>
+
+<ul>
+<li>keeping all changes unstaged and crafting the commits once everything is implemented (using <code>git add --patch</code> or <a href="https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging"><code>git add --interactive</code></a>)</li>
+<li>creating commits along the way and finally rewriting the history to clean things up. Note that it is sometimes easier to reset to a state where all changes are unstaged/uncommitted (see <a href="#reset">Reset</a>).</li>
+</ul>
+
+<p>Finally, one should note that even though keeping details in the commits history is not a lean practice, one may actually keep those details in the <a href="#what’s-a-good-commit-message">commit message</a>.</p>
+
+<h3 id="commented-hunks-of-code">Commented hunks of code</h3>
+
+<p>Last but not least, a good commit should not contain code that has been commented:</p>
+
+<ul>
+<li>it will only get people to be confused about the commented hunks</li>
+<li>it goes against the main usage of a vcs i.e. history control that allow to retrieve past hunks that are no longer in the trunk.</li>
+</ul>
+
+<h2 id="what-s-a-good-commit-message">What’s a good commit message?</h2>
+
+<p>Commit messages are utterly important as they are the human counter part to a good commits history.</p>
+
+<h3 id="formatting">Formatting</h3>
+
+<p>The structure of a commit message is important. It <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">should</a> look like:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Short commit summary <span style="color:#ce5c00;font-weight:bold">(</span>below <span style="color:#0000cf;font-weight:bold">50</span> chars<span style="color:#ce5c00;font-weight:bold">)</span>
+
+Detailed description of the changes introduced by the commit
+<span style="color:#ce5c00;font-weight:bold">(</span>using at most <span style="color:#0000cf;font-weight:bold">72</span> chars wide columns and markdown style<span style="color:#ce5c00;font-weight:bold">)</span></code></pre></div>
+<p>Following this format will produce readable <a href="http://git-scm.com/docs/git-log"><code>git log</code></a> outputs and display nicely with git tools and services.</p>
+
+<h3 id="content">Content</h3>
+
+<p>The commit summary is like a (technical) book cover: it should give a good insight of what the commit is actually about.
+The description is like the backcover, providing more in-depth detail about the commit itself (and possibly listing dead ends encountered). It should answer the following <a href="http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message">questions</a>:</p>
+
+<ul>
+<li>Why is this change necessary?</li>
+<li>How does it address the issue?</li>
+<li>What side effects does this change have?</li>
+</ul>
+
+<h3 id="documentation">Documentation</h3>
+
+<p>As every line of code in repository comes from a unique commit, writing good commit messages will provide a <a href="http://mislav.uniqpath.com/2014/02/hidden-documentation/">documentation</a> covering all the code:</p>
+
+<ul>
+<li><a href="http://git-scm.com/docs/git-whatchanged"><code>git whatchanged path/to/file</code></a> lists all commits that changed a particular file</li>
+<li><a href="http://git-scm.com/docs/git-blame"><code>git blame path/to/file</code></a> shows what revision and author last modified each line of a file</li>
+<li><code>git log --topo-order --graph -u -L$line,$line:path/to/file</code> will show all commits modifying the line <code>$line</code> of a file.</li>
+</ul>
+
+<p>The advantage of this is that messages cannot go out-of-sync. Whenever a line will be updated, the associated commit message will provide an up-to-date version. And those 3 commands provide fine documentation granularity from a project level (<code>git whatchanged</code>), to a file level (<code>git blame</code>) and finally a line level (<code>git log --topo-order</code>).</p>
+
+<h1 id="going-further">Going further</h1>
+
+<h2 id="options">Options</h2>
+
+<p>Here is a short list of useful options that applies to many git commands</p>
+
+<ul>
+<li><code>--patch</code>: work on hunks instead of full files</li>
+<li><code>--cached</code>: apply command to the staging area instead of repository objects</li>
+<li><code>--stat</code>: display a diffstat only i.e. for each file modified it shows the number of deletions and additions</li>
+<li><code>git [command] [options] -- file/to/path</code>: using <code>-- file/to/path/</code> will only apply <code>git [command] [options]</code> to <code>file/to/path</code>. Note that a regexp might be used e.g. <code>-- '*.[ch]'</code> will perform the command on all C files and headers.</li>
+<li>some commands accept date/time filters such as <code>--since</code>, <code>--until</code>, <code>--before</code> or <code>--after</code>; the <a href="http://alexpeattie.com/blog/working-with-dates-in-git/">“approxidate”</a> <a href="https://github.com/git/git/blob/master/date.c">parser</a> will accept absolute date (e.g. <code>&quot;2014-01-01&quot;</code> or <code>&quot;Jan 01 10:00:00 2014 +01&quot;</code>) or relative ones (e.g. <code>&quot;3.weeks.ago&quot;</code> or <code>&quot;last monday&quot;</code>).</li>
+<li>commands that do not directly accept date/time filters can still be used with dates through the <code>branch@{approxidate}</code> construct e.g. <code>git diff --stat master@{1.week.ago} master</code> will display a diffstat of changes committed on the <code>master</code> during the last week.</li>
+</ul>
+
+<h2 id="searching">Searching</h2>
+
+<p>We have already seen commands to compare <a href="#comparing">branches</a> and list <a href="#documentation">commit messages</a>. git allows to quickly <a href="http://travisjeffery.com/b/2012/02/search-a-git-repo-like-a-ninja/">search</a> <a href="http://gitref.org/inspect/">through</a> the repository too.</p>
+
+<ul>
+<li>searching content
+
+<ul>
+<li><a href="http://gitster.livejournal.com/27674.html"><code>git grep -e 'pattern' [revision]</code></a>: search for <code>'pattern'</code> in a given revision (<code>HEAD</code> by default) full content</li>
+<li><a href="http://stackoverflow.com/a/2929502/626278"><code>git rev-list --all | xargs git grep -e 'pattern'</code></a>: search for <code>'pattern'</code> in all reachable commits</li>
+</ul></li>
+<li>searching diff:
+
+<ul>
+<li><code>git log -S&quot;pattern&quot;</code>: search for commits having <code>&quot;pattern&quot;</code> in their diff (be it addition or deletion)</li>
+</ul></li>
+<li>searching commit messages:
+
+<ul>
+<li><code>git log --grep='pattern'</code>: search for <code>'pattern'</code> in commit messages in the current branch history</li>
+<li><code>git log --all --grep='pattern'</code>: search for <code>'pattern'</code> in commit messages of all branches</li>
+</ul></li>
+<li>searching authors:
+
+<ul>
+<li><code>git log --author='pattern'</code>: search for commit made by an author matching <code>'pattern'</code></li>
+<li><code>git log --committer='pattern'</code>: search for commits committed by a committer matching <code>'pattern'</code></li>
+</ul></li>
+</ul>
+
+<h2 id="reset">Reset</h2>
+
+<p>As we’ve seen at the beginning, git involves both a local file tree and a commit tree.
+When one needs to reset something in git, it should first analyze what exactly should be reset:</p>
+
+<ul>
+<li>local file tree only: <code>git checkout sha1 -- path/to/content</code></li>
+<li>git commit tree only: <code>git reset sha1</code></li>
+<li>both local file tree and git commit tree: <code>git reset --hard sha1</code></li>
+</ul>
+
+<h2 id="cherry-pick">Cherry pick</h2>
+
+<p>It is sometimes handy to be able to apply a single commit from another branch e.g. to report a patch.
+<a href="https://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html"><code>git cherry-pick</code></a> will do just that and apply the <code>sha1</code> commit content in a new commit on the current branch. The commit object will be distinct. However this is not considered as rewriting history since the commit did previously not exist in the branch.</p>
+
+<h2 id="stash">Stash</h2>
+
+<p>It sometimes happen that you need to quickly change context (e.g. to fix some bug in production). To avoid creating a dummy commit with all current staged and unstaged diff, you may use <a href="https://www.kernel.org/pub/software/scm/git/docs/git-stash.html"><code>git stash</code></a>. This will push a new stash in the stash stack. Changes will be stored but not in the context of a branch.</p>
+
+<p>When stashing, you should always save a message (<code>git stash -m &quot;...&quot;</code>) to keep some context to what you were previously doing. The risk is that you might completely forget that you stashed some modification.</p>
+
+<h2 id="bisect">Bisect</h2>
+
+<p>When some bug or regression is found in a repository, we used to perform dichotomy through history to find when <em>it</em> was introduced. <a href="https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html"><code>git bisect</code></a> <a href="http://robots.thoughtbot.com/git-bisect">automates</a> the process.</p>
+
+<p>We first need to start the session by setting the interval that should be tested, flagging the last known commit that is known to not have the bug as good and a bad commit</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git bisect start
+
+$ git bisect bad 456xyz <span style="color:#8f5902;font-style:italic"># by default HEAD is assumed</span>
+
+$ git bisect good abc123 <span style="color:#8f5902;font-style:italic"># last commit known to be bug-free</span></code></pre></div>
+<p>git then iterates over the range of commits using binary search and will wait for a good/bad flag for each checkouted commit. When all revisions have been bisected, the faulty commit is stored in <code>refs/bisect/bad</code>.</p>
+
+<p>To automate things further, an executable script or a command checking wether a revision is good or bad may be supplied by</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git bisect run command</code></pre></div>
+<h1 id="environment">Environment</h1>
+
+<h2 id="command-line-completion">Command line completion</h2>
+
+<p>One of the most helpful tool you will need is <a href="https://github.com/git/git/blob/master/contrib/completion/git-completion.">git  completion</a>. This enables tab-completion on most git commands. Downloading the script and <a href="http://git-scm.com/book/en/v1/Git-Basics-Tips-and-Tricks">sourcing</a> it in its <a href="http://git-scm.com/book/en/v2/Git-in-Other-Environments-Git-in-">profile</a> is all that is needed.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="local-global-system">Local/global/system</h3>
+
+<p>git configuration may be done at three levels (listed by order of <em>descending</em> precedence)</p>
+
+<ul>
+<li><code>--local</code>ly i.e. at a repository level in <code>repo_path/.git/config</code></li>
+<li><code>--global</code>ly for a given user in <code>$HOME/.gitconfig</code>; note here that if the <a href="http://git-scm.com/book/en/v2/Git-Internals-Environment-Variables"><code>$HOME</code></a> environment variable changes, you may experience behaviors that you did not expect</li>
+<li><code>--system</code>-wide  in <code>/etc/gitconfig</code></li>
+</ul>
+
+<p>by invoking</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git config <span style="color:#ce5c00;font-weight:bold">[</span>--level<span style="color:#ce5c00;font-weight:bold">]</span> --<span style="color:#ce5c00;font-weight:bold">(</span>set<span style="color:#000;font-weight:bold">|</span>add<span style="color:#ce5c00;font-weight:bold">)</span> section<span style="color:#ce5c00;font-weight:bold">[</span>.subsection<span style="color:#ce5c00;font-weight:bold">]=</span>value</code></pre></div>
+<p>Most of the time configuration is set at the <code>--global</code> level but it really depends on your setup.</p>
+
+<p>All configurations can either be done through the <code>git config</code> command or by directly editing the <code>gitconfig</code> file if you know what you are doing.</p>
+
+<h3 id="basics">Basics</h3>
+
+<p>We have already seen some configuration as git requires a user to be properly used:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global --set user.name<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;My Name&#34;</span>
+
+$ git config --global --set user.email<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;me@mail.org&#34;</span></code></pre></div>
+<p>We have also been changing the merge conflict output to show the <code>ORIG_HEAD</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global merge.conflictstyle diff3</code></pre></div>
+<p>One of the most useful configuration is colors that will make reading any <code>git diff</code> outputs easier to read (note that this is the default for git≥1.8.4):</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global ui.color<span style="color:#ce5c00;font-weight:bold">=</span>auto</code></pre></div>
+<p>Finally, git may automatically correct mistyped commands when the error can be unambiguously fixed in the specified number of deci-seconds (0.1 second):</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global --set help.autocorrect<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">5</span></code></pre></div>
+<h3 id="aliases">Aliases</h3>
+
+<p><a href="http://git-scm.com/book/en/v2/Git-Basics-Git-Aliases#_git_aliases">Aliases</a> offer a way to</p>
+
+<ul>
+<li>use shorter names for commands frequently typed; a common example is to alias <code>checkout</code> with <code>co</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global alias.co checkout</code></pre></div>
+<ul>
+<li>introduce a personalized command using constant arguments; a typical usage is a custom display of commit history:</li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global alias.hist <span style="color:#4e9a06">&#34;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&#34;</span></code></pre></div>
+<ul>
+<li>invoke custom commands with possible arguments (git≥<a href="https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments">1.5.3</a>) and possibly piping with non-git commands
+
+<ul>
+<li>listing recent commits using the  <a href="http://ss64.com//head.html"><code>head</code></a> command (arguments will apply on the <code>head</code> command i.e. <code>git head -5</code> will list the last 5 commits)</li>
+<li><a href="http://stackoverflow.com/a/21148981/626278">fixuping</a> a commit by committing and rebasing automatically</li>
+</ul></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config--global alias.head <span style="color:#4e9a06">&#34;git log --oneline --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; | head&#34;</span>
+
+$ git config --global alias.fixup <span style="color:#4e9a06">&#34;!sh -c &#39;(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) &amp;&amp; sha_to_patch=</span><span style="color:#204a87;font-weight:bold">$(</span> git rev-parse <span style="color:#000">$1</span> <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06"> &amp;&amp; git commit --fixup=</span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; git rebase -i --autosquash </span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">^&#39; -&#34;</span></code></pre></div>
+<p><a href="http://stackoverflow.com/a/22183573/626278">Listing</a> all defined aliases may be done with the following command</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --get-regexp ^alias<span style="color:#4e9a06">\.</span> <span style="color:#000;font-weight:bold">|</span> sed -e s/^alias<span style="color:#4e9a06">\.</span>//</code></pre></div>
+<p>and/or defined as an alias!</p>
+
+<h2 id="hooks">Hooks</h2>
+
+<p><a href="http://githooks.com">git hooks</a> offer the possibility to add custom behaviors on top of some git actions:</p>
+
+<ul>
+<li>user hooks:
+
+<ul>
+<li><a href="http://git-scm.com/docs/githooks#_applypatch_msg"><code>applypatch-msg</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_pre_applypatch"><code>pre-applypatch</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_applypatch"><code>post-applypatch</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_pre_commit"><code>pre-commit</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_prepare_commit_msg"><code>prepare-commit-msg</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_commit_msg"><code>commit-msg</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_commit"><code>post-commit</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_pre_rebase"><code>pre-rebase</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_checkout"><code>post-checkout</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_merge"><code>post-merge</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_pre_push"><code>pre-push</code></a></li>
+</ul></li>
+<li>server hooks:
+
+<ul>
+<li><a href="http://git-scm.com/docs/githooks#_pre_receive"><code>pre-receive</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_update"><code>update</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_receive"><code>post-receive</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_update"><code>post-update</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_pre_auto_gc"><code>pre-auto-gc</code></a></li>
+<li><a href="http://git-scm.com/docs/githooks#_post_rewrite"><code>post-rewrite</code></a></li>
+</ul></li>
+</ul>
+
+<p>Hooks have to be <em>executable</em> and should be placed in the <code>.git/hooks</code> folder. Hooks thus can <em>not</em> be enforced within a repository. Some typical usage for hooks is:</p>
+
+<ul>
+<li>check commit message format (see e.g. a <a href="https://gist.github.com/marchelbling/7358077">hook for pivotal</a> enforcing branch name convention in the <code>pre-commit</code> hook and referencing pivotal story id in the <code>prepare-commit-msg</code> hook)</li>
+<li>automatically run test suite locally; depending on the project policy, this could be done for every commit or simply before pushing code to a remote</li>
+<li>automatically triggering project build/deployment when the remote is updated.</li>
+</ul>
+
+<h2 id="custom-command-line-prompt">Custom command-line prompt</h2>
+
+<p>When interacting from the command-line, having a prompt displaying information such as the branch or brief status helps to improve productivity by avoiding unnecessary intermediate commands. Implementing a robust  customization is cumbersome and there already exist lots of customizable <a href="https://github.com/alebcay/awesome-">projects</a>:</p>
+
+<ul>
+<li><a href="https://github.com/Lokaltog/powerline">powerline</a></li>
+<li><a href="https://github.com/riobard/-powerline"> powerline</a></li>
+<li><a href="https://github.com/magicmonty/-git-prompt"> git prompt</a></li>
+<li><a href="https://github.com/lvv/git-prompt">git prompt</a></li>
+<li><a href="https://github.com/olivierverdier/zsh-git-prompt">zsh git prompt</a></li>
+</ul>
+
+<h2 id="protocols">Protocols</h2>
+
+<p>Interaction with a remote rely on a <a href="http://git-scm.com/book/en/Git-Internals-Transfer-Protocols">transfer</a> <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">protocol</a>.
+Depending on the server configuration, the following protocols may be available:</p>
+
+<ul>
+<li>git: fast but with no authentication</li>
+<li>ssh: secured &amp; efficient; requires to set up <a href="https://help.github.com/articles/generating-ssh-keys/">keys</a></li>
+<li>http(s): efficient; authentication might be more cumbersome than with ssh as no session is kept and credentials might have to be provided multiple times.</li>
+</ul>
+
+<p>Other technical considerations such as corporate firewall preventing traffic through some ports might make the <a href="https://help.github.com/articles/which-remote-url-should-i-use/">https</a> protocol useful in most cases.</p>
+
+<p><a href="https://bitbucket.org/">Major</a> <a href="https://gitlab.com">commercial</a> git <a href="https://github.com">hosting</a> solutions support at least ssh and https protocols.</p>
+
+<h2 id="guis-and-plugins">GUIs and plugins</h2>
+
+<p>Here is a list of higher level <a href="http://git-scm.com/downloads/guis">GUIs</a> or plugins:</p>
+
+<ul>
+<li>GitHub GUI for <a href="https://mac.github.com/">mac</a>/<a href="https://windows.github.com/">windows</a></li>
+<li><a href="http://www.sourcetreeapp.com/">sourcetree</a> for mac/windows</li>
+<li><a href="https://code.google.com/p/tortoisegit/">tortoisegit</a> for windows</li>
+<li><a href="http://www.git-tower.com/">git tower</a> for mac</li>
+<li><a href="https://github.com/tpope/vim-fugitive">fugitive</a>, <a href="https://github.com/bling/vim-airline">vim-airline</a> for vim</li>
+<li><a href="https://github.com/magit/magit">magit</a> for emacs (<a href="http://www.masteringemacs.org/article/introduction-magit-emacs-mode-git">tutorial</a>)</li>
+<li><a href="https://github.com/kemayo/sublime-text-git">sublime-text git</a> for sublime-text</li>
+</ul>
+
+<h2 id="jargon">Jargon</h2>
+
+<h3 id="upstream-downstream">upstream/downstream</h3>
+
+<p>This definition is <a href="http://stackoverflow.com/a/2739476/626278">relative</a> and depends on how data flows:</p>
+
+<ul>
+<li>downstream expresses that content is being fetched</li>
+<li>upstream stands for the original source of data.</li>
+</ul>
+
+<h3 id="bare-and-non-bare-repository">bare and non-bare repository</h3>
+
+<p>A non-bare repository is what we have been manipulating so far: a repository containing both <code>.git</code> folder and a local file tree.</p>
+
+<p>A <a href="http://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/">bare</a> repository has no local file tree but just the <code>.git</code> folder. It is typically used for host host git repositories on a <a href="https://www.petekeen.net/self-hosted-git-server">server</a> and is instanciated using <code>git init --bare</code>.</p>
+
+<h3 id="fork">fork</h3>
+
+<p>A <a href="https://help.github.com/articles/fork-a-repo/">fork</a> is a copy of a repository.</p>
+
+<h3 id="pull-request">pull request</h3>
+
+<p>A <a href="https://help.github.com/articles/using-pull-requests/">pull request</a> is a request to merge a branch (typically hosted on a fork) into an other branch.</p>
+
+<h3 id="porcelain-plumbing">porcelain/plumbing</h3>
+
+<p>This terminology refers to <a href="http://stackoverflow.com/a/6976506/626278">toilets</a>:</p>
+
+<ul>
+<li>porcelain is the material from which toilets are made; this stands for git high level commands, the one the user actually see and interact with</li>
+<li>plumbing is what happens behind the scene and what carries “stuff”; plumbing are the low level commands to which porcelain commands transfer data.</li>
+</ul>
+
+<h3 id="gist">gist</h3>
+
+<p>A <a href="https://help.github.com/articles/about-gists/">gist</a> is a lightweight repository typically versioning a single or a small number of files.</p>
+
+<h3 id="hunk">hunk</h3>
+
+<p>A <a href="http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-with-git-or-imma-edit-your-hunk/on:2011-11-16@20:54:30">hunk</a> is a section of diff displayed using the <a href="http://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html#Detailed-Unified">unified format</a> e.g.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">@@@ -1,1 -1,3 +1,2 @@@
+  one
+ -two
++ three</code></pre></div>
+<ul>
+<li>the triple <code>@</code> indicates where are using <code>diff3</code></li>
+<li>the three pairs of numbers indicates common ancestor, “from file” and “to file” lines span</li>
+<li>a line span pair represent <code>first line, number of lines</code> for the diff patch.</li>
+</ul>
+
+<h1 id="references">References</h1>
+
+<ul>
+<li><a href="http://rogerdudler.github.io/git-guide/">Git the simple guide</a></li>
+<li><a href="https://try.github.io/levels/1/challenges/1">CodeSchool - Try Git</a></li>
+<li><a href="http://git-scm.com/book/en/v2">Pro Git</a></li>
+<li><a href="https://speakerdeck.com/schacon/introduction-to-git">Introduction to git</a></li>
+<li><a href="http://onlywei.github.io/explain-git-with-d3/">Visualizing Git Concepts with D3</a></li>
+<li><a href="http://wildlyinaccurate.com/a-hackers-guide-to-git">A hackcker’s guide to git</a></li>
+<li><a href="http://eagain.net/articles/git-for-computer-scientists/">git for computer scientists</a></li>
+<li><a href="http://justinhileman.info/article/git-pretty/">git pretty (cheat sheet)</a></li>
+<li><a href="http://alexpeattie.com/blog/working-with-dates-in-git/">Working with dates in git</a></li>
+<li><a href="https://gregoryszorc.com/blog/2017/12/11/high-level-problems-with-git-and-how-to-fix-them/">High-level problems with git</a></li>
+</ul>
+
+        </div>
+
+        
+            <footer class="article-footer">
+                <ul class="article-tag-list">
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/vcs">vcs</a>
+                        </li>
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="http://marc.helbling.fr/tags/git">git</a>
+                        </li>
+                    
+                </ul>
+            </footer>
+        
+    </div>
+</article>
+
+            </section>
+
+            <footer id="footer">
+
+</footer>
+
+        </div>
+    </body>
+</html>

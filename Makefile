@@ -24,3 +24,9 @@ generate: clean cname
 local:
 	cd ${REPO_ROOT}
 	hugo server --disableFastRender -D watch
+
+
+.PHONY: deploy
+deploy: generate
+	git add ${BUILD_DIR} && git commit -m "make generate"
+	git push origin master

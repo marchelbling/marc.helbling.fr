@@ -13,8 +13,14 @@ Static site built with [Hugo](https://gohugo.io). Current theme is: [malt](https
 $ make local
 ```
 
-## Building
+## Building content
 
 ```
 $ make generate
+```
+
+## Deploying to marc.helbling.fr
+
+```
+$ make deploy
 ```

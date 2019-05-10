@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docker on /dev/log</title>
-    <link>http://marc.helbling.fr/tags/docker/</link>
+    <link>https://marc.helbling.fr/tags/docker/</link>
     <description>Recent content in Docker on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 17 Aug 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://marc.helbling.fr/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://marc.helbling.fr/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Running Citus in Docker</title>
-      <link>http://marc.helbling.fr/running-citus-locally/</link>
+      <link>https://marc.helbling.fr/running-citus-locally/</link>
       <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://marc.helbling.fr/running-citus-locally/</guid>
+      <guid>https://marc.helbling.fr/running-citus-locally/</guid>
       <description>Citus is an open-source PostgreSQL extension to distribute tables and queries on multiple shards. The extension requires a master node aka the coordinator whose role is to forward queries to workers — that actually store data — and gather results.
 While using CitusCloud to run Citus in production is probably the best idea, it is less true for local or testing environments as network adds latency and concurrent builds require hacks (like creating random schemas for each build).</description>
     </item>

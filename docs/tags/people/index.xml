@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>People on /dev/log</title>
-    <link>http://marc.helbling.fr/tags/people/</link>
+    <link>https://marc.helbling.fr/tags/people/</link>
     <description>Recent content in People on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 17 May 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://marc.helbling.fr/tags/people/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://marc.helbling.fr/tags/people/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>What could go wrong?</title>
-      <link>http://marc.helbling.fr/what-could-go-wrong/</link>
+      <link>https://marc.helbling.fr/what-could-go-wrong/</link>
       <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://marc.helbling.fr/what-could-go-wrong/</guid>
+      <guid>https://marc.helbling.fr/what-could-go-wrong/</guid>
       <description>When dealing with software, stuff — be it technical or human — quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
 This is not intended to be a list of technical difficulties encountered during the development phase but a reminder of what to think about before starting to code:</description>
     </item>

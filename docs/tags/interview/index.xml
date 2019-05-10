@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Interview on /dev/log</title>
-    <link>http://marc.helbling.fr/tags/interview/</link>
+    <link>https://marc.helbling.fr/tags/interview/</link>
     <description>Recent content in Interview on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 13 Jul 2013 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://marc.helbling.fr/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://marc.helbling.fr/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Job interviews</title>
-      <link>http://marc.helbling.fr/interviews/</link>
+      <link>https://marc.helbling.fr/interviews/</link>
       <pubDate>Sat, 13 Jul 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://marc.helbling.fr/interviews/</guid>
+      <guid>https://marc.helbling.fr/interviews/</guid>
       <description>Like it or not, technical interviews are still a reality in the software industry and I don’t expect this to radically change anytime soon.
 Getting a job in a place where you have no connection can prove very hard. The obvious guess: the bigger/hotter the company, the harder. You may try to be original but I’m not sure this works very often for technical positions. From my experience, you better be concise, have a clear message, show why you care about the company you’re applying at and hopefully you’ll have a chance to show them your abilities.</description>
     </item>

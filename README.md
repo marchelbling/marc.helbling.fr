@@ -4,7 +4,7 @@ Static site built with [Hugo](https://gohugo.io). Current theme is: [malt](https
 
 ## Requirements
 
-* hugo
+* hugo (v0.90.0)
 * make
 * `git clone git@github.com:marchelbling/malt themes/malt`
 

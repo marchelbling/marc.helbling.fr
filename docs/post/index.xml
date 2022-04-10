@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on /dev/log</title>
@@ -6,10 +6,25 @@
     <description>Recent content in Posts on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang FAQ</title>
+      <link>https://marc.helbling.fr/go-faq/</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/go-faq/</guid>
+      <description>Foo</description>
+    </item>
     
-	<atom:link href="https://marc.helbling.fr/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>Advanced git operations</title>
+      <link>https://marc.helbling.fr/advanced-git/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/advanced-git/</guid>
+      <description>Merging repositories Without loosing history:
+```cd path/to/project-b git remote add project-a path/to/project-a git fetch project-a --tags git merge --allow-unrelated-histories --strategy-option=theirs git remote remove project-a </description>
+    </item>
     
     <item>
       <title>Running Citus in Docker</title>
@@ -28,7 +43,7 @@ While using CitusCloud to run Citus in production is probably the best idea, it 
       
       <guid>https://marc.helbling.fr/vim-notes/</guid>
       <description>Basic vim All this is vim built-in and requires no plugin.
-Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual selection (&amp;lt;: shift block to the left, &amp;gt;: shift block to the right) ~: change case ctrl-x + : vim ‘context aware’ complete mode (based on set complete list) in insert mode  ctrl-n/ctrl-p: next/previous word matching prefix (the difference with ctrl-p/ctrl-n is the context awareness) ctrl-f: file names ctrl-l: whole lines ctrl-d: macro definitions (also in included files) ctrl-i: current and included files ctrl-k: words from a dictionary ctrl-t: words from a thesaurus ctrl-]: tags ctrl-v: Vim command line ctrl-o: language aware completion  :set spell [spelllang=fr_fr]/:set nospell: activate/deactivate spell checking :!</description>
+Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual selection (&amp;lt;: shift block to the left, &amp;gt;: shift block to the right) ~: change case ctrl-x + : vim ‘context aware’ complete mode (based on set complete list) in insert mode  ctrl-n/ctrl-p: next/previous word matching prefix (the difference with ctrl-p/ctrl-n is the context awareness) ctrl-f: file names ctrl-l: whole lines ctrl-d: macro definitions (also in included files) ctrl-i: current and included files ctrl-k: words from a dictionary ctrl-t: words from a thesaurus ctrl-]: tags ctrl-v: Vim command line ctrl-o: language aware completion   :set spell [spelllang=fr_fr]/:set nospell: activate/deactivate spell checking :!</description>
     </item>
     
     <item>
@@ -37,7 +52,7 @@ Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual 
       <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
       
       <guid>https://marc.helbling.fr/what-could-go-wrong/</guid>
-      <description>When dealing with software, stuff — be it technical or human — quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
+      <description>When dealing with software, stuff — be it technicalor human— quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
 This is not intended to be a list of technical difficulties encountered during the development phase but a reminder of what to think about before starting to code:</description>
     </item>
     
@@ -48,7 +63,7 @@ This is not intended to be a list of technical difficulties encountered during t
       
       <guid>https://marc.helbling.fr/writing-json-c/</guid>
       <description>Writing a valid json file looks simple. Except that if the json file contains real world data coming from unknown sources, it might not be that simple. The json format does not support everything that you could expect for numerical values and strings.
-More specifically, a numerical value involves digits in json. This prevents from having inf or nan serialized in json. Strings preferred encoding is UTF-8 with some restriction.</description>
+More specifically, a numerical value involves digits in json. This prevents from having inf or nan serialized in json. Strings preferred encoding is UTF-8 with some restriction. Quotes &amp;quot; and backslash \ have to be escaped but control characters should be encoded with their unicode 4 hex digits representation.</description>
     </item>
     
     <item>

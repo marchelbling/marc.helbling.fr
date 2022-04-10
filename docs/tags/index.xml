@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on /dev/log</title>
@@ -6,22 +6,45 @@
     <description>Recent content in Tags on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2015 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://marc.helbling.fr/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 02 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>C&#43;&#43;</title>
-      <link>https://marc.helbling.fr/tags/c&#43;&#43;/</link>
-      <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
+      <title>faq</title>
+      <link>https://marc.helbling.fr/tags/faq/</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://marc.helbling.fr/tags/c&#43;&#43;/</guid>
+      <guid>https://marc.helbling.fr/tags/faq/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Citus</title>
+      <title>golang</title>
+      <link>https://marc.helbling.fr/tags/golang/</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://marc.helbling.fr/tags/git/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vcs</title>
+      <link>https://marc.helbling.fr/tags/vcs/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/vcs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>citus</title>
       <link>https://marc.helbling.fr/tags/citus/</link>
       <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
       
@@ -30,25 +53,7 @@
     </item>
     
     <item>
-      <title>Code</title>
-      <link>https://marc.helbling.fr/tags/code/</link>
-      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/code/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Devops</title>
-      <link>https://marc.helbling.fr/tags/devops/</link>
-      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/devops/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Docker</title>
+      <title>docker</title>
       <link>https://marc.helbling.fr/tags/docker/</link>
       <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
       
@@ -57,43 +62,7 @@
     </item>
     
     <item>
-      <title>Git</title>
-      <link>https://marc.helbling.fr/tags/git/</link>
-      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Interview</title>
-      <link>https://marc.helbling.fr/tags/interview/</link>
-      <pubDate>Sat, 13 Jul 2013 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/interview/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Json</title>
-      <link>https://marc.helbling.fr/tags/json/</link>
-      <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/json/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>People</title>
-      <link>https://marc.helbling.fr/tags/people/</link>
-      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/people/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Postgres</title>
+      <title>postgres</title>
       <link>https://marc.helbling.fr/tags/postgres/</link>
       <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
       
@@ -102,7 +71,7 @@
     </item>
     
     <item>
-      <title>Text</title>
+      <title>text</title>
       <link>https://marc.helbling.fr/tags/text/</link>
       <pubDate>Sun, 30 Aug 2015 00:00:00 +0000</pubDate>
       
@@ -111,20 +80,65 @@
     </item>
     
     <item>
-      <title>Vcs</title>
-      <link>https://marc.helbling.fr/tags/vcs/</link>
-      <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://marc.helbling.fr/tags/vcs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Vim</title>
+      <title>vim</title>
       <link>https://marc.helbling.fr/tags/vim/</link>
       <pubDate>Sun, 30 Aug 2015 00:00:00 +0000</pubDate>
       
       <guid>https://marc.helbling.fr/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code</title>
+      <link>https://marc.helbling.fr/tags/code/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>https://marc.helbling.fr/tags/devops/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>people</title>
+      <link>https://marc.helbling.fr/tags/people/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/people/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;</title>
+      <link>https://marc.helbling.fr/tags/c&#43;&#43;/</link>
+      <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>json</title>
+      <link>https://marc.helbling.fr/tags/json/</link>
+      <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/json/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>interview</title>
+      <link>https://marc.helbling.fr/tags/interview/</link>
+      <pubDate>Sat, 13 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/tags/interview/</guid>
       <description></description>
     </item>
     

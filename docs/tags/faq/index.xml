@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>faq on /dev/log</title>
+    <link>https://marc.helbling.fr/tags/faq/</link>
+    <description>Recent content in faq on /dev/log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/faq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang FAQ</title>
+      <link>https://marc.helbling.fr/go-faq/</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/go-faq/</guid>
+      <description>Foo</description>
+    </item>
+    
+  </channel>
+</rss>

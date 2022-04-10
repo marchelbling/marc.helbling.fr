@@ -1,15 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vcs on /dev/log</title>
+    <title>vcs on /dev/log</title>
     <link>https://marc.helbling.fr/tags/vcs/</link>
-    <description>Recent content in Vcs on /dev/log</description>
+    <description>Recent content in vcs on /dev/log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Sep 2014 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://marc.helbling.fr/tags/vcs/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 18 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/vcs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Advanced git operations</title>
+      <link>https://marc.helbling.fr/advanced-git/</link>
+      <pubDate>Tue, 18 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://marc.helbling.fr/advanced-git/</guid>
+      <description>Merging repositories Without loosing history:
+```cd path/to/project-b git remote add project-a path/to/project-a git fetch project-a --tags git merge --allow-unrelated-histories --strategy-option=theirs git remote remove project-a </description>
+    </item>
     
     <item>
       <title>A practical introduction to git</title>

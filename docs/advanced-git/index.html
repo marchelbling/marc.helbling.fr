@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Categories &#9889; /dev/log</title>
+    <title>Advanced git operations &#9889; /dev/log</title>
 
         <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -11,11 +11,11 @@
     <meta name="author" content="">
     <meta name="msvalidate.01" content="AF2CB1331E78B3C8BAE565C82C1AE415" />
 
-        <meta property="og:title" content="Categories" />
+        <meta property="og:title" content="Advanced git operations" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://marc.helbling.fr/categories/" />
+    <meta property="og:url" content="https://marc.helbling.fr/advanced-git/" />
     
 
 
@@ -34,6 +34,7 @@
     <meta name="generator" content="Hugo 0.90.0" />
 </head>
 
+
     <body>
         <div id="container">
             <header id="header">
@@ -48,13 +49,43 @@
 
 
             <section id="main" class="outer">
-                <div class="index-list">
-                    
-                    
-                </div>
+                <article class="article article-type-post" itemscope itemprop="post">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                <h1 class="article-title" itemprop="name">Advanced git operations</h1>
+            </header>
+        
 
-                
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="merging-repositories">Merging repositories</h2>
+<p>Without loosing history:</p>
+<pre tabindex="0"><code>```cd path/to/project-b
+git remote add project-a path/to/project-a
+git fetch project-a --tags
+git merge --allow-unrelated-histories --strategy-option=theirs
+git remote remove project-a
+</code></pre>
+        </div>
 
+        
+            
+            <footer class="article-footer">
+                <ul class="article-tag-list">
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/vcs">vcs</a>
+                        </li>
+                    
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/git">git</a>
+                        </li>
+                    
+                </ul>
+            </footer>
+        
+    </div>
+</article>
 
             </section>
 

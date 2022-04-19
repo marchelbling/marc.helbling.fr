@@ -3,31 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://marc.helbling.fr/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/tags/faq/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/tags/golang/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/go-faq/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/post/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/tags/</loc>
-    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/advanced-git/</loc>
-    <lastmod>2019-06-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/tags/git/</loc>
-    <lastmod>2019-06-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/tags/vcs/</loc>
-    <lastmod>2019-06-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/tags/citus/</loc>
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
@@ -38,7 +14,13 @@
     <loc>https://marc.helbling.fr/tags/postgres/</loc>
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://marc.helbling.fr/post/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://marc.helbling.fr/running-citus-locally/</loc>
+    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://marc.helbling.fr/tags/</loc>
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/tags/text/</loc>
@@ -74,7 +56,13 @@
     <loc>https://marc.helbling.fr/practical-git-introduction/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://marc.helbling.fr/tags/git/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://marc.helbling.fr/global/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://marc.helbling.fr/tags/vcs/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/about/</loc>

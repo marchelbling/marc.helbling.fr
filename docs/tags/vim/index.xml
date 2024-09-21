@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vim on /dev/log</title>
+    <title>Vim on /dev/log</title>
     <link>https://marc.helbling.fr/tags/vim/</link>
-    <description>Recent content in vim on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Vim on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Aug 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Aug 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vim notes &amp; plugins</title>
       <link>https://marc.helbling.fr/vim-notes/</link>
       <pubDate>Sun, 30 Aug 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/vim-notes/</guid>
-      <description>Basic vim All this is vim built-in and requires no plugin.
-Useful commands  %: jump to the matching { .. } or ( .. ) etc. =: indent visual selection (&amp;lt;: shift block to the left, &amp;gt;: shift block to the right) ~: change case ctrl-x + : vim ‘context aware’ complete mode (based on set complete list) in insert mode  ctrl-n/ctrl-p: next/previous word matching prefix (the difference with ctrl-p/ctrl-n is the context awareness) ctrl-f: file names ctrl-l: whole lines ctrl-d: macro definitions (also in included files) ctrl-i: current and included files ctrl-k: words from a dictionary ctrl-t: words from a thesaurus ctrl-]: tags ctrl-v: Vim command line ctrl-o: language aware completion   :set spell [spelllang=fr_fr]/:set nospell: activate/deactivate spell checking :!</description>
+      <description>&lt;h1 id=&#34;basic-vim&#34;&gt;Basic vim&lt;/h1&gt;&#xA;&lt;p&gt;All this is vim built-in and requires no plugin.&lt;/p&gt;&#xA;&lt;h2 id=&#34;useful-commands&#34;&gt;Useful commands&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;%&lt;/code&gt;: jump to the matching &lt;code&gt;{ .. }&lt;/code&gt; or &lt;code&gt;( .. )&lt;/code&gt; etc.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;=&lt;/code&gt;: indent visual selection (&lt;code&gt;&amp;lt;&lt;/code&gt;: shift block to the left, &lt;code&gt;&amp;gt;&lt;/code&gt;: shift block to the right)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;~&lt;/code&gt;: change case&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-x&lt;/code&gt; + : &lt;a href=&#34;https://www.youtube.com/watch?v=3TX3kV3TICU&#34;&gt;vim ‘context aware’ complete&lt;/a&gt; mode (based on &lt;code&gt;set complete&lt;/code&gt; list) in insert mode&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-n&lt;/code&gt;/&lt;code&gt;ctrl-p&lt;/code&gt;: next/previous word matching prefix (the difference with &lt;code&gt;ctrl-p&lt;/code&gt;/&lt;code&gt;ctrl-n&lt;/code&gt; is the context awareness)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-f&lt;/code&gt;: file names&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-l&lt;/code&gt;: whole lines&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-d&lt;/code&gt;: macro definitions (also in included files)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-i&lt;/code&gt;: current and included files&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-k&lt;/code&gt;: words from a dictionary&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-t&lt;/code&gt;: words from a thesaurus&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-]&lt;/code&gt;: tags&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-v&lt;/code&gt;: Vim command line&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-o&lt;/code&gt;: language aware completion&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;:set spell [spelllang=fr_fr]&lt;/code&gt;/&lt;code&gt;:set nospell&lt;/code&gt;: activate/deactivate spell checking&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;:!&amp;lt;command&amp;gt;&lt;/code&gt;: execute &lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt; in a shell without leaving vim (e.g. &lt;code&gt;:!make&lt;/code&gt;)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;:read !&amp;lt;command&amp;gt;&lt;/code&gt;: insert result of &lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt; on next line (e.g. &lt;code&gt;read !ls .&lt;/code&gt;)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;ctrl-O&lt;/code&gt;, &lt;code&gt;ctrl-I&lt;/code&gt;: navigate through “&lt;a href=&#34;http://vim.wikia.com/wiki/Jumping_to_previously_visited_locations&#34;&gt;jump locations&lt;/a&gt;” locations, both within current and other opened documents; &lt;code&gt;:jumps&lt;/code&gt; to list all jump locations.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;.&lt;/code&gt;: repeat last command&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;macros&#34;&gt;Macros&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;code&gt;q&amp;lt;key&amp;gt;&lt;/code&gt;: start recording&lt;/li&gt;&#xA;&lt;li&gt;(do commands)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;q&lt;/code&gt;: stop recording&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;@&amp;lt;key&amp;gt;&lt;/code&gt;: replay macro&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;advanced-editing-command-mode-exed&#34;&gt;Advanced editing (command mode ex/ed)&lt;/h2&gt;&#xA;&lt;p&gt;The command mode syntax basically reads&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

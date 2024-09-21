@@ -23,15 +23,15 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
 
-    <link href="https://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
-    <link href="https://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="feed" type="application/rss+xml" title="/dev/log" />
 
-    <link rel="stylesheet" href="https://marc.helbling.fr/css/malt.css">
+    <link rel="stylesheet" href="https://marc.helbling.fr//css/malt.css">
     
 
     <link href="http://gmpg.org/xfn/11" rel="profile">
 
-    <meta name="generator" content="Hugo 0.90.0" />
+    <meta name="generator" content="Hugo 0.134.3">
 </head>
 
 
@@ -40,7 +40,7 @@
             <header id="header">
     <div id="header-outer" class="outer">
         <div id="header-inner" class="inner">
-            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr/">/dev/log</a>
             <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
             <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
         </div>
@@ -69,88 +69,88 @@ The extension requires a master node aka the <a href="http://docs.citusdata.com/
 <p>Let’s see how to handle a local Citus cluster.</p>
 <h1 id="fiddling">Fiddling</h1>
 <p>First things first, let&rsquo;s start a Citus cluster with at least 2 workers (this assumes that <a href="https://docs.docker.com/install/"><code>docker</code></a> and <a href="https://docs.docker.com/compose/install/"><code>docker-compose</code></a> are available locally):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl https://raw.githubusercontent.com/citusdata/docker/master/docker-compose.yml &gt;docker-compose.yml
-docker-compose -p citus up --scale <span style="color:#000">worker</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">2</span> -d
-</code></pre></div><p>The image only provides the default role and database so by default, as only master exposes a port, we&rsquo;ll have to use</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl https://raw.githubusercontent.com/citusdata/docker/master/docker-compose.yml &gt;docker-compose.yml
+</span></span><span style="display:flex;"><span>docker-compose -p citus up --scale <span style="color:#000">worker</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">2</span> -d
+</span></span></code></pre></div><p>The image only provides the default role and database so by default, as only master exposes a port, we&rsquo;ll have to use</p>
 <ul>
 <li><code>psql postgres://postgres@localhost:5432?sslmode=disable</code> to connect to the master node;</li>
 <li><code>docker exec -t citus_worker_1 psql postgres://postgres@localhost:5432?sslmode=disable</code> to connect to a worker node.</li>
 </ul>
 <p>Let&rsquo;s start by creating a <code>citus</code> role and <code>citus</code> database. As Citus does not automatically forward the call to the workers, we have to call <a href="http://docs.citusdata.com/en/v7.5/develop/reference_propagation.html#running-on-all-workers"><code>run_command_on_workers</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">psql postgres://postgres@localhost:5432?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
-</span><span style="color:#4e9a06">  CREATE ROLE citus WITH LOGIN IN ROLE pg_monitor;
-</span><span style="color:#4e9a06">  SELECT run_command_on_workers(&#39;CREATE ROLE citus WITH LOGIN IN ROLE pg_monitor&#39;);
-</span><span style="color:#4e9a06">
-</span><span style="color:#4e9a06">  CREATE DATABASE citus WITH OWNER citus;
-</span><span style="color:#4e9a06">  SELECT run_command_on_workers(&#39;CREATE DATABASE citus WITH OWNER=citus&#39;);
-</span><span style="color:#4e9a06">EOQ</span>
-</code></pre></div><p>Alternatively, we could execute the same command by connecting on all the nodes successively.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>psql postgres://postgres@localhost:5432?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  CREATE ROLE citus WITH LOGIN IN ROLE pg_monitor;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  SELECT run_command_on_workers(&#39;CREATE ROLE citus WITH LOGIN IN ROLE pg_monitor&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  CREATE DATABASE citus WITH OWNER citus;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  SELECT run_command_on_workers(&#39;CREATE DATABASE citus WITH OWNER=citus&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOQ</span>
+</span></span></code></pre></div><p>Alternatively, we could execute the same command by connecting on all the nodes successively.</p>
 <p>As extensions are installed per database, we should now install the desired extensions (including the <code>citus</code> one) for our freshly created database:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
-</span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;citus&#34;;
-</span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;hll&#34;;
-</span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;topn&#34;;
-</span><span style="color:#4e9a06">EOQ</span>
-</code></pre></div><p>Now the coordinator is ready; it has a custom user, a custom database and the needed extensions. However, as everything is database scoped, the 2 workers are not attached for the <code>citus</code> database:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic"># this is the default database:</span>
-$ psql postgres://postgres@localhost:5432?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;SELECT * FROM master_get_active_worker_nodes()&#39;</span><span style="color:#000;font-weight:bold">;</span>
-   node_name    <span style="color:#000;font-weight:bold">|</span> node_port
-----------------+-----------
- citus_worker_2 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
- citus_worker_1 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
-<span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
-
-<span style="color:#8f5902;font-style:italic"># this is our new database:</span>
-$ psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;SELECT * FROM master_get_active_worker_nodes()&#39;</span><span style="color:#000;font-weight:bold">;</span>
- node_name <span style="color:#000;font-weight:bold">|</span> node_port
------------+-----------
-<span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>Using <a href="https://docs.docker.com/engine/reference/commandline/inspect/#get-an-instances-ip-address"><code>docker inspect</code></a> easily allows to retrieve the worker ips to attach them to our database:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000">worker1_ip</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span> docker inspect -f <span style="color:#4e9a06">&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> citus_worker_1 <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
-<span style="color:#000">worker2_ip</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span> docker inspect -f <span style="color:#4e9a06">&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> citus_worker_2 <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
-
-psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
-</span><span style="color:#4e9a06">  SELECT * from master_add_node(&#39;${worker1_ip}&#39;, 5432);
-</span><span style="color:#4e9a06">  SELECT * from master_add_node(&#39;${worker2_ip}&#39;, 5432);
-</span><span style="color:#4e9a06">EOQ</span>
-</code></pre></div><p>Finally, workers need to be setup for the <code>citus</code> database:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
-</span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;citus&#34;&#39;);
-</span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;hll&#34;&#39;);
-</span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;topn&#34;&#39;);
-</span><span style="color:#4e9a06">EOQ</span>
-</code></pre></div><p>And we are now done! Running all these steps takes 10-ish seconds on a recent laptop which is good enough if we consider that we do not have to start and stop a local cluster all the time.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;citus&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;hll&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  CREATE EXTENSION IF NOT EXISTS &#34;topn&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOQ</span>
+</span></span></code></pre></div><p>Now the coordinator is ready; it has a custom user, a custom database and the needed extensions. However, as everything is database scoped, the 2 workers are not attached for the <code>citus</code> database:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># this is the default database:</span>
+</span></span><span style="display:flex;"><span>$ psql postgres://postgres@localhost:5432?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;SELECT * FROM master_get_active_worker_nodes()&#39;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>   node_name    <span style="color:#000;font-weight:bold">|</span> node_port
+</span></span><span style="display:flex;"><span>----------------+-----------
+</span></span><span style="display:flex;"><span> citus_worker_2 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
+</span></span><span style="display:flex;"><span> citus_worker_1 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># this is our new database:</span>
+</span></span><span style="display:flex;"><span>$ psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;SELECT * FROM master_get_active_worker_nodes()&#39;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span> node_name <span style="color:#000;font-weight:bold">|</span> node_port
+</span></span><span style="display:flex;"><span>-----------+-----------
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Using <a href="https://docs.docker.com/engine/reference/commandline/inspect/#get-an-instances-ip-address"><code>docker inspect</code></a> easily allows to retrieve the worker ips to attach them to our database:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">worker1_ip</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span> docker inspect -f <span style="color:#4e9a06">&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> citus_worker_1 <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">worker2_ip</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span> docker inspect -f <span style="color:#4e9a06">&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> citus_worker_2 <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  SELECT * from master_add_node(&#39;${worker1_ip}&#39;, 5432);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  SELECT * from master_add_node(&#39;${worker2_ip}&#39;, 5432);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOQ</span>
+</span></span></code></pre></div><p>Finally, workers need to be setup for the <code>citus</code> database:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>psql postgres://postgres@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable <span style="color:#4e9a06">&lt;&lt;EOQ
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;citus&#34;&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;hll&#34;&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"> SELECT run_command_on_workers(&#39;CREATE EXTENSION IF NOT EXISTS &#34;topn&#34;&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOQ</span>
+</span></span></code></pre></div><p>And we are now done! Running all these steps takes 10-ish seconds on a recent laptop which is good enough if we consider that we do not have to start and stop a local cluster all the time.</p>
 <p>We can now “normally” interact with the cluster (and query both the coordinator and workers):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;select * FROM master_get_active_worker_nodes();&#39;</span>
-   node_name   <span style="color:#000;font-weight:bold">|</span> node_port
----------------+-----------
- 192.168.144.5 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
- 192.168.144.4 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
-<span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;\dx&#39;</span>
-                    List of installed extensions
-  Name   <span style="color:#000;font-weight:bold">|</span> Version <span style="color:#000;font-weight:bold">|</span>   Schema   <span style="color:#000;font-weight:bold">|</span>            Description
----------+---------+------------+-----------------------------------
- citus   <span style="color:#000;font-weight:bold">|</span> 7.5-7   <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> Citus distributed database
- hll     <span style="color:#000;font-weight:bold">|</span> 2.10    <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> storing hyperloglog data
- plpgsql <span style="color:#000;font-weight:bold">|</span> 1.0     <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> PL/pgSQL procedural language
- topn    <span style="color:#000;font-weight:bold">|</span> 2.0.0   <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> top-n JSONB
-<span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;\d+&#39;</span>
-Did not find any relations.
-
-$ docker <span style="color:#204a87">exec</span> -it citus_worker_1 psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#34;\dx&#34;</span>
-                    List of installed extensions
-  Name   <span style="color:#000;font-weight:bold">|</span> Version <span style="color:#000;font-weight:bold">|</span>   Schema   <span style="color:#000;font-weight:bold">|</span>            Description
----------+---------+------------+-----------------------------------
- citus   <span style="color:#000;font-weight:bold">|</span> 7.5-7   <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> Citus distributed database
- hll     <span style="color:#000;font-weight:bold">|</span> 2.10    <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> storing hyperloglog data
- plpgsql <span style="color:#000;font-weight:bold">|</span> 1.0     <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> PL/pgSQL procedural language
- topn    <span style="color:#000;font-weight:bold">|</span> 2.0.0   <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> top-n JSONB
-<span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>Fiddling script available as a <a href="https://gist.github.com/marchelbling/8a0b47e82d0993c8a5a4726611d5ccfd">gist</a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;select * FROM master_get_active_worker_nodes();&#39;</span>
+</span></span><span style="display:flex;"><span>   node_name   <span style="color:#000;font-weight:bold">|</span> node_port
+</span></span><span style="display:flex;"><span>---------------+-----------
+</span></span><span style="display:flex;"><span> 192.168.144.5 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
+</span></span><span style="display:flex;"><span> 192.168.144.4 <span style="color:#000;font-weight:bold">|</span>      <span style="color:#0000cf;font-weight:bold">5432</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;\dx&#39;</span>
+</span></span><span style="display:flex;"><span>                    List of installed extensions
+</span></span><span style="display:flex;"><span>  Name   <span style="color:#000;font-weight:bold">|</span> Version <span style="color:#000;font-weight:bold">|</span>   Schema   <span style="color:#000;font-weight:bold">|</span>            Description
+</span></span><span style="display:flex;"><span>---------+---------+------------+-----------------------------------
+</span></span><span style="display:flex;"><span> citus   <span style="color:#000;font-weight:bold">|</span> 7.5-7   <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> Citus distributed database
+</span></span><span style="display:flex;"><span> hll     <span style="color:#000;font-weight:bold">|</span> 2.10    <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> storing hyperloglog data
+</span></span><span style="display:flex;"><span> plpgsql <span style="color:#000;font-weight:bold">|</span> 1.0     <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> PL/pgSQL procedural language
+</span></span><span style="display:flex;"><span> topn    <span style="color:#000;font-weight:bold">|</span> 2.0.0   <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> top-n JSONB
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#39;\d+&#39;</span>
+</span></span><span style="display:flex;"><span>Did not find any relations.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ docker <span style="color:#204a87">exec</span> -it citus_worker_1 psql postgres://citus@localhost:5432/citus?sslmode<span style="color:#ce5c00;font-weight:bold">=</span>disable -c <span style="color:#4e9a06">&#34;\dx&#34;</span>
+</span></span><span style="display:flex;"><span>                    List of installed extensions
+</span></span><span style="display:flex;"><span>  Name   <span style="color:#000;font-weight:bold">|</span> Version <span style="color:#000;font-weight:bold">|</span>   Schema   <span style="color:#000;font-weight:bold">|</span>            Description
+</span></span><span style="display:flex;"><span>---------+---------+------------+-----------------------------------
+</span></span><span style="display:flex;"><span> citus   <span style="color:#000;font-weight:bold">|</span> 7.5-7   <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> Citus distributed database
+</span></span><span style="display:flex;"><span> hll     <span style="color:#000;font-weight:bold">|</span> 2.10    <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> storing hyperloglog data
+</span></span><span style="display:flex;"><span> plpgsql <span style="color:#000;font-weight:bold">|</span> 1.0     <span style="color:#000;font-weight:bold">|</span> pg_catalog <span style="color:#000;font-weight:bold">|</span> PL/pgSQL procedural language
+</span></span><span style="display:flex;"><span> topn    <span style="color:#000;font-weight:bold">|</span> 2.0.0   <span style="color:#000;font-weight:bold">|</span> public     <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">type</span> <span style="color:#204a87;font-weight:bold">for</span> top-n JSONB
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4</span> rows<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Fiddling script available as a <a href="https://gist.github.com/marchelbling/8a0b47e82d0993c8a5a4726611d5ccfd">gist</a>.</p>
 <h1 id="using-citus-in-docker-the-clean-approach">Using Citus in Docker: the clean approach.</h1>
 <p>The previous was good to better understand how to interact with a Citus cluster but this is far from practical:</p>
 <ul>
@@ -160,30 +160,30 @@ $ docker <span style="color:#204a87">exec</span> -it citus_worker_1 psql postgre
 </ul>
 <p>The Citus image is based on the official <a href="https://hub.docker.com/_/postgres/">Postgres Docker image</a> that comes with lots of customization options and this will allow us to have a clean and scalable way of running our local cluster.</p>
 <p>The first option that we want to use is the environment variable <code>POSTGRES_DB</code>; setting <code>POSTGRES_DB=citus</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">version: <span style="color:#4e9a06">&#39;2.1&#39;</span>
-
-services:
-  master:
-    container_name: <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">COMPOSE_PROJECT_NAME</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">citus</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_master&#34;</span>
-    image: <span style="color:#4e9a06">&#39;local-citus:latest&#39;</span>
-    ports: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">MASTER_EXTERNAL_PORT</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">5432</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:5432&#34;</span><span style="color:#ce5c00;font-weight:bold">]</span>
-    labels: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;com.citusdata.role=Master&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
-	environment:
-    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
-  worker:
-    image: <span style="color:#4e9a06">&#39;local-citus:latest&#39;</span>
-    labels: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;com.citusdata.role=Worker&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
-    depends_on: <span style="color:#ce5c00;font-weight:bold">{</span> manager: <span style="color:#ce5c00;font-weight:bold">{</span> condition: service_healthy <span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#ce5c00;font-weight:bold">}</span>
-	environment:
-    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
-  manager:
-    container_name: <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">COMPOSE_PROJECT_NAME</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">citus</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_manager&#34;</span>
-    image: <span style="color:#4e9a06">&#39;citusdata/membership-manager:0.2.0&#39;</span>
-    volumes: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;/var/run/docker.sock:/var/run/docker.sock&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
-    depends_on: <span style="color:#ce5c00;font-weight:bold">{</span> master: <span style="color:#ce5c00;font-weight:bold">{</span> condition: service_healthy <span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#ce5c00;font-weight:bold">}</span>
-	environment:
-    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
-</code></pre></div><p>will use the <code>citus</code> database by default and create it if needed.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>version: <span style="color:#4e9a06">&#39;2.1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>services:
+</span></span><span style="display:flex;"><span>  master:
+</span></span><span style="display:flex;"><span>    container_name: <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">COMPOSE_PROJECT_NAME</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">citus</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_master&#34;</span>
+</span></span><span style="display:flex;"><span>    image: <span style="color:#4e9a06">&#39;local-citus:latest&#39;</span>
+</span></span><span style="display:flex;"><span>    ports: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">MASTER_EXTERNAL_PORT</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">5432</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:5432&#34;</span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>    labels: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;com.citusdata.role=Master&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>	environment:
+</span></span><span style="display:flex;"><span>    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
+</span></span><span style="display:flex;"><span>  worker:
+</span></span><span style="display:flex;"><span>    image: <span style="color:#4e9a06">&#39;local-citus:latest&#39;</span>
+</span></span><span style="display:flex;"><span>    labels: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;com.citusdata.role=Worker&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>    depends_on: <span style="color:#ce5c00;font-weight:bold">{</span> manager: <span style="color:#ce5c00;font-weight:bold">{</span> condition: service_healthy <span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	environment:
+</span></span><span style="display:flex;"><span>    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
+</span></span><span style="display:flex;"><span>  manager:
+</span></span><span style="display:flex;"><span>    container_name: <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">COMPOSE_PROJECT_NAME</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">citus</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_manager&#34;</span>
+</span></span><span style="display:flex;"><span>    image: <span style="color:#4e9a06">&#39;citusdata/membership-manager:0.2.0&#39;</span>
+</span></span><span style="display:flex;"><span>    volumes: <span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#4e9a06">&#39;/var/run/docker.sock:/var/run/docker.sock&#39;</span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>    depends_on: <span style="color:#ce5c00;font-weight:bold">{</span> master: <span style="color:#ce5c00;font-weight:bold">{</span> condition: service_healthy <span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	environment:
+</span></span><span style="display:flex;"><span>    - <span style="color:#000">POSTGRES_DB</span><span style="color:#ce5c00;font-weight:bold">=</span>citus
+</span></span></code></pre></div><p>will use the <code>citus</code> database by default and create it if needed.
 Note that the environment has to be defined on all services to work as expected; now the manager will be able to attach new workers to the master node automatically.</p>
 <p>The other handy option is the <code>/docker-entrypoint-initdb.d/</code> that allows to customize how the PostgreSQL instance should behave. Any SQL or Bash script will be executed before starting the service. This can be used to</p>
 <ol>
@@ -192,20 +192,20 @@ Note that the environment has to be defined on all services to work as expected;
 <li>install custom extensions.</li>
 </ol>
 <p>All we have to do is “wrap” the Citus Docker image and inject our own script. Let&rsquo;s write a simple Dockerfile for this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">FROM citusdata/citus:7.5.0
-
-COPY 100-local-citus.sql /docker-entrypoint-initdb.d/
-</code></pre></div><p>where the <code>100-local-citus.sql</code> could simply be:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#8f5902;font-style:italic">-- user:
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">ROLE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">WITH</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">NOSUPERUSER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">LOGIN</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IN</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">ROLE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">pg_monitor</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">-- database:
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">ALTER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">DATABASE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">OWNER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">TO</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">-- extensions:
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">EXTENSION</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IF</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">EXISTS</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;hll&#34;</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">EXTENSION</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IF</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">EXISTS</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;topn&#34;</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></code></pre></div><p>Now after building the image (<code>docker build -t local-citus:latest .</code>) we can start a cluster using the same command as before:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM citusdata/citus:7.5.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COPY 100-local-citus.sql /docker-entrypoint-initdb.d/
+</span></span></code></pre></div><p>where the <code>100-local-citus.sql</code> could simply be:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">-- user:
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">ROLE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">WITH</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">NOSUPERUSER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">LOGIN</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IN</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">ROLE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">pg_monitor</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">-- database:
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">ALTER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">DATABASE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">OWNER</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">TO</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">citus</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">-- extensions:
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">EXTENSION</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IF</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">EXISTS</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;hll&#34;</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">EXTENSION</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">IF</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">EXISTS</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;topn&#34;</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div><p>Now after building the image (<code>docker build -t local-citus:latest .</code>) we can start a cluster using the same command as before:
 <code>docker-compose -p citus up --scale worker=2 -d</code>. Before the container is taking connections, all our custom setup will be executed and the manager will attach workers to the master. This solution is not more time consuming and solves all the previous issues.</p>
 <p>Configuration available as a <a href="https://gist.github.com/marchelbling/1ef4ae74c3d5bd745a04f7b8ae375f8a">gist</a>.</p>
 
@@ -217,15 +217,15 @@ COPY 100-local-citus.sql /docker-entrypoint-initdb.d/
                 <ul class="article-tag-list">
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/citus">citus</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/citus">citus</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/postgres">postgres</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/postgres">postgres</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/docker">docker</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/docker">docker</a>
                         </li>
                     
                 </ul>

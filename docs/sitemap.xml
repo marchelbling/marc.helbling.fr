@@ -3,7 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://marc.helbling.fr/</loc>
-    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://marc.helbling.fr/post/</loc>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/tags/citus/</loc>
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
@@ -12,9 +15,6 @@
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/tags/postgres/</loc>
-    <lastmod>2018-08-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://marc.helbling.fr/post/</loc>
     <lastmod>2018-08-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/running-citus-locally/</loc>
@@ -53,6 +53,9 @@
     <loc>https://marc.helbling.fr/writing-json-c/</loc>
     <lastmod>2015-02-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://marc.helbling.fr/about/</loc>
+    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://marc.helbling.fr/practical-git-introduction/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -65,14 +68,13 @@
     <loc>https://marc.helbling.fr/tags/vcs/</loc>
     <lastmod>2014-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://marc.helbling.fr/about/</loc>
-    <lastmod>2014-09-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://marc.helbling.fr/tags/interview/</loc>
     <lastmod>2013-07-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://marc.helbling.fr/interviews/</loc>
     <lastmod>2013-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://marc.helbling.fr/post/draft/ownership/</loc>
   </url><url>
     <loc>https://marc.helbling.fr/categories/</loc>
   </url>

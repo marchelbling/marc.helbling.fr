@@ -23,15 +23,15 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
 
-    <link href="https://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
-    <link href="https://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="feed" type="application/rss+xml" title="/dev/log" />
 
-    <link rel="stylesheet" href="https://marc.helbling.fr/css/malt.css">
+    <link rel="stylesheet" href="https://marc.helbling.fr//css/malt.css">
     
 
     <link href="http://gmpg.org/xfn/11" rel="profile">
 
-    <meta name="generator" content="Hugo 0.90.0" />
+    <meta name="generator" content="Hugo 0.134.3">
 </head>
 
 
@@ -40,7 +40,7 @@
             <header id="header">
     <div id="header-outer" class="outer">
         <div id="header-inner" class="inner">
-            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr/">/dev/log</a>
             <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
             <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
         </div>
@@ -141,26 +141,26 @@ Seeing a block starting with <code>#!EDITOR</code> means we are editing from a t
 </ul>
 <p>As mentioned previously, it is necessary to have a text editor installed (and presumably the <a href="http://askubuntu.com/questions/432524/how-do-i-find-and-set-my-editor-environment-variable"><code>EDITOR</code></a> environment variable). Setting up the command-line <a href="#command-line-completion">tab completion</a> script might also ease typing a lot.</p>
 <p>Let’s start by initializing a new repository</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git init <span style="color:#000">$HOME</span>/bonjour
-Initialized empty Git repository in /Users/marc/bonjour/.git/
-
-$ <span style="color:#204a87">cd</span> <span style="color:#000">$HOME</span>/bonjour
-
-$ tree -a -I hooks
-.
-└── .git
-    ├── HEAD
-    ├── config
-    ├── description
-    ├── info
-    │   └── exclude
-    ├── objects
-    │   ├── info
-    │   └── pack
-    └── refs
-        ├── heads
-        └── tags
-</code></pre></div><p><code>git init</code> just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git init <span style="color:#000">$HOME</span>/bonjour
+</span></span><span style="display:flex;"><span>Initialized empty Git repository in /Users/marc/bonjour/.git/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">cd</span> <span style="color:#000">$HOME</span>/bonjour
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ tree -a -I hooks
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>└── .git
+</span></span><span style="display:flex;"><span>    ├── HEAD
+</span></span><span style="display:flex;"><span>    ├── config
+</span></span><span style="display:flex;"><span>    ├── description
+</span></span><span style="display:flex;"><span>    ├── info
+</span></span><span style="display:flex;"><span>    │   └── exclude
+</span></span><span style="display:flex;"><span>    ├── objects
+</span></span><span style="display:flex;"><span>    │   ├── info
+</span></span><span style="display:flex;"><span>    │   └── pack
+</span></span><span style="display:flex;"><span>    └── refs
+</span></span><span style="display:flex;"><span>        ├── heads
+</span></span><span style="display:flex;"><span>        └── tags
+</span></span></code></pre></div><p><code>git init</code> just created a hidden repository to contain internal data that we’ll describe later and that’s it, we’ve got a git repository!</p>
 <h2 id="a-note-on-revision-control-ux">A note on revision control UX</h2>
 <p>Newcomers to revision control systems are often confused about how the vcs changes the way they interact with the filesystem. The good news is: it basically changes nothing!</p>
 <p>One should still edit and modify files and folders as if they were not under revision control and simply create a new revision whenever desired. Some other commands will usually allow to visualize a previous revision, compare some revisions, come back to a previous revision etc.
@@ -168,46 +168,46 @@ In git, these commands will use the information stored in the <code>.git</code> 
 <h1 id="git-basics">git basics</h1>
 <h2 id="first-commit">First commit!</h2>
 <p>Before diving quickly into git internals, let’s create our first commit:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git status
-On branch master
-
-Initial commit
-
-nothing to commit <span style="color:#ce5c00;font-weight:bold">(</span>create/copy files and use <span style="color:#4e9a06">&#34;git add&#34;</span> to track<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;A dummy app listing ways to just say &#39;hello&#39;&#34;</span> &gt; README.md
-
-$ git status
-On branch master
-
-Initial commit
-
-Untracked files:
-  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
-
-	README.md
-
-$ git add README.md
-
-$ git status
-On branch master
-
-Initial commit
-
-Changes to be committed:
-  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git rm --cached &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
-
-  new file:   README.md
-
-$ git commit -m <span style="color:#4e9a06">&#34;First commit&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>master <span style="color:#ce5c00;font-weight:bold">(</span>root-commit<span style="color:#ce5c00;font-weight:bold">)</span> 45de2f7<span style="color:#ce5c00;font-weight:bold">]</span> First commit
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
- create mode <span style="color:#0000cf;font-weight:bold">100644</span> README.md
-
-$ git status
-On branch master
-nothing to commit, working directory clean
-</code></pre></div><p>Note that at each step, the <code>git status</code> command provides helpful overview of the current repository state and a <em>contextual</em> help.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Initial commit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nothing to commit <span style="color:#ce5c00;font-weight:bold">(</span>create/copy files and use <span style="color:#4e9a06">&#34;git add&#34;</span> to track<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;A dummy app listing ways to just say &#39;hello&#39;&#34;</span> &gt; README.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Initial commit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Untracked files:
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	README.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add README.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Initial commit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Changes to be committed:
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git rm --cached &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  new file:   README.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git commit -m <span style="color:#4e9a06">&#34;First commit&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master <span style="color:#ce5c00;font-weight:bold">(</span>root-commit<span style="color:#ce5c00;font-weight:bold">)</span> 45de2f7<span style="color:#ce5c00;font-weight:bold">]</span> First commit
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span> create mode <span style="color:#0000cf;font-weight:bold">100644</span> README.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>nothing to commit, working directory clean
+</span></span></code></pre></div><p>Note that at each step, the <code>git status</code> command provides helpful overview of the current repository state and a <em>contextual</em> help.</p>
 <h2 id="staging-area">Staging area</h2>
 <p>git uses a two-phase commit:</p>
 <ol>
@@ -222,31 +222,31 @@ nothing to commit, working directory clean
 </ul>
 <p>The staging area is an important aspect of git as it is what connects the local file system to the internal git storage.
 It is described by <code>git status</code> as <em>&ldquo;changes to be committed&rdquo;</em> and thus it is important to think of it as a commit draft.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mkdir <span style="color:#ce5c00;font-weight:bold">{</span>fr,en<span style="color:#ce5c00;font-weight:bold">}</span>
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;bonjour&#39;</span> &gt; fr/data
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;hello&#39;</span> &gt; en/data
-
-$ git add fr/data
-
-$ git status
-On branch master
-Changes to be committed:
-  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git reset HEAD &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
-
-  new file:   fr/data
-
-Untracked files:
-  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
-
-  en/
-</code></pre></div><p>Notice that we do not have to stage all local modifications. Once we are done selecting the changes that belong to a new revision, we may actually commit those changes.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit -m <span style="color:#4e9a06">&#34;Create french data file&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>master 13d1b4b<span style="color:#ce5c00;font-weight:bold">]</span> Create french data file
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
- create mode <span style="color:#0000cf;font-weight:bold">100644</span> fr/data
-</code></pre></div><p>This example is really simple; a more realistic workflow would be:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ mkdir <span style="color:#ce5c00;font-weight:bold">{</span>fr,en<span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;bonjour&#39;</span> &gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#39;hello&#39;</span> &gt; en/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>Changes to be committed:
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git reset HEAD &lt;file&gt;...&#34;</span> to unstage<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  new file:   fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Untracked files:
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  en/
+</span></span></code></pre></div><p>Notice that we do not have to stage all local modifications. Once we are done selecting the changes that belong to a new revision, we may actually commit those changes.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git commit -m <span style="color:#4e9a06">&#34;Create french data file&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master 13d1b4b<span style="color:#ce5c00;font-weight:bold">]</span> Create french data file
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span> create mode <span style="color:#0000cf;font-weight:bold">100644</span> fr/data
+</span></span></code></pre></div><p>This example is really simple; a more realistic workflow would be:</p>
 <ol>
 <li>make local changes</li>
 <li>stage meaningful changes/unstage undesired ones (using <code>git reset [--patch] HEAD file</code>)</li>
@@ -257,17 +257,17 @@ Untracked files:
 <h2 id="data-store">Data store</h2>
 <h3 id="objects">Objects</h3>
 <p>After creating a commit, <code>git</code> displays a unique id for the newly created commit. We may use some git commands to inspect this <a href="http://git-scm.com/book/en/Git-Internals-Git-Objects">data</a></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file -t 13d1b4b
-commit
-
-$ git cat-file commit 13d1b4b
-tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
-parent 45de2f713305a9dcd3e82833653153c19081f36e
-author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
-committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
-
-Create french data file
-</code></pre></div><p>From this, we see that a <a href="http://git-scm.com/docs/git-commit-tree">commit</a> references:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git cat-file -t 13d1b4b
+</span></span><span style="display:flex;"><span>commit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git cat-file commit 13d1b4b
+</span></span><span style="display:flex;"><span>tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+</span></span><span style="display:flex;"><span>parent 45de2f713305a9dcd3e82833653153c19081f36e
+</span></span><span style="display:flex;"><span>author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
+</span></span><span style="display:flex;"><span>committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413120925</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Create french data file
+</span></span></code></pre></div><p>From this, we see that a <a href="http://git-scm.com/docs/git-commit-tree">commit</a> references:</p>
 <ul>
 <li>a “tree”: git internal description of the filesystem</li>
 <li>a parent: git is fundamentally a <strong>direct acyclic graph</strong> (<a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a>) in which nodes are commits that references their parent commit(s)</li>
@@ -278,22 +278,22 @@ Create french data file
 <li>a message: the description for the changes contained in the commit.</li>
 </ul>
 <p>This is the high level definition of a commit in git. We need to go one more step into internals and inspect the “tree” object to have a better picture of how git structures data.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
-<span style="color:#0000cf;font-weight:bold">100644</span> README.mdF??Bd???<span style="color:#4e9a06">&#34;?C-%D?J?x40000 fr\bbS?&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>nC??WJ!
-
-$ git ls-tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
-<span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
-<span style="color:#0000cf;font-weight:bold">040000</span> tree 5c7f626253bb14227d6e074382ee91574a180f21	fr
-
-$ git cat-file blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e
-A dummy app listing ways to just say <span style="color:#4e9a06">&#39;hello&#39;</span>
-
-$ git ls-tree 5c7f626253bb14227d6e074382ee91574a180f21
-<span style="color:#0000cf;font-weight:bold">100644</span> blob 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3	data
-
-$ git cat-file -p 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3
-bonjour
-</code></pre></div><p>So we can see that:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git cat-file tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">100644</span> README.mdF??Bd???<span style="color:#4e9a06">&#34;?C-%D?J?x40000 fr\bbS?&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>nC??WJ!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git ls-tree 7efc3caa79efbab80f45335d4d5f8d2885daff29
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">040000</span> tree 5c7f626253bb14227d6e074382ee91574a180f21	fr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git cat-file blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e
+</span></span><span style="display:flex;"><span>A dummy app listing ways to just say <span style="color:#4e9a06">&#39;hello&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git ls-tree 5c7f626253bb14227d6e074382ee91574a180f21
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">100644</span> blob 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3	data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git cat-file -p 1cd909e05d33f0f6bc4ea1caf19b5749b434ceb3
+</span></span><span style="display:flex;"><span>bonjour
+</span></span></code></pre></div><p>So we can see that:</p>
 <ul>
 <li>a “tree” contains pointers to “blobs” and other trees and a name for each pointer</li>
 <li>a “blob” is bunch of bytes representing user content (text, images etc.)</li>
@@ -315,39 +315,39 @@ bonjour
 <h3 id="physical-storage">Physical storage</h3>
 <p>As git handles history of files, we may ask ourselves how does git stores incremental differences for our data.
 To test this, let’s add some content in an existing file</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;salut&#34;</span> &gt;&gt; fr/data
-
-$ git add -u
-
-$ git commit -m <span style="color:#4e9a06">&#34;Add more frensh data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>master 456a082<span style="color:#ce5c00;font-weight:bold">]</span> Add more frensh data
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>and inspect the resulting blob object</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git ls-tree 456a082
-<span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
-<span style="color:#0000cf;font-weight:bold">040000</span> tree 3d9ba4d12442602bd81928438f80810622b9fd56	fr
-
-$ git ls-tree 3d9ba4d12442602bd81928438f80810622b9fd56
-<span style="color:#0000cf;font-weight:bold">100644</span> blob bd61b2ccb39197cc3a66b43f52a6fed66a237a29	data
-
-$ git cat-file blob bd61b2c
-bonjour
-salut
-</code></pre></div><p>The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for <a href="https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt">git≥1.9.0</a>).
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;salut&#34;</span> &gt;&gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add -u
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git commit -m <span style="color:#4e9a06">&#34;Add more frensh data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master 456a082<span style="color:#ce5c00;font-weight:bold">]</span> Add more frensh data
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>and inspect the resulting blob object</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git ls-tree 456a082
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">100644</span> blob 4695a64264e4d7ea22d9432d25449f1e4aeb781e	README.md
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">040000</span> tree 3d9ba4d12442602bd81928438f80810622b9fd56	fr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git ls-tree 3d9ba4d12442602bd81928438f80810622b9fd56
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">100644</span> blob bd61b2ccb39197cc3a66b43f52a6fed66a237a29	data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git cat-file blob bd61b2c
+</span></span><span style="display:flex;"><span>bonjour
+</span></span><span style="display:flex;"><span>salut
+</span></span></code></pre></div><p>The conclusion is that git stores pointers to “full” blobs which means that a blob is useful by itself, independently of the history file it represents.  Practically, this means that even a shallow repository is usable (especially for <a href="https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/1.9.0.txt">git≥1.9.0</a>).
 This could seem inefficient as for each file, git will keep a copy of the full content after each commit. However, git may also create “<a href="http://git-scm.com/book/en/Git-Internals-Packfiles">packfiles</a>” that represent content ‘delta’s to optimize disk usage.</p>
 <p>Time to examine how the data is actually stored.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
-xK??OR04aH????/-?*N?<span style="color:#ce5c00;font-weight:bold">)</span>-?S?a
-
-$ python -c <span style="color:#4e9a06">&#34;&#34;&#34;
-</span><span style="color:#4e9a06">import zlib, sys;
-</span><span style="color:#4e9a06">print repr(zlib.decompress(sys.stdin.read()))
-</span><span style="color:#4e9a06">&#34;&#34;&#34;</span> &lt; .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
-<span style="color:#4e9a06">&#39;blob 14\x00bonjour\nsalut\n&#39;</span>
-
-$ wc -c fr/data
-      <span style="color:#0000cf;font-weight:bold">14</span> fr/data
-</code></pre></div><p>git physically stores content using zlib-compressed files containing:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
+</span></span><span style="display:flex;"><span>xK??OR04aH????/-?*N?<span style="color:#ce5c00;font-weight:bold">)</span>-?S?a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ python -c <span style="color:#4e9a06">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">import zlib, sys;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">print repr(zlib.decompress(sys.stdin.read()))
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">&#34;&#34;&#34;</span> &lt; .git/objects/bd/61b2ccb39197cc3a66b43f52a6fed66a237a29
+</span></span><span style="display:flex;"><span><span style="color:#4e9a06">&#39;blob 14\x00bonjour\nsalut\n&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ wc -c fr/data
+</span></span><span style="display:flex;"><span>      <span style="color:#0000cf;font-weight:bold">14</span> fr/data
+</span></span></code></pre></div><p>git physically stores content using zlib-compressed files containing:</p>
 <ol>
 <li>the object type (blob, tree, commit or tag)</li>
 <li>the uncompressed data size</li>
@@ -358,74 +358,73 @@ $ wc -c fr/data
 <p>The zlib compression will optimize git disk usage for storing commits (especially if blobs represent large files).</p>
 <p>The last important point for this quest is to understand how git names his internal files. Those names correspond to a cryptographic hash of the object. The hash function used is <a href="http://en.wikipedia.org/wiki/SHA-1">SHA-1</a> and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
 You may have noticed that when referencing git <a href="http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/">objects</a>, we did not always used a 40 digits long value every time. git allows to use a shorter sub-sha1 <em>prefix</em>, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cat fr/data <span style="color:#000;font-weight:bold">|</span> git hash-object --stdin
-bd61b2ccb39197cc3a66b43f52a6fed66a237a29
-
-$ tree .git/objects/ --matchdirs -P bd
-.git/objects/
-├── <span style="color:#0000cf;font-weight:bold">13</span>
-├── 1c
-├── 3d
-├── <span style="color:#0000cf;font-weight:bold">45</span>
-├── <span style="color:#0000cf;font-weight:bold">46</span>
-├── 5c
-├── <span style="color:#0000cf;font-weight:bold">77</span>
-├── 7e
-├── bd
-│   └── 61b2ccb39197cc3a66b43f52a6fed66a237a29
-├── cf
-├── info
-└── pack
-
-</code></pre></div><p>git shards objects into 16×16=256 subfolders to grant a <a href="http://thread.gmane.org/gmane.comp.version-control.git/69322">faster access</a> to a given sha1. This matters as all manipulations in git involve a sha1 (sometimes through <!-- raw HTML omitted -->aliases<!-- raw HTML omitted -->).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat fr/data <span style="color:#000;font-weight:bold">|</span> git hash-object --stdin
+</span></span><span style="display:flex;"><span>bd61b2ccb39197cc3a66b43f52a6fed66a237a29
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ tree .git/objects/ --matchdirs -P bd
+</span></span><span style="display:flex;"><span>.git/objects/
+</span></span><span style="display:flex;"><span>├── <span style="color:#0000cf;font-weight:bold">13</span>
+</span></span><span style="display:flex;"><span>├── 1c
+</span></span><span style="display:flex;"><span>├── 3d
+</span></span><span style="display:flex;"><span>├── <span style="color:#0000cf;font-weight:bold">45</span>
+</span></span><span style="display:flex;"><span>├── <span style="color:#0000cf;font-weight:bold">46</span>
+</span></span><span style="display:flex;"><span>├── 5c
+</span></span><span style="display:flex;"><span>├── <span style="color:#0000cf;font-weight:bold">77</span>
+</span></span><span style="display:flex;"><span>├── 7e
+</span></span><span style="display:flex;"><span>├── bd
+</span></span><span style="display:flex;"><span>│   └── 61b2ccb39197cc3a66b43f52a6fed66a237a29
+</span></span><span style="display:flex;"><span>├── cf
+</span></span><span style="display:flex;"><span>├── info
+</span></span><span style="display:flex;"><span>└── pack
+</span></span></code></pre></div><p>git shards objects into 16×16=256 subfolders to grant a <a href="http://thread.gmane.org/gmane.comp.version-control.git/69322">faster access</a> to a given sha1. This matters as all manipulations in git involve a sha1 (sometimes through <!-- raw HTML omitted -->aliases<!-- raw HTML omitted -->).</p>
 <p>In the end, we have spent a bit of time looking at how git stores <em>loose</em> objects i.e. how git stores its objects in individual files. This helped us getting the big picture of the internal storage.</p>
 <p>We will not dig the <a href="http://schacon.github.io/gitbook/7_the_packfile.html">packfile</a> <a href="https://www.kernel.org/pub/software/scm/git/docs/technical/pack-format.txt">format</a> which is an optimization to avoid cluttering the disk by regrouping objects together (typically by invoking <code>git gc</code>).</p>
 <h2 id="immutability">Immutability</h2>
 <p>When creating our last commit, we made an horrible typo. git allows to amend the last commit using <code>git commit --amend</code>.  If the staging area contains any modification, they will be added to the commit.</p>
 <p>In our case, we just want to fix our typo in the commit message, so we do not add anything to the staging area:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit --amend
-</code></pre></div><p>opens our favorite editor (as defined by the <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#Basic-Client-Configuration"><code>$EDITOR</code></a> environment variable) where we may edit the commit message</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8f5902;font-style:italic">#!EDITOR
-</span><span style="color:#8f5902;font-style:italic"></span>Add more french data
-
-<span style="color:#8f5902;font-style:italic"># Please enter the commit message for your changes. Lines starting</span>
-<span style="color:#8f5902;font-style:italic"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
-<span style="color:#8f5902;font-style:italic">#</span>
-<span style="color:#8f5902;font-style:italic"># Date:      Sun Oct 12 16:19:08 2014 +0200</span>
-<span style="color:#8f5902;font-style:italic">#</span>
-<span style="color:#8f5902;font-style:italic"># On branch master</span>
-<span style="color:#8f5902;font-style:italic">#</span>
-<span style="color:#8f5902;font-style:italic"># Changes to be committed:</span>
-<span style="color:#8f5902;font-style:italic"># modified:   fr/data</span>
-<span style="color:#8f5902;font-style:italic">#</span>
-</code></pre></div><p>and simply save our modification.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ce5c00;font-weight:bold">[</span>master dd0f5d6<span style="color:#ce5c00;font-weight:bold">]</span> Add more french data
- Date: Sun Oct <span style="color:#0000cf;font-weight:bold">12</span> 16:19:08 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>We see that git creates a <em>new</em> commit object <code>dd0f5d6</code> (remember that the sha1 involves the commit message and timestamps).</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file commit dd0f5d6
-tree 77a832b508bd5d2fb7c1eb8999e6e0a9f926434d
-parent 13d1b4b062b7a7308553bc504dda2d43d32525ba
-author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413123548</span> +0200
-committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413725760</span> +0200
-
-Add more french data
-</code></pre></div><p>This means that a commit is <a href="http://www.brainshave.com/talks/immutable-data-trees">immutable</a>; any modification creates a new commit instead of modifying the existing one thus making git a <a href="http://www.jayway.com/2013/03/03/git-is-a-purely-functional-data-structure/">functional</a> DAG.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git commit --amend
+</span></span></code></pre></div><p>opens our favorite editor (as defined by the <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#Basic-Client-Configuration"><code>$EDITOR</code></a> environment variable) where we may edit the commit message</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!EDITOR
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>Add more french data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Please enter the commit message for your changes. Lines starting</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Date:      Sun Oct 12 16:19:08 2014 +0200</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># On branch master</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Changes to be committed:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># modified:   fr/data</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#</span>
+</span></span></code></pre></div><p>and simply save our modification.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master dd0f5d6<span style="color:#ce5c00;font-weight:bold">]</span> Add more french data
+</span></span><span style="display:flex;"><span> Date: Sun Oct <span style="color:#0000cf;font-weight:bold">12</span> 16:19:08 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>We see that git creates a <em>new</em> commit object <code>dd0f5d6</code> (remember that the sha1 involves the commit message and timestamps).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git cat-file commit dd0f5d6
+</span></span><span style="display:flex;"><span>tree 77a832b508bd5d2fb7c1eb8999e6e0a9f926434d
+</span></span><span style="display:flex;"><span>parent 13d1b4b062b7a7308553bc504dda2d43d32525ba
+</span></span><span style="display:flex;"><span>author Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413123548</span> +0200
+</span></span><span style="display:flex;"><span>committer Marc Helbling &lt;marc.d.helbling@gmail.com&gt; <span style="color:#0000cf;font-weight:bold">1413725760</span> +0200
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Add more french data
+</span></span></code></pre></div><p>This means that a commit is <a href="http://www.brainshave.com/talks/immutable-data-trees">immutable</a>; any modification creates a new commit instead of modifying the existing one thus making git a <a href="http://www.jayway.com/2013/03/03/git-is-a-purely-functional-data-structure/">functional</a> DAG.
 We will later see that this is an important property to have in mind when multiple people are working on the same repository. The benefit is that every object is uniquely defined and when you manipulate a sha1 you do not have to worry about not having the correct content.</p>
 <h2 id="reflog">Reflog</h2>
 <p>If we look at our commit tree</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-</code></pre></div><p>we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit a new commit. We could fear that any git command have a direct and irreversible impact.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git log --graph --oneline
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit a new commit. We could fear that any git command have a direct and irreversible impact.</p>
 <p>However git keeps a <a href="https://git-scm.com/docs/git-reflog">reflog</a> which is a record of all commits that were referenced at some point.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git reflog
-dd0f5d6 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>0<span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>amend<span style="color:#ce5c00;font-weight:bold">)</span>: Add more french data
-456a082 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>1<span style="color:#ce5c00;font-weight:bold">}</span>: commit: Add more frensh data
-13d1b4b HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>2<span style="color:#ce5c00;font-weight:bold">}</span>: commit: Create french data file
-45de2f7 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>3<span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>initial<span style="color:#ce5c00;font-weight:bold">)</span>: First commit
-</code></pre></div><p>Any action that has been <strong>committed</strong> can be retrieved later, even if it is no longer referenced in the commit tree. This allows to undo bad commands very easily and may serve as a safety net.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git reflog
+</span></span><span style="display:flex;"><span>dd0f5d6 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>0<span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>amend<span style="color:#ce5c00;font-weight:bold">)</span>: Add more french data
+</span></span><span style="display:flex;"><span>456a082 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>1<span style="color:#ce5c00;font-weight:bold">}</span>: commit: Add more frensh data
+</span></span><span style="display:flex;"><span>13d1b4b HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>2<span style="color:#ce5c00;font-weight:bold">}</span>: commit: Create french data file
+</span></span><span style="display:flex;"><span>45de2f7 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>3<span style="color:#ce5c00;font-weight:bold">}</span>: commit <span style="color:#ce5c00;font-weight:bold">(</span>initial<span style="color:#ce5c00;font-weight:bold">)</span>: First commit
+</span></span></code></pre></div><p>Any action that has been <strong>committed</strong> can be retrieved later, even if it is no longer referenced in the commit tree. This allows to undo bad commands very easily and may serve as a safety net.</p>
 <p>Note however that git has <a href="https://www.kernel.org/pub/software/scm/git/docs/git-gc.html">garbage</a> <a href="http://alblue.bandlem.com/2011/11/git-tip-of-week-gc-and-pruning-this.html">collection</a> commands that will remove unreachable objects. By default those commands will not remove objects that were created in the last 2 weeks.</p>
 <h2 id="git-basics-tldr">git basics: tl;dr</h2>
 <ul>
@@ -440,87 +439,83 @@ dd0f5d6 HEAD@<span style="color:#ce5c00;font-weight:bold">{</span>0<span style="
 <h1 id="branches-and-remotes">Branches and remotes</h1>
 <h2 id="branches">Branches</h2>
 <p>As we have seen in the previous section, git is a graph and you may have noticed that <code>git status</code> names branches:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git status
-On branch master
-nothing to commit, working directory clean
-
-$ git branch
-* master
-</code></pre></div><p>By default, git creates a branch called <code>master</code>.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>nothing to commit, working directory clean
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch
+</span></span><span style="display:flex;"><span>* master
+</span></span></code></pre></div><p>By default, git creates a branch called <code>master</code>.
 If we inspect this object</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git cat-file -t master
-commit
-
-$ git show --oneline master
-dd0f5d6 Add more french data
-diff --git a/fr/data b/fr/data
-index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
---- a/fr/data
-+++ b/fr/data
-@@ -1 +1,2 @@
- bonjour
-+salut
-
-</code></pre></div><p>we realize that a branch is simply a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ tree .git/refs/heads/
-.git/refs/heads/
-└── master
-
-$ cat .git/refs/heads/master
-dd0f5d6500d72d54747dec1dc4139f13b5fdb8f2
-</code></pre></div><p>git also keeps an alias for current branch last commit as <a href="http://git-scm.com/book/en/Git-Internals-Git-References"><code>HEAD</code></a> (with a special case for <a href="http://git-scm.com/docs/git-checkout#_detached_head"><code>detached HEAD</code></a>).</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git show --oneline HEAD
-dd0f5d6 Add more french data
-diff --git a/fr/data b/fr/data
-index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
---- a/fr/data
-+++ b/fr/data
-@@ -1 +1,2 @@
- bonjour
-+salut
-
-$ cat .git/HEAD
-ref: refs/heads/master
-
-</code></pre></div><p>Creating new branch is very easy with git:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git branch structure-data
-
-$ git branch
-  structure-data
-* master
-
-$ git checkout structure-data
-Switched to branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-
-$ git branch
-* structure-data
-  master
-
-$ git show --oneline HEAD
-dd0f5d6 Add more french data
-diff --git a/fr/data b/fr/data
-index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
---- a/fr/data
-+++ b/fr/data
-@@ -1 +1,2 @@
- bonjour
-+salut
-
-</code></pre></div><p>We see that our brand new branch points exactly to the same commit as our <code>master</code> branch. This is the default behavior when creating a new branch; it is assumed that the new branch will start from <code>HEAD</code> and may be changed by passing the desired branching commit sha1 as a second argument i.e. <code>git branch new_branch new_branch_HEAD_commit</code>.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;# old\n\nbonjour\nsalut&#34;</span> &gt; fr/data
-
-$ git add fr/data <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add &#39;old&#39; header to french data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>structure-data dd0109a<span style="color:#ce5c00;font-weight:bold">]</span> add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-
-$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# modern\n\nyo&#34;</span> &gt;&gt; fr/data
-
-$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add modern french data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>structure-data 5a40d5a<span style="color:#ce5c00;font-weight:bold">]</span> add modern french data
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">4</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-</code></pre></div><h2 id="comparing">Comparing</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git cat-file -t master
+</span></span><span style="display:flex;"><span>commit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git show --oneline master
+</span></span><span style="display:flex;"><span>dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>diff --git a/fr/data b/fr/data
+</span></span><span style="display:flex;"><span>index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@ -1 +1,2 @@
+</span></span><span style="display:flex;"><span> bonjour
+</span></span><span style="display:flex;"><span>+salut
+</span></span></code></pre></div><p>we realize that a branch is simply a pointer to a “leaf” commit also called “tip” commit. The binding name/commit is stored in</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ tree .git/refs/heads/
+</span></span><span style="display:flex;"><span>.git/refs/heads/
+</span></span><span style="display:flex;"><span>└── master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ cat .git/refs/heads/master
+</span></span><span style="display:flex;"><span>dd0f5d6500d72d54747dec1dc4139f13b5fdb8f2
+</span></span></code></pre></div><p>git also keeps an alias for current branch last commit as <a href="http://git-scm.com/book/en/Git-Internals-Git-References"><code>HEAD</code></a> (with a special case for <a href="http://git-scm.com/docs/git-checkout#_detached_head"><code>detached HEAD</code></a>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git show --oneline HEAD
+</span></span><span style="display:flex;"><span>dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>diff --git a/fr/data b/fr/data
+</span></span><span style="display:flex;"><span>index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@ -1 +1,2 @@
+</span></span><span style="display:flex;"><span> bonjour
+</span></span><span style="display:flex;"><span>+salut
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ cat .git/HEAD
+</span></span><span style="display:flex;"><span>ref: refs/heads/master
+</span></span></code></pre></div><p>Creating new branch is very easy with git:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git branch structure-data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch
+</span></span><span style="display:flex;"><span>  structure-data
+</span></span><span style="display:flex;"><span>* master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git checkout structure-data
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch
+</span></span><span style="display:flex;"><span>* structure-data
+</span></span><span style="display:flex;"><span>  master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git show --oneline HEAD
+</span></span><span style="display:flex;"><span>dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>diff --git a/fr/data b/fr/data
+</span></span><span style="display:flex;"><span>index 1cd909e..bd61b2c <span style="color:#0000cf;font-weight:bold">100644</span>
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@ -1 +1,2 @@
+</span></span><span style="display:flex;"><span> bonjour
+</span></span><span style="display:flex;"><span>+salut
+</span></span></code></pre></div><p>We see that our brand new branch points exactly to the same commit as our <code>master</code> branch. This is the default behavior when creating a new branch; it is assumed that the new branch will start from <code>HEAD</code> and may be changed by passing the desired branching commit sha1 as a second argument i.e. <code>git branch new_branch new_branch_HEAD_commit</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;# old\n\nbonjour\nsalut&#34;</span> &gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add fr/data <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add &#39;old&#39; header to french data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>structure-data dd0109a<span style="color:#ce5c00;font-weight:bold">]</span> add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# modern\n\nyo&#34;</span> &gt;&gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add modern french data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>structure-data 5a40d5a<span style="color:#ce5c00;font-weight:bold">]</span> add modern french data
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">4</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><h2 id="comparing">Comparing</h2>
 <p>Now that we have two distinct branches, we should make sure that the changes introduced by our new branch match the intended specification. We therefore need to see the differences in content and commits.</p>
 <h3 id="referencing-parent-commits">Referencing parent commits</h3>
 <ul>
@@ -550,28 +545,28 @@ $ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git 
 <li><code>git branch --no-merged</code>: list branches that are not reachable in current branch history</li>
 </ul>
 <p>If we compare our branch content with the <code>master</code> branch:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff master structure-data
-diff --git a/fr/data b/fr/data
-index bd61b2c..ea35d1f <span style="color:#0000cf;font-weight:bold">100644</span>
---- a/fr/data
-+++ b/fr/data
-@@ -1,2 +1,8 @@
-+# old
-+
- bonjour
- salut
-+
-+# modern
-+
-+yo
-
-$ git log --oneline structure-data --not master
-5a40d5a add modern french data
-dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-
-$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git branch --merged
-* master
-</code></pre></div><p>we see that we have been structuring our data and adding new content in two commits that are ready to be merged.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git diff master structure-data
+</span></span><span style="display:flex;"><span>diff --git a/fr/data b/fr/data
+</span></span><span style="display:flex;"><span>index bd61b2c..ea35d1f <span style="color:#0000cf;font-weight:bold">100644</span>
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@ -1,2 +1,8 @@
+</span></span><span style="display:flex;"><span>+# old
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span> bonjour
+</span></span><span style="display:flex;"><span> salut
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+# modern
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+yo
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git log --oneline structure-data --not master
+</span></span><span style="display:flex;"><span>5a40d5a add modern french data
+</span></span><span style="display:flex;"><span>dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git branch --merged
+</span></span><span style="display:flex;"><span>* master
+</span></span></code></pre></div><p>we see that we have been structuring our data and adding new content in two commits that are ready to be merged.</p>
 <h2 id="merging">Merging</h2>
 <p>As we are happy with the changes introduced in our new branch, we may now make our work available in the repository trunk.
 There are multiple strategies to perform this, the most basic one being a merge commit. In its simplest — yet most common — form, a merge will take 2 branches and create a commit having the branches respective <code>HEAD</code>s as parents through a merge.</p>
@@ -584,286 +579,281 @@ There are multiple strategies to perform this, the most basic one being a merge 
 </ul>
 <p>The result of a three-way merge will <a href="http://www.quora.com/How-does-Git-merge-work/answer/Anders-Kaseorg">look like</a>: <code>HEAD + (MERGE_HEAD - ORIG_HEAD)</code></p>
 <table>
-<thead>
-<tr>
-<th><code>HEAD</code></th>
-<th><code>+</code></th>
-<th><code>MERGE_HEAD</code></th>
-<th><code>-</code></th>
-<th><code>ORIG_HEAD</code></th>
-<th>→</th>
-<th>result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>foo</td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td>foo</td>
-</tr>
-<tr>
-<td>foo</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>foo</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td></td>
-<td></td>
-<td>foo</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>foo</td>
-<td></td>
-<td></td>
-<td></td>
-<td>foo</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>foo</td>
-<td></td>
-<td>bar</td>
-<td></td>
-<td>baz</td>
-<td></td>
-<td><em>conflict</em></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th style="text-align: left"><code>HEAD</code></th>
+          <th style="text-align: left"><code>+</code></th>
+          <th style="text-align: left"><code>MERGE_HEAD</code></th>
+          <th style="text-align: left"><code>-</code></th>
+          <th style="text-align: left"><code>ORIG_HEAD</code></th>
+          <th style="text-align: left">→</th>
+          <th style="text-align: left">result</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">foo</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">bar</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">baz</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"><em>conflict</em></td>
+      </tr>
+  </tbody>
 </table>
 <p>This short overview of how the three-way merge works assume that <code>ORIG_HEAD</code> is unique which can be wrong when merge commits are involved too. By default, git uses the <code>merge-recursive</code> strategy that is a three-way merge where the <code>ORIG_HEAD</code> is a (virtual) merge commits for all common ancestors.</p>
 <p>So, after running</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge --no-ff structure-data
-&gt; Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-&gt;
-&gt; <span style="color:#8f5902;font-style:italic"># Please enter a commit message to explain why this merge is necessary,</span>
-&gt; <span style="color:#8f5902;font-style:italic"># especially if it merges an updated upstream into a topic branch.</span>
-&gt; <span style="color:#8f5902;font-style:italic">#</span>
-&gt; <span style="color:#8f5902;font-style:italic"># Lines starting with &#39;#&#39; will be ignored, and an empty message aborts</span>
-&gt; <span style="color:#8f5902;font-style:italic"># the commit.</span>
-Merge made by the <span style="color:#4e9a06">&#39;recursive&#39;</span> strategy.
- fr/data <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">6</span> ++++++
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">6</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ cat fr/data
-<span style="color:#8f5902;font-style:italic"># old</span>
-
-bonjour
-salut
-
-<span style="color:#8f5902;font-style:italic"># modern</span>
-
-yo
-</code></pre></div><p>the commit tree now looks like</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
-* 62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
-<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>/
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-</code></pre></div><p>One thing to notice is that the merge commit (62cbf27) is linked to 2 (parent) commits: dd0f5d6 and 5a40d5a. <a href="#referencing-parent-commits">Referencing</a> a merge commit ancestors may therefore be ambiguous in some contexts.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git merge --no-ff structure-data
+</span></span><span style="display:flex;"><span>&gt; Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#8f5902;font-style:italic"># Please enter a commit message to explain why this merge is necessary,</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#8f5902;font-style:italic"># especially if it merges an updated upstream into a topic branch.</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#8f5902;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#8f5902;font-style:italic"># Lines starting with &#39;#&#39; will be ignored, and an empty message aborts</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#8f5902;font-style:italic"># the commit.</span>
+</span></span><span style="display:flex;"><span>Merge made by the <span style="color:#4e9a06">&#39;recursive&#39;</span> strategy.
+</span></span><span style="display:flex;"><span> fr/data <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">6</span> ++++++
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">6</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ cat fr/data
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># old</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bonjour
+</span></span><span style="display:flex;"><span>salut
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># modern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yo
+</span></span></code></pre></div><p>the commit tree now looks like</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git log --graph --oneline
+</span></span><span style="display:flex;"><span>* 62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>One thing to notice is that the merge commit (62cbf27) is linked to 2 (parent) commits: dd0f5d6 and 5a40d5a. <a href="#referencing-parent-commits">Referencing</a> a merge commit ancestors may therefore be ambiguous in some contexts.</p>
 <h3 id="fast-forward">Fast forward</h3>
 <p>When merging, we explicitly asked git to create a merge commit using the <code>--no-ff</code> flag. However, looking at the commit graph, we see that it is (almost) equivalent to the simplified one</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">* yyyyyyy add modern french data
-* xxxxxxx add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-</code></pre></div><p>Indeed, in this case, <code>HEAD</code> and <code>ORIG_HEAD</code> pointed to the same commits hence <code>HEAD</code> may just be updated to <code>MERGE_HEAD</code>. Wether one should prevent fast-forward merges or not is a matter of workflow and we will discuss this point a bit later.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>* yyyyyyy add modern french data
+</span></span><span style="display:flex;"><span>* xxxxxxx add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>Indeed, in this case, <code>HEAD</code> and <code>ORIG_HEAD</code> pointed to the same commits hence <code>HEAD</code> may just be updated to <code>MERGE_HEAD</code>. Wether one should prevent fast-forward merges or not is a matter of workflow and we will discuss this point a bit later.</p>
 <h3 id="resolving-conflicts">Resolving conflicts</h3>
 <p>We have seen that in some situations, the three-way merge results in a situation where the merge content may not be automatically deduced. This is called a merge conflict. Let’s create a conflict:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b modern-french
-Switched to a new branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;jourbon&#34;</span> &gt;&gt; fr/data
-
-$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add new modern data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>modern-french 81defc8<span style="color:#ce5c00;font-weight:bold">]</span> add new modern data
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# slang\n\nchenu reluit&#34;</span> &gt;&gt; fr/data
-
-$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add french slang&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>modern-french e6defd6<span style="color:#ce5c00;font-weight:bold">]</span> add french slang
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">5</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ git checkout master
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;wesh&#34;</span> &gt;&gt; fr/data
-
-$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add more modern data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>master 075ce36<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-</code></pre></div><p>Let’s see what happens when we try to merge:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge modern-french
-Auto-merging fr/data
-CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
-Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
-
-$ git status
-On branch master
-Your branch is up-to-date with <span style="color:#4e9a06">&#39;origin/master&#39;</span>.
-You have unmerged paths.
-  <span style="color:#ce5c00;font-weight:bold">(</span>fix conflicts and run <span style="color:#4e9a06">&#34;git commit&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
-
-Unmerged paths:
-  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to mark resolution<span style="color:#ce5c00;font-weight:bold">)</span>
-
-	both modified:   fr/data
-
-$ git diff
-diff --cc fr/data
-index cd1a280,5a932d1..0000000
---- a/fr/data
-+++ b/fr/data
-@@@ -6,4 -6,9 +6,13 @@@ salu
-  <span style="color:#8f5902;font-style:italic"># modern</span>
-
-  yo
-++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
- +wesh
-++<span style="color:#ce5c00;font-weight:bold">=======</span>
-+ jourbon
-+
-+
-+ <span style="color:#8f5902;font-style:italic"># slang</span>
-+
-+ chenu reluit
-++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french
-
-</code></pre></div><p>We see the content from the <code>master</code> branch materialized in a block delimited by
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git checkout -b modern-french
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;jourbon&#34;</span> &gt;&gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add new modern data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>modern-french 81defc8<span style="color:#ce5c00;font-weight:bold">]</span> add new modern data
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;\n# slang\n\nchenu reluit&#34;</span> &gt;&gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add french slang&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>modern-french e6defd6<span style="color:#ce5c00;font-weight:bold">]</span> add french slang
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">5</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git checkout master
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;wesh&#34;</span> &gt;&gt; fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;add more modern data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master 075ce36<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Let’s see what happens when we try to merge:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git merge modern-french
+</span></span><span style="display:flex;"><span>Auto-merging fr/data
+</span></span><span style="display:flex;"><span>CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+</span></span><span style="display:flex;"><span>Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git status
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>Your branch is up-to-date with <span style="color:#4e9a06">&#39;origin/master&#39;</span>.
+</span></span><span style="display:flex;"><span>You have unmerged paths.
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>fix conflicts and run <span style="color:#4e9a06">&#34;git commit&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Unmerged paths:
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">(</span>use <span style="color:#4e9a06">&#34;git add &lt;file&gt;...&#34;</span> to mark resolution<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	both modified:   fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git diff
+</span></span><span style="display:flex;"><span>diff --cc fr/data
+</span></span><span style="display:flex;"><span>index cd1a280,5a932d1..0000000
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@@ -6,4 -6,9 +6,13 @@@ salu
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># modern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  yo
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span style="display:flex;"><span> +wesh
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">=======</span>
+</span></span><span style="display:flex;"><span>+ jourbon
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ <span style="color:#8f5902;font-style:italic"># slang</span>
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ chenu reluit
+</span></span><span style="display:flex;"><span>++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french
+</span></span></code></pre></div><p>We see the content from the <code>master</code> branch materialized in a block delimited by
 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>=======</code> and the content of <code>modern-french</code> is delimited by <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>. By default, git only shows <code>HEAD</code> (on the top of a conflict) and <code>MERGE_HEAD</code> (on the bottom of a conflict).
 Visualizing the <code>ORIG_HEAD</code> content is a matter of configuration and may be achieved by setting <code>git config --local merge.conflictstyle diff3</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git merge --abort
-
-$ git merge modern-french
-Auto-merging fr/data
-CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
-Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
-
-$ git diff
-diff --cc fr/data
-index cd1a280,5a932d1..0000000
---- a/fr/data
-+++ b/fr/data
-@@@ -6,4 -6,9 +6,14 @@@ salu
-  <span style="color:#8f5902;font-style:italic"># modern</span>
-
-  yo
-++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
- +wesh
-++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
-++<span style="color:#ce5c00;font-weight:bold">=======</span>
-+ jourbon
-+
-+
-+ <span style="color:#8f5902;font-style:italic"># slang</span>
-+
-+ chenu reluit
-++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french
-</code></pre></div><p>We now have the full picture:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git merge --abort
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git merge modern-french
+</span></span><span style="display:flex;"><span>Auto-merging fr/data
+</span></span><span style="display:flex;"><span>CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+</span></span><span style="display:flex;"><span>Automatic merge failed<span style="color:#000;font-weight:bold">;</span> fix conflicts and <span style="color:#204a87;font-weight:bold">then</span> commit the result.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git diff
+</span></span><span style="display:flex;"><span>diff --cc fr/data
+</span></span><span style="display:flex;"><span>index cd1a280,5a932d1..0000000
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@@ -6,4 -6,9 +6,14 @@@ salu
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># modern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  yo
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span style="display:flex;"><span> +wesh
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">=======</span>
+</span></span><span style="display:flex;"><span>+ jourbon
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ <span style="color:#8f5902;font-style:italic"># slang</span>
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ chenu reluit
+</span></span><span style="display:flex;"><span>++&gt;&gt;&gt;&gt;&gt;&gt;&gt; modern-french
+</span></span></code></pre></div><p>We now have the full picture:</p>
 <ul>
 <li>there was no content before attempting to merge;</li>
 <li>the <code>master</code> branch wants to add “wesh” in the modern section;</li>
 <li>the <code>modern-french</code> branch wants to add a “slang” section.</li>
 </ul>
 <p>This conflicts is easy to <a href="https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/">solve</a> by editing the file and keeping both changes and thus having the following</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$  git diff
- +wesh
-+ jourbon
-+
-+
-+ <span style="color:#8f5902;font-style:italic"># slang</span>
-+
-+ chenu reluit
-
-</code></pre></div><p>To finish the conflict resolution, we may now stage our changes and commit them</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit
-&gt; Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
-&gt;
-&gt; Conflicts:
-&gt;   fr/data
-<span style="color:#ce5c00;font-weight:bold">[</span>master b20ab97<span style="color:#ce5c00;font-weight:bold">]</span> Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
-</code></pre></div><p>and look at our commit tree</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
-*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
-<span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
-* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
-<span style="color:#000;font-weight:bold">|</span>/
-*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
-<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>/
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-
-</code></pre></div><p>It is important to note that when feeling unsure about the resolution of a conflict:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$  git diff
+</span></span><span style="display:flex;"><span> +wesh
+</span></span><span style="display:flex;"><span>+ jourbon
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ <span style="color:#8f5902;font-style:italic"># slang</span>
+</span></span><span style="display:flex;"><span>+
+</span></span><span style="display:flex;"><span>+ chenu reluit
+</span></span></code></pre></div><p>To finish the conflict resolution, we may now stage our changes and commit them</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit
+</span></span><span style="display:flex;"><span>&gt; Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;
+</span></span><span style="display:flex;"><span>&gt; Conflicts:
+</span></span><span style="display:flex;"><span>&gt;   fr/data
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>master b20ab97<span style="color:#ce5c00;font-weight:bold">]</span> Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+</span></span></code></pre></div><p>and look at our commit tree</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git log --graph --oneline
+</span></span><span style="display:flex;"><span>*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
+</span></span><span style="display:flex;"><span>* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>It is important to note that when feeling unsure about the resolution of a conflict:</p>
 <ul>
 <li>reflog keeps previous states so it will always be possible to undo things</li>
 <li>the conflict resolution can be aborted using <code>git merge --abort</code>.</li>
 </ul>
 <h2 id="rebasing">Rebasing</h2>
 <p>Once again, it feels like the graph</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
-<span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
-* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
-<span style="color:#000;font-weight:bold">|</span>/
-</code></pre></div><p>could make more sense as</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#000;font-weight:bold">|</span>
-* yyyyyyy add french slang
-* xxxxxxx add new modern data
-<span style="color:#000;font-weight:bold">|</span>
-*  075ce36 add more modern data
-<span style="color:#000;font-weight:bold">|</span>
-</code></pre></div><p>Indeed, the purpose of the <code>modern-french</code> branch was just to add new content; we could debate about the reason why we would create a new branch as we are continuing previous work. So let’s rewind our repository to where it was before merging</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
-$ git reset --hard 075ce36
-
-$ git checkout modern-french <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git log --graph --oneline
-* e6defd6 add french slang
-* 81defc8 add new modern data
-*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
-<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>/
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-
-</code></pre></div><p>What we would like to achieve is to change the parent commit of 81defc8 to <code>master</code>’s HEAD (075ce36). git allows to move a series of commit (or branch) and replay them on another commit (or branch) with the <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rebase.html"><code>git rebase</code></a> command.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>*   b20ab97 Merge branch <span style="color:#4e9a06">&#39;modern-french&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * e6defd6 add french slang
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * 81defc8 add new modern data
+</span></span><span style="display:flex;"><span>* <span style="color:#000;font-weight:bold">|</span> 075ce36 add more modern data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span></code></pre></div><p>could make more sense as</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>* yyyyyyy add french slang
+</span></span><span style="display:flex;"><span>* xxxxxxx add new modern data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>*  075ce36 add more modern data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>
+</span></span></code></pre></div><p>Indeed, the purpose of the <code>modern-french</code> branch was just to add new content; we could debate about the reason why we would create a new branch as we are continuing previous work. So let’s rewind our repository to where it was before merging</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git reset --hard 075ce36
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git checkout modern-french <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git log --graph --oneline
+</span></span><span style="display:flex;"><span>* e6defd6 add french slang
+</span></span><span style="display:flex;"><span>* 81defc8 add new modern data
+</span></span><span style="display:flex;"><span>*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>What we would like to achieve is to change the parent commit of 81defc8 to <code>master</code>’s HEAD (075ce36). git allows to move a series of commit (or branch) and replay them on another commit (or branch) with the <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rebase.html"><code>git rebase</code></a> command.</p>
 <p><code>git rebase</code> <a href="http://git-scm.com/book/ch3-6.html">works</a> by</p>
 <ol>
 <li>going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto),</li>
@@ -878,74 +868,72 @@ $ git checkout modern-french <span style="color:#ce5c00;font-weight:bold">&amp;&
 <li>git will drop a commit for which the computed diff is now empty.</li>
 </ol>
 <p>Let’s try to rebase <code>modern-french</code> onto <code>master</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase master
-First, rewinding head to replay your work on top of it...
-Applying: add new modern data
-Using index info to reconstruct a base tree...
-M	fr/data
-Falling back to patching base and 3-way merge...
-Auto-merging fr/data
-CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
-Failed to merge in the changes.
-Patch failed at <span style="color:#0000cf;font-weight:bold">0001</span> add new modern data
-The copy of the patch that failed is found in:
-   /private/tmp/bonjour/.git/rebase-apply/patch
-
-When you have resolved this problem, run <span style="color:#4e9a06">&#34;git rebase --continue&#34;</span>.
-If you prefer to skip this patch, run <span style="color:#4e9a06">&#34;git rebase --skip&#34;</span> instead.
-To check out the original branch and stop rebasing, run <span style="color:#4e9a06">&#34;git rebase --abort&#34;</span>.
-
-$ git diff
-diff --cc fr/data
-index cd1a280,89bb164..0000000
---- a/fr/data
-+++ b/fr/data
-@@@ -6,4 -6,4 +6,9 @@@ salu
-  <span style="color:#8f5902;font-style:italic"># modern</span>
-
-  yo
-++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
- +wesh
-++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
-++<span style="color:#ce5c00;font-weight:bold">=======</span>
-+ jourbon
-++&gt;&gt;&gt;&gt;&gt;&gt;&gt; add new modern data
-
-</code></pre></div><p>When applying the commits, git uses the three-way merge algorithm which explains that we have a conflict similar to the one we had with a merge. We edit the conflict as previously:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff
-diff --cc fr/data
-index cd1a280,89bb164..0000000
---- a/fr/data
-+++ b/fr/data
-@@@ -6,4 -6,4 +6,5 @@@ salu
-  <span style="color:#8f5902;font-style:italic"># modern</span>
-
-  yo
- +wesh
-+ jourbon
-</code></pre></div><p>and then stage our modification to continue the rebase process</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git rebase --continue
-Applying: add new modern data
-Applying: add french slang
-Using index info to reconstruct a base tree...
-M	fr/data
-Falling back to patching base and 3-way merge...
-Auto-merging fr/data
-
-$ git log --graph --oneline
-* b588260 add french slang
-* 7a48ea2 add new modern data
-* 075ce36 add more modern data
-*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
-<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>/
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-
-</code></pre></div><p>We have thus linearized our commit history by rebasing the <code>modern-french</code> branch onto the <code>master</code> branch.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git rebase master
+</span></span><span style="display:flex;"><span>First, rewinding head to replay your work on top of it...
+</span></span><span style="display:flex;"><span>Applying: add new modern data
+</span></span><span style="display:flex;"><span>Using index info to reconstruct a base tree...
+</span></span><span style="display:flex;"><span>M	fr/data
+</span></span><span style="display:flex;"><span>Falling back to patching base and 3-way merge...
+</span></span><span style="display:flex;"><span>Auto-merging fr/data
+</span></span><span style="display:flex;"><span>CONFLICT <span style="color:#ce5c00;font-weight:bold">(</span>content<span style="color:#ce5c00;font-weight:bold">)</span>: Merge conflict in fr/data
+</span></span><span style="display:flex;"><span>Failed to merge in the changes.
+</span></span><span style="display:flex;"><span>Patch failed at <span style="color:#0000cf;font-weight:bold">0001</span> add new modern data
+</span></span><span style="display:flex;"><span>The copy of the patch that failed is found in:
+</span></span><span style="display:flex;"><span>   /private/tmp/bonjour/.git/rebase-apply/patch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>When you have resolved this problem, run <span style="color:#4e9a06">&#34;git rebase --continue&#34;</span>.
+</span></span><span style="display:flex;"><span>If you prefer to skip this patch, run <span style="color:#4e9a06">&#34;git rebase --skip&#34;</span> instead.
+</span></span><span style="display:flex;"><span>To check out the original branch and stop rebasing, run <span style="color:#4e9a06">&#34;git rebase --abort&#34;</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git diff
+</span></span><span style="display:flex;"><span>diff --cc fr/data
+</span></span><span style="display:flex;"><span>index cd1a280,89bb164..0000000
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@@ -6,4 -6,4 +6,9 @@@ salu
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># modern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  yo
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span style="display:flex;"><span> +wesh
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> merged common ancestors
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">=======</span>
+</span></span><span style="display:flex;"><span>+ jourbon
+</span></span><span style="display:flex;"><span>++&gt;&gt;&gt;&gt;&gt;&gt;&gt; add new modern data
+</span></span></code></pre></div><p>When applying the commits, git uses the three-way merge algorithm which explains that we have a conflict similar to the one we had with a merge. We edit the conflict as previously:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git diff
+</span></span><span style="display:flex;"><span>diff --cc fr/data
+</span></span><span style="display:flex;"><span>index cd1a280,89bb164..0000000
+</span></span><span style="display:flex;"><span>--- a/fr/data
+</span></span><span style="display:flex;"><span>+++ b/fr/data
+</span></span><span style="display:flex;"><span>@@@ -6,4 -6,4 +6,5 @@@ salu
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># modern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  yo
+</span></span><span style="display:flex;"><span> +wesh
+</span></span><span style="display:flex;"><span>+ jourbon
+</span></span></code></pre></div><p>and then stage our modification to continue the rebase process</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git add -u <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git rebase --continue
+</span></span><span style="display:flex;"><span>Applying: add new modern data
+</span></span><span style="display:flex;"><span>Applying: add french slang
+</span></span><span style="display:flex;"><span>Using index info to reconstruct a base tree...
+</span></span><span style="display:flex;"><span>M	fr/data
+</span></span><span style="display:flex;"><span>Falling back to patching base and 3-way merge...
+</span></span><span style="display:flex;"><span>Auto-merging fr/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git log --graph --oneline
+</span></span><span style="display:flex;"><span>* b588260 add french slang
+</span></span><span style="display:flex;"><span>* 7a48ea2 add new modern data
+</span></span><span style="display:flex;"><span>* 075ce36 add more modern data
+</span></span><span style="display:flex;"><span>*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>We have thus linearized our commit history by rebasing the <code>modern-french</code> branch onto the <code>master</code> branch.</p>
 <p>Once again:</p>
 <ul>
 <li><code>git reflog</code> would enable to undo a faulty rebase if needed</li>
@@ -954,9 +942,9 @@ $ git log --graph --oneline
 </ul>
 <h3 id="rewriting-history">Rewriting history</h3>
 <p>By rebasing our branch, we have avoided a merge commit. However, we now have two successive commits that seem to bring similar changes</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">* 7a48ea2 add new modern data
-* 075ce36 add more modern data
-</code></pre></div><p>Those changes probably deserve to belong to the same commit. <code>git rebase --interactive</code> enables to rewrite a set of commits interactively e.g.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>* 7a48ea2 add new modern data
+</span></span><span style="display:flex;"><span>* 075ce36 add more modern data
+</span></span></code></pre></div><p>Those changes probably deserve to belong to the same commit. <code>git rebase --interactive</code> enables to rewrite a set of commits interactively e.g.</p>
 <ul>
 <li>reword a commit message</li>
 <li>squash commits together</li>
@@ -965,158 +953,156 @@ $ git log --graph --oneline
 <li>reorder commits.</li>
 </ul>
 <p>In our case we want to squash commits <code>075ce36</code> and <code>7a48ea2</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive 075ce36^
-</code></pre></div><p>will present all child commits that may be rewritten:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 075ce36 add more modern data
-pick 7a48ea2 add new modern data
-pick b588260 add french slang
-
-<span style="color:#8f5902;font-style:italic"># Rebase 62cbf27..b588260 onto 62cbf27</span>
-<span style="color:#8f5902;font-style:italic">#</span>
-<span style="color:#8f5902;font-style:italic"># Commands:</span>
-<span style="color:#8f5902;font-style:italic">#  p, pick = use commit</span>
-<span style="color:#8f5902;font-style:italic">#  r, reword = use commit, but edit the commit message</span>
-<span style="color:#8f5902;font-style:italic">#  e, edit = use commit, but stop for amending</span>
-<span style="color:#8f5902;font-style:italic">#  s, squash = use commit, but meld into previous commit</span>
-<span style="color:#8f5902;font-style:italic">#  f, fixup = like &#34;squash&#34;, but discard this commit&#39;s log message</span>
-<span style="color:#8f5902;font-style:italic">#  x, exec = run command (the rest of the line) using </span>
-</code></pre></div><p>It is important to note that the commits order is reversed compared to the output of <code>git log</code> command; the first commits listed are the oldest one.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git rebase --interactive 075ce36^
+</span></span></code></pre></div><p>will present all child commits that may be rewritten:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pick 075ce36 add more modern data
+</span></span><span style="display:flex;"><span>pick 7a48ea2 add new modern data
+</span></span><span style="display:flex;"><span>pick b588260 add french slang
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Rebase 62cbf27..b588260 onto 62cbf27</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Commands:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  p, pick = use commit</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  r, reword = use commit, but edit the commit message</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  e, edit = use commit, but stop for amending</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  s, squash = use commit, but meld into previous commit</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  f, fixup = like &#34;squash&#34;, but discard this commit&#39;s log message</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#  x, exec = run command (the rest of the line) using </span>
+</span></span></code></pre></div><p>It is important to note that the commits order is reversed compared to the output of <code>git log</code> command; the first commits listed are the oldest one.</p>
 <p>We just need to change the line</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 7a48ea2 add new modern data
-</code></pre></div><p>into (note that changing anything else that the verb at the beginning of a line will have no effect)</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">fixup 7a48ea2 add new modern data
-</code></pre></div><p>and save the change</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive 075ce36^
-<span style="color:#ce5c00;font-weight:bold">[</span>detached HEAD df55562<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
- Date: Wed Oct <span style="color:#0000cf;font-weight:bold">22</span> 22:45:05 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-Successfully rebased and updated refs/heads/modern-french.
-</code></pre></div><p>We are done rewriting history and now have a clean commit tree:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git log --graph --oneline
-* cc4b70a add french slang
-* df55562 add more modern data
-*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
-<span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
-</span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
-<span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
-<span style="color:#000;font-weight:bold">|</span>/
-* dd0f5d6 Add more french data
-* 13d1b4b Create french data file
-* 45de2f7 First commit
-</code></pre></div><p>Now the <code>modern-french</code> branch should be renamed into <code>master</code> which can be done in multiple ways e.g.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git reset --hard modern-french
-HEAD is now at cc4b70a add french slang
-
-$ git branch --delete modern-french
-Deleted branch modern-french <span style="color:#ce5c00;font-weight:bold">(</span>was cc4b70a<span style="color:#ce5c00;font-weight:bold">)</span>.
-</code></pre></div><p>or</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git branch -D master
-Deleted branch master <span style="color:#ce5c00;font-weight:bold">(</span>was 075ce36<span style="color:#ce5c00;font-weight:bold">)</span>.
-
-$ git branch --move modern-french master
-
-</code></pre></div><h2 id="rebase-caveats">Rebase caveats</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pick 7a48ea2 add new modern data
+</span></span></code></pre></div><p>into (note that changing anything else that the verb at the beginning of a line will have no effect)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fixup 7a48ea2 add new modern data
+</span></span></code></pre></div><p>and save the change</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git rebase --interactive 075ce36^
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>detached HEAD df55562<span style="color:#ce5c00;font-weight:bold">]</span> add more modern data
+</span></span><span style="display:flex;"><span> Date: Wed Oct <span style="color:#0000cf;font-weight:bold">22</span> 22:45:05 <span style="color:#0000cf;font-weight:bold">2014</span> +0200
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">2</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>Successfully rebased and updated refs/heads/modern-french.
+</span></span></code></pre></div><p>We are done rewriting history and now have a clean commit tree:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git log --graph --oneline
+</span></span><span style="display:flex;"><span>* cc4b70a add french slang
+</span></span><span style="display:flex;"><span>* df55562 add more modern data
+</span></span><span style="display:flex;"><span>*   62cbf27 Merge branch <span style="color:#4e9a06">&#39;structure-data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-weight:bold">|</span> * 5a40d5a add modern french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span> * dd0109a add <span style="color:#4e9a06">&#39;old&#39;</span> header to french data
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">|</span>/
+</span></span><span style="display:flex;"><span>* dd0f5d6 Add more french data
+</span></span><span style="display:flex;"><span>* 13d1b4b Create french data file
+</span></span><span style="display:flex;"><span>* 45de2f7 First commit
+</span></span></code></pre></div><p>Now the <code>modern-french</code> branch should be renamed into <code>master</code> which can be done in multiple ways e.g.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git checkout master <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git reset --hard modern-french
+</span></span><span style="display:flex;"><span>HEAD is now at cc4b70a add french slang
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch --delete modern-french
+</span></span><span style="display:flex;"><span>Deleted branch modern-french <span style="color:#ce5c00;font-weight:bold">(</span>was cc4b70a<span style="color:#ce5c00;font-weight:bold">)</span>.
+</span></span></code></pre></div><p>or</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git branch -D master
+</span></span><span style="display:flex;"><span>Deleted branch master <span style="color:#ce5c00;font-weight:bold">(</span>was 075ce36<span style="color:#ce5c00;font-weight:bold">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch --move modern-french master
+</span></span></code></pre></div><h2 id="rebase-caveats">Rebase caveats</h2>
 <p>Rewriting history can lead to predictable yet unexpected results.</p>
 <p>Suppose we create a new file with some lines and a commit for each line.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b rewriting-history
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;one&#34;</span> &gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;first&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 9041c15<span style="color:#ce5c00;font-weight:bold">]</span> first
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
- create mode <span style="color:#0000cf;font-weight:bold">100644</span> dummy
-
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;two&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;second&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 50c1ff1<span style="color:#ce5c00;font-weight:bold">]</span> second
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;three&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;third&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 631a301<span style="color:#ce5c00;font-weight:bold">]</span> third
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
-
-</code></pre></div><p>Now let’s say we want to swap commits</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git rebase --interactive HEAD~3
-</code></pre></div><p>and set</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pick 9041c15 first
-pick 631a301 third
-pick 50c1ff1 second
-</code></pre></div><p>This will give the following conflict diff</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
-++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 631a301... third
-++two
-++<span style="color:#ce5c00;font-weight:bold">=======</span>
-+ two
-+ three
-++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 631a301... third
-</code></pre></div><p>This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit <code>A</code> to commit <code>B</code> (i.e. <code>git diff A B</code>). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. <code>git diff A...B</code>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git checkout -b rewriting-history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;one&#34;</span> &gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;first&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 9041c15<span style="color:#ce5c00;font-weight:bold">]</span> first
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span> create mode <span style="color:#0000cf;font-weight:bold">100644</span> dummy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;two&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;second&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 50c1ff1<span style="color:#ce5c00;font-weight:bold">]</span> second
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;three&#34;</span> &gt;&gt; dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git add dummy <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> git commit -m <span style="color:#4e9a06">&#34;third&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>rewriting-history 631a301<span style="color:#ce5c00;font-weight:bold">]</span> third
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">1</span> insertion<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Now let’s say we want to swap commits</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git rebase --interactive HEAD~3
+</span></span></code></pre></div><p>and set</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pick 9041c15 first
+</span></span><span style="display:flex;"><span>pick 631a301 third
+</span></span><span style="display:flex;"><span>pick 50c1ff1 second
+</span></span></code></pre></div><p>This will give the following conflict diff</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 631a301... third
+</span></span><span style="display:flex;"><span>++two
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">=======</span>
+</span></span><span style="display:flex;"><span>+ two
+</span></span><span style="display:flex;"><span>+ three
+</span></span><span style="display:flex;"><span>++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 631a301... third
+</span></span></code></pre></div><p>This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit <code>A</code> to commit <code>B</code> (i.e. <code>git diff A B</code>). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. <code>git diff A...B</code>).</p>
 <p>Let’s say that we resolved the conflict with the following</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git diff
-diff --cc dummy
-index 5626abf,4cb29ea..0000000
---- a/dummy
-+++ b/dummy
-@@@ -1,1 -1,3 +1,2 @@@
-  one
- -two
-+ three
-</code></pre></div><p>When we continue the rebase, we will again hit a conflict:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
- +three
-++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 50c1ff1... second
-++<span style="color:#ce5c00;font-weight:bold">=======</span>
-+ two
-++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 50c1ff1... second
-</code></pre></div><p>We see that we have moved the issue from the common ancestor to the <code>MERGE_HEAD</code>, which in a rebase, is the parent commit and created a conflict cascade.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git diff
+</span></span><span style="display:flex;"><span>diff --cc dummy
+</span></span><span style="display:flex;"><span>index 5626abf,4cb29ea..0000000
+</span></span><span style="display:flex;"><span>--- a/dummy
+</span></span><span style="display:flex;"><span>+++ b/dummy
+</span></span><span style="display:flex;"><span>@@@ -1,1 -1,3 +1,2 @@@
+</span></span><span style="display:flex;"><span>  one
+</span></span><span style="display:flex;"><span> -two
+</span></span><span style="display:flex;"><span>+ three
+</span></span></code></pre></div><p>When we continue the rebase, we will again hit a conflict:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt; HEAD
+</span></span><span style="display:flex;"><span> +three
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">||||||</span><span style="color:#000;font-weight:bold">|</span> parent of 50c1ff1... second
+</span></span><span style="display:flex;"><span>++<span style="color:#ce5c00;font-weight:bold">=======</span>
+</span></span><span style="display:flex;"><span>+ two
+</span></span><span style="display:flex;"><span>++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 50c1ff1... second
+</span></span></code></pre></div><p>We see that we have moved the issue from the common ancestor to the <code>MERGE_HEAD</code>, which in a rebase, is the parent commit and created a conflict cascade.</p>
 <h2 id="remotes">Remotes</h2>
 <p>Until now, we have been working locally. As the repository is now clean, we are now ready to publish our work to the world. git servers can be interacted with through the <a href="https://www.kernel.org/pub/software/scm/git/docs/git-remote.html"><code>git remote</code></a> command.
 By default no remote server is defined. We will use a repository declared on <a href="https://github.com/">GitHub</a> as our remote called <code>origin</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git remote add origin git@github.com:marchelbling/bonjour.git
-
-$ git remote show origin
-* remote origin
-  Fetch URL: git@github.com:marchelbling/bonjour.git
-  Push  URL: git@github.com:marchelbling/bonjour.git
-  HEAD branch: <span style="color:#ce5c00;font-weight:bold">(</span>unknown<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>We see two new verbs, “Fetch” to retrieve modification <em>from</em> the remote repository and “Push” to publish our local modification <em>to</em> a remote repository. This local/remote binding is called the <a href="http://git-scm.com/book/en/v2/Git-Internals-The-Refspec">refspec</a>. By default, the “Fetch” URL is the same as the “Push” URL but this may be easily <a href="http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html">configured</a> if needed.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git remote add origin git@github.com:marchelbling/bonjour.git
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git remote show origin
+</span></span><span style="display:flex;"><span>* remote origin
+</span></span><span style="display:flex;"><span>  Fetch URL: git@github.com:marchelbling/bonjour.git
+</span></span><span style="display:flex;"><span>  Push  URL: git@github.com:marchelbling/bonjour.git
+</span></span><span style="display:flex;"><span>  HEAD branch: <span style="color:#ce5c00;font-weight:bold">(</span>unknown<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>We see two new verbs, “Fetch” to retrieve modification <em>from</em> the remote repository and “Push” to publish our local modification <em>to</em> a remote repository. This local/remote binding is called the <a href="http://git-scm.com/book/en/v2/Git-Internals-The-Refspec">refspec</a>. By default, the “Fetch” URL is the same as the “Push” URL but this may be easily <a href="http://sleepycoders.blogspot.fr/2012/05/different-git-push-pullfetch-urls.html">configured</a> if needed.</p>
 <p>As we did not interact (to fetch or push) with the <code>origin</code> remote yet, the <code>HEAD</code> or upstream branch is unknown.</p>
 <h3 id="push">Push</h3>
 <p><code>git push origin local:remote</code> will push the <code>local</code> branch as the <code>remote</code> branch onto the <code>origin</code> remote (where <code>remote</code> is equal to <code>local</code> by default).</p>
 <p>git might be <a href="http://stackoverflow.com/a/948397/626278">configured</a> to shorten the command line to push changes upstream. However care should be taken that this configuration depends a lot on the git version being used (and you might depend on multiple versions when working with distinct servers) so as a safe rule of thumb, always invoke <code>git push origin local</code> to push the <code>local</code> branch to the <code>origin</code> remote. Actually pushing changes is not the action that you perform most of the time and it will keep you out of any <a href="https://groups.google.com/forum/#!msg/jenkinsci-dev/-myjRIPcVwU/qOAqXGaRioIJ">embarrassing mistake</a>.</p>
 <p>Note that if <code>local</code> is empty (i.e. <code>git push origin :remote</code>), the <code>remote</code> branch will be deleted from the <code>origin</code> remote.</p>
 <p>We may push our <code>master</code> branch to our <code>origin</code> remote</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git push origin master
-Counting objects: 8, <span style="color:#204a87;font-weight:bold">done</span>.
-Delta compression using up to <span style="color:#0000cf;font-weight:bold">4</span> threads.
-Compressing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>5/5<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
-Writing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>8/8<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">738</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
-Total <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
-To git@github.com:marchelbling/bonjour.git
- * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      master -&gt; master
-</code></pre></div><p>and everyone with an access to the remote can now see our work.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git push origin master
+</span></span><span style="display:flex;"><span>Counting objects: 8, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Delta compression using up to <span style="color:#0000cf;font-weight:bold">4</span> threads.
+</span></span><span style="display:flex;"><span>Compressing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>5/5<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Writing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>8/8<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">738</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Total <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>To git@github.com:marchelbling/bonjour.git
+</span></span><span style="display:flex;"><span> * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      master -&gt; master
+</span></span></code></pre></div><p>and everyone with an access to the remote can now see our work.</p>
 <h3 id="fetch">Fetch</h3>
 <p>Until now, we have been working on our own on the repository. As we created a public repository, some changes may have been pushed to our remote. git does not automatically try to get modification from the remote so it is the user responsibility to make sure his repository is up to date.
 The command to retrieve remote changes is <code>git fetch</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git fetch origin
-remote: Counting objects: 4, <span style="color:#204a87;font-weight:bold">done</span>.
-remote: Compressing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>2/2<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
-remote: Total <span style="color:#0000cf;font-weight:bold">4</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
-Unpacking objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>4/4<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
-From github.com:marchelbling/bonjour
- * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      english    -&gt; origin/english
-</code></pre></div><p>We can see that a new branch <code>english</code> has been pushed. We see that locally, git refers to it as <code>origin/english</code>. Indeed, git keep remote object references in an eponym namespace</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ tree .git/refs/ --matchdirs -P remotes/origin
-.git/refs/
-├── heads
-├── remotes
-│   └── origin
-│       ├── english
-│       └── master
-└── tags
-</code></pre></div><p>It is important to understand that fetching a remote will <em>not</em> modify the working tree. Also, as a consequence of the remote namespacing, to reference a remote branch we should prefix it with the remote name</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git checkout -b english origin/english
-Branch english <span style="color:#204a87">set</span> up to track remote branch english from origin.
-Switched to a new branch <span style="color:#4e9a06">&#39;english&#39;</span>
-</code></pre></div><h3 id="pull">Pull</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git fetch origin
+</span></span><span style="display:flex;"><span>remote: Counting objects: 4, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>remote: Compressing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>2/2<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>remote: Total <span style="color:#0000cf;font-weight:bold">4</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>Unpacking objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>4/4<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>From github.com:marchelbling/bonjour
+</span></span><span style="display:flex;"><span> * <span style="color:#ce5c00;font-weight:bold">[</span>new branch<span style="color:#ce5c00;font-weight:bold">]</span>      english    -&gt; origin/english
+</span></span></code></pre></div><p>We can see that a new branch <code>english</code> has been pushed. We see that locally, git refers to it as <code>origin/english</code>. Indeed, git keep remote object references in an eponym namespace</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ tree .git/refs/ --matchdirs -P remotes/origin
+</span></span><span style="display:flex;"><span>.git/refs/
+</span></span><span style="display:flex;"><span>├── heads
+</span></span><span style="display:flex;"><span>├── remotes
+</span></span><span style="display:flex;"><span>│   └── origin
+</span></span><span style="display:flex;"><span>│       ├── english
+</span></span><span style="display:flex;"><span>│       └── master
+</span></span><span style="display:flex;"><span>└── tags
+</span></span></code></pre></div><p>It is important to understand that fetching a remote will <em>not</em> modify the working tree. Also, as a consequence of the remote namespacing, to reference a remote branch we should prefix it with the remote name</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git checkout -b english origin/english
+</span></span><span style="display:flex;"><span>Branch english <span style="color:#204a87">set</span> up to track remote branch english from origin.
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#4e9a06">&#39;english&#39;</span>
+</span></span></code></pre></div><h3 id="pull">Pull</h3>
 <p>Often times, we fetch a remote to check for update on our working branch meaning that we want to update both git objects and our working tree. This means that we would actually like to fetch changes and apply them. This is what <code>git pull</code> does:</p>
 <ol>
 <li>it fetches changes from the remote defined by the local branch refspec</li>
@@ -1129,32 +1115,32 @@ Switched to a new branch <span style="color:#4e9a06">&#39;english&#39;</span>
 </ol>
 <h3 id="force-push">Force push</h3>
 <p>Let’s say we would like to fix the commit message from the branch we fetched</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git commit --amend -m <span style="color:#4e9a06">&#34;add english/american data&#34;</span>
-<span style="color:#ce5c00;font-weight:bold">[</span>english ea761bc<span style="color:#ce5c00;font-weight:bold">]</span> add english/american data
- Author: Linux Tor &lt;tor@linux.org&gt;
- Date: Sun Nov <span style="color:#0000cf;font-weight:bold">2</span> 20:19:35 <span style="color:#0000cf;font-weight:bold">2014</span> +0100
- <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">20</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
- create mode <span style="color:#0000cf;font-weight:bold">100644</span> en/data
-
-$ git push origin english
- ! <span style="color:#ce5c00;font-weight:bold">[</span>rejected<span style="color:#ce5c00;font-weight:bold">]</span>        english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>non-fast-forward<span style="color:#ce5c00;font-weight:bold">)</span>
-error: failed to push some refs to <span style="color:#4e9a06">&#39;git@github.com:marchelbling/bonjour.git&#39;</span>
-hint: Updates were rejected because the tip of your current branch is behind
-hint: its remote counterpart. Integrate the remote changes <span style="color:#ce5c00;font-weight:bold">(</span>e.g.
-hint: <span style="color:#4e9a06">&#39;git pull ...&#39;</span><span style="color:#ce5c00;font-weight:bold">)</span> before pushing again.
-hint: See the <span style="color:#4e9a06">&#39;Note about fast-forwards&#39;</span> in <span style="color:#4e9a06">&#39;git push --help&#39;</span> <span style="color:#204a87;font-weight:bold">for</span> details.
-</code></pre></div><p>By amending, we have just replaced the branch tip commit and whenever a user tries to push a local branch to an existing remote branch, git will check that the remote branch <code>HEAD</code> is still reachable in the branch being pushed and will fail if it is unreachable. This may happen in 2 cases:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git commit --amend -m <span style="color:#4e9a06">&#34;add english/american data&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>english ea761bc<span style="color:#ce5c00;font-weight:bold">]</span> add english/american data
+</span></span><span style="display:flex;"><span> Author: Linux Tor &lt;tor@linux.org&gt;
+</span></span><span style="display:flex;"><span> Date: Sun Nov <span style="color:#0000cf;font-weight:bold">2</span> 20:19:35 <span style="color:#0000cf;font-weight:bold">2014</span> +0100
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">1</span> file changed, <span style="color:#0000cf;font-weight:bold">20</span> insertions<span style="color:#ce5c00;font-weight:bold">(</span>+<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span> create mode <span style="color:#0000cf;font-weight:bold">100644</span> en/data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git push origin english
+</span></span><span style="display:flex;"><span> ! <span style="color:#ce5c00;font-weight:bold">[</span>rejected<span style="color:#ce5c00;font-weight:bold">]</span>        english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>non-fast-forward<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>error: failed to push some refs to <span style="color:#4e9a06">&#39;git@github.com:marchelbling/bonjour.git&#39;</span>
+</span></span><span style="display:flex;"><span>hint: Updates were rejected because the tip of your current branch is behind
+</span></span><span style="display:flex;"><span>hint: its remote counterpart. Integrate the remote changes <span style="color:#ce5c00;font-weight:bold">(</span>e.g.
+</span></span><span style="display:flex;"><span>hint: <span style="color:#4e9a06">&#39;git pull ...&#39;</span><span style="color:#ce5c00;font-weight:bold">)</span> before pushing again.
+</span></span><span style="display:flex;"><span>hint: See the <span style="color:#4e9a06">&#39;Note about fast-forwards&#39;</span> in <span style="color:#4e9a06">&#39;git push --help&#39;</span> <span style="color:#204a87;font-weight:bold">for</span> details.
+</span></span></code></pre></div><p>By amending, we have just replaced the branch tip commit and whenever a user tries to push a local branch to an existing remote branch, git will check that the remote branch <code>HEAD</code> is still reachable in the branch being pushed and will fail if it is unreachable. This may happen in 2 cases:</p>
 <ul>
 <li>local branch is out-of-sync due to changes pushed to the remote; the reflex should be immediately to <a href="https://help.github.com/articles/dealing-with-non-fast-forward-errors/">fetch</a> the remote and update the branch</li>
 <li>history has been rewritten and the sha1 is no longer reachable; we need to force push our local branch to rewrite the remote history:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git push --force origin english
-Counting objects: 1, <span style="color:#204a87;font-weight:bold">done</span>.
-Writing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>1/1<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">192</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
-Total <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
-To git@github.com:marchelbling/bonjour.git
- + 0ffd492...ea761bc english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>forced update<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>We here see that pushing a rewritten history (<code>git commit --amend</code> or <code>git rebase</code>) should be done with care and we will discuss workflows in the next section.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git push --force origin english
+</span></span><span style="display:flex;"><span>Counting objects: 1, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Writing objects: 100% <span style="color:#ce5c00;font-weight:bold">(</span>1/1<span style="color:#ce5c00;font-weight:bold">)</span>, <span style="color:#0000cf;font-weight:bold">192</span> bytes <span style="color:#000;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0</span> bytes/s, <span style="color:#204a87;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Total <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>, reused <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">(</span>delta 0<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>To git@github.com:marchelbling/bonjour.git
+</span></span><span style="display:flex;"><span> + 0ffd492...ea761bc english -&gt; english <span style="color:#ce5c00;font-weight:bold">(</span>forced update<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>We here see that pushing a rewritten history (<code>git commit --amend</code> or <code>git rebase</code>) should be done with care and we will discuss workflows in the next section.</p>
 <h2 id="branches-and-remotes-tldr">Branches and remotes: tl;dr</h2>
 <ul>
 <li>branches are simply references to commits</li>
@@ -1250,11 +1236,11 @@ Don’t merge <em>downstream</em> code at random points either.</p>
 <p>Commit messages are utterly important as they are the human counter part to a good commits history.</p>
 <h3 id="formatting">Formatting</h3>
 <p>The structure of a commit message is important. It <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">should</a> look like:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Short commit summary <span style="color:#ce5c00;font-weight:bold">(</span>below <span style="color:#0000cf;font-weight:bold">50</span> chars<span style="color:#ce5c00;font-weight:bold">)</span>
-
-Detailed description of the changes introduced by the commit
-<span style="color:#ce5c00;font-weight:bold">(</span>using at most <span style="color:#0000cf;font-weight:bold">72</span> chars wide columns and markdown style<span style="color:#ce5c00;font-weight:bold">)</span>
-</code></pre></div><p>Following this format will produce readable <a href="http://git-scm.com/docs/git-log"><code>git log</code></a> outputs and display nicely with git tools and services.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Short commit summary <span style="color:#ce5c00;font-weight:bold">(</span>below <span style="color:#0000cf;font-weight:bold">50</span> chars<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Detailed description of the changes introduced by the commit
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">(</span>using at most <span style="color:#0000cf;font-weight:bold">72</span> chars wide columns and markdown style<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Following this format will produce readable <a href="http://git-scm.com/docs/git-log"><code>git log</code></a> outputs and display nicely with git tools and services.</p>
 <h3 id="content">Content</h3>
 <p>The commit summary is like a (technical) book cover: it should give a good insight of what the commit is actually about.
 The description is like the backcover, providing more in-depth detail about the commit itself (and possibly listing dead ends encountered). It should answer the following <a href="http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message">questions</a>:</p>
@@ -1326,15 +1312,15 @@ When one needs to reset something in git, it should first analyze what exactly s
 <h2 id="bisect">Bisect</h2>
 <p>When some bug or regression is found in a repository, we used to perform dichotomy through history to find when <em>it</em> was introduced. <a href="https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html"><code>git bisect</code></a> <a href="http://robots.thoughtbot.com/git-bisect">automates</a> the process.</p>
 <p>We first need to start the session by setting the interval that should be tested, flagging the last known commit that is known to not have the bug as good and a bad commit</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git bisect start
-
-$ git bisect bad 456xyz <span style="color:#8f5902;font-style:italic"># by default HEAD is assumed</span>
-
-$ git bisect good abc123 <span style="color:#8f5902;font-style:italic"># last commit known to be bug-free</span>
-</code></pre></div><p>git then iterates over the range of commits using binary search and will wait for a good/bad flag for each checkouted commit. When all revisions have been bisected, the faulty commit is stored in <code>refs/bisect/bad</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git bisect start
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git bisect bad 456xyz <span style="color:#8f5902;font-style:italic"># by default HEAD is assumed</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git bisect good abc123 <span style="color:#8f5902;font-style:italic"># last commit known to be bug-free</span>
+</span></span></code></pre></div><p>git then iterates over the range of commits using binary search and will wait for a good/bad flag for each checkouted commit. When all revisions have been bisected, the faulty commit is stored in <code>refs/bisect/bad</code>.</p>
 <p>To automate things further, an executable script or a command checking wether a revision is good or bad may be supplied by</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git bisect run <span style="color:#204a87">command</span>
-</code></pre></div><h1 id="environment">Environment</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git bisect run <span style="color:#204a87">command</span>
+</span></span></code></pre></div><h1 id="environment">Environment</h1>
 <h2 id="command-line-completion">Command line completion</h2>
 <p>One of the most helpful tool you will need is <a href="https://github.com/git/git/blob/master/contrib/completion/git-completion.">git  completion</a>. This enables tab-completion on most git commands. Downloading the script and <a href="http://git-scm.com/book/en/v1/Git-Basics-Tips-and-Tricks">sourcing</a> it in its <a href="http://git-scm.com/book/en/v2/Git-in-Other-Environments-Git-in-">profile</a> is all that is needed.</p>
 <h2 id="configuration">Configuration</h2>
@@ -1346,31 +1332,31 @@ $ git bisect good abc123 <span style="color:#8f5902;font-style:italic"># last co
 <li><code>--system</code>-wide  in <code>/etc/gitconfig</code></li>
 </ul>
 <p>by invoking</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git config <span style="color:#ce5c00;font-weight:bold">[</span>--level<span style="color:#ce5c00;font-weight:bold">]</span> --<span style="color:#ce5c00;font-weight:bold">(</span>set<span style="color:#000;font-weight:bold">|</span>add<span style="color:#ce5c00;font-weight:bold">)</span> section<span style="color:#ce5c00;font-weight:bold">[</span>.subsection<span style="color:#ce5c00;font-weight:bold">]=</span>value
-</code></pre></div><p>Most of the time configuration is set at the <code>--global</code> level but it really depends on your setup.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git config <span style="color:#ce5c00;font-weight:bold">[</span>--level<span style="color:#ce5c00;font-weight:bold">]</span> --<span style="color:#ce5c00;font-weight:bold">(</span>set<span style="color:#000;font-weight:bold">|</span>add<span style="color:#ce5c00;font-weight:bold">)</span> section<span style="color:#ce5c00;font-weight:bold">[</span>.subsection<span style="color:#ce5c00;font-weight:bold">]=</span>value
+</span></span></code></pre></div><p>Most of the time configuration is set at the <code>--global</code> level but it really depends on your setup.</p>
 <p>All configurations can either be done through the <code>git config</code> command or by directly editing the <code>gitconfig</code> file if you know what you are doing.</p>
 <h3 id="basics">Basics</h3>
 <p>We have already seen some configuration as git requires a user to be properly used:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global --set user.name<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;My Name&#34;</span>
-
-$ git config --global --set user.email<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;me@mail.org&#34;</span>
-</code></pre></div><p>We have also been changing the merge conflict output to show the <code>ORIG_HEAD</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global merge.conflictstyle diff3
-</code></pre></div><p>One of the most useful configuration is colors that will make reading any <code>git diff</code> outputs easier to read (note that this is the default for git≥1.8.4):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global ui.color<span style="color:#ce5c00;font-weight:bold">=</span>auto
-</code></pre></div><p>Finally, git may automatically correct mistyped commands when the error can be unambiguously fixed in the specified number of deci-seconds (0.1 second):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global --set help.autocorrect<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">5</span>
-</code></pre></div><h3 id="aliases">Aliases</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global --set user.name<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;My Name&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git config --global --set user.email<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;me@mail.org&#34;</span>
+</span></span></code></pre></div><p>We have also been changing the merge conflict output to show the <code>ORIG_HEAD</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global merge.conflictstyle diff3
+</span></span></code></pre></div><p>One of the most useful configuration is colors that will make reading any <code>git diff</code> outputs easier to read (note that this is the default for git≥1.8.4):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global ui.color<span style="color:#ce5c00;font-weight:bold">=</span>auto
+</span></span></code></pre></div><p>Finally, git may automatically correct mistyped commands when the error can be unambiguously fixed in the specified number of deci-seconds (0.1 second):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global --set help.autocorrect<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">5</span>
+</span></span></code></pre></div><h3 id="aliases">Aliases</h3>
 <p><a href="http://git-scm.com/book/en/v2/Git-Basics-Git-Aliases#_git_aliases">Aliases</a> offer a way to</p>
 <ul>
 <li>use shorter names for commands frequently typed; a common example is to alias <code>checkout</code> with <code>co</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global alias.co checkout
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global alias.co checkout
+</span></span></code></pre></div><ul>
 <li>introduce a personalized command using constant arguments; a typical usage is a custom display of commit history:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --global alias.hist <span style="color:#4e9a06">&#34;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&#34;</span>
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --global alias.hist <span style="color:#4e9a06">&#34;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&#34;</span>
+</span></span></code></pre></div><ul>
 <li>invoke custom commands with possible arguments (git≥<a href="https://git.wiki.kernel.org/index.php/Aliases#Advanced_aliases_with_arguments">1.5.3</a>) and possibly piping with non-git commands
 <ul>
 <li>listing recent commits using the  <a href="http://ss64.com//head.html"><code>head</code></a> command (arguments will apply on the <code>head</code> command i.e. <code>git head -5</code> will list the last 5 commits)</li>
@@ -1378,12 +1364,12 @@ $ git config --global --set user.email<span style="color:#ce5c00;font-weight:bol
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config--global alias.head <span style="color:#4e9a06">&#34;git log --oneline --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; | head&#34;</span>
-
-$ git config --global alias.fixup <span style="color:#4e9a06">&#34;!sh -c &#39;(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) &amp;&amp; sha_to_patch=</span><span style="color:#204a87;font-weight:bold">$(</span> git rev-parse <span style="color:#000">$1</span> <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06"> &amp;&amp; git commit --fixup=</span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; git rebase -i --autosquash </span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">^&#39; -&#34;</span>
-</code></pre></div><p><a href="http://stackoverflow.com/a/22183573/626278">Listing</a> all defined aliases may be done with the following command</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git config --get-regexp ^alias<span style="color:#4e9a06">\.</span> <span style="color:#000;font-weight:bold">|</span> sed -e s/^alias<span style="color:#4e9a06">\.</span>//
-</code></pre></div><p>and/or defined as an alias!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config--global alias.head <span style="color:#4e9a06">&#34;git log --oneline --pretty=format:&#39;%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; | head&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git config --global alias.fixup <span style="color:#4e9a06">&#34;!sh -c &#39;(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) &amp;&amp; sha_to_patch=</span><span style="color:#204a87;font-weight:bold">$(</span> git rev-parse <span style="color:#000">$1</span> <span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06"> &amp;&amp; git commit --fixup=</span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; git rebase -i --autosquash </span><span style="color:#4e9a06">${</span><span style="color:#000">sha_to_patch</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">^&#39; -&#34;</span>
+</span></span></code></pre></div><p><a href="http://stackoverflow.com/a/22183573/626278">Listing</a> all defined aliases may be done with the following command</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config --get-regexp ^alias<span style="color:#4e9a06">\.</span> <span style="color:#000;font-weight:bold">|</span> sed -e s/^alias<span style="color:#4e9a06">\.</span>//
+</span></span></code></pre></div><p>and/or defined as an alias!</p>
 <h2 id="hooks">Hooks</h2>
 <p><a href="http://githooks.com">git hooks</a> offer the possibility to add custom behaviors on top of some git actions:</p>
 <ul>
@@ -1473,11 +1459,11 @@ Depending on the server configuration, the following protocols may be available:
 <p>A <a href="https://help.github.com/articles/about-gists/">gist</a> is a lightweight repository typically versioning a single or a small number of files.</p>
 <h3 id="hunk">hunk</h3>
 <p>A <a href="http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-with-git-or-imma-edit-your-hunk/on:2011-11-16@20:54:30">hunk</a> is a section of diff displayed using the <a href="http://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html#Detailed-Unified">unified format</a> e.g.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">@@@ -1,1 -1,3 +1,2 @@@
-  one
- -two
-+ three
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>@@@ -1,1 -1,3 +1,2 @@@
+</span></span><span style="display:flex;"><span>  one
+</span></span><span style="display:flex;"><span> -two
+</span></span><span style="display:flex;"><span>+ three
+</span></span></code></pre></div><ul>
 <li>the triple <code>@</code> indicates where are using <code>diff3</code></li>
 <li>the three pairs of numbers indicates common ancestor, “from file” and “to file” lines span</li>
 <li>a line span pair represent <code>first line, number of lines</code> for the diff patch.</li>
@@ -1504,11 +1490,11 @@ Depending on the server configuration, the following protocols may be available:
                 <ul class="article-tag-list">
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/vcs">vcs</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/vcs">vcs</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/git">git</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/git">git</a>
                         </li>
                     
                 </ul>

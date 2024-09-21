@@ -23,15 +23,15 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
 
-    <link href="https://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
-    <link href="https://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="feed" type="application/rss+xml" title="/dev/log" />
 
-    <link rel="stylesheet" href="https://marc.helbling.fr/css/malt.css">
+    <link rel="stylesheet" href="https://marc.helbling.fr//css/malt.css">
     
 
     <link href="http://gmpg.org/xfn/11" rel="profile">
 
-    <meta name="generator" content="Hugo 0.90.0" />
+    <meta name="generator" content="Hugo 0.134.3">
 </head>
 
 
@@ -40,7 +40,7 @@
             <header id="header">
     <div id="header-outer" class="outer">
         <div id="header-inner" class="inner">
-            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr/">/dev/log</a>
             <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
             <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
         </div>
@@ -87,12 +87,12 @@ quotes unless you’re 100% sure it will always work correctly.</li>
 <li>there is no exception mechanism in bash. Every command or function has a <a href="http://tldp.org/LDP/abs/html/exit-status.html">return
 status</a> telling if it was successful (<code>0</code>) or not (<code>&gt;0</code>).  <em>Every</em> command. It is very easy to forget to test an important status code e.g. with some piped commands. Bash has a special flag to prevent silent failures: <a href="http://www.gnu.org/software/bash/manual/bashref.html#The-Set-Builtin"><code>set -e</code></a>, which may be used either globally (e.g. by using <code>#!/bin/bash -e</code> shebang) or on a specific bloc of code i.e.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">
-<span style="color:#204a87">set</span> -e
-command0 <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">command</span> <span style="color:#0000cf;font-weight:bold">1</span>
-command2
-<span style="color:#204a87">set</span> +e
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -e
+</span></span><span style="display:flex;"><span>command0 <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">command</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>command2
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> +e
+</span></span></code></pre></div><ul>
 <li>bash script often involve filesystem; even though the kernel only handles bytes, it may easily be
 overlooked that the <a href="http://en.wikipedia.org/wiki/Locale">locale</a> may have an impact on file
 manipulations; e.g. 7z uses the locale when handling archives.</li>
@@ -212,14 +212,14 @@ statement takes a second parameter to provide a human readable message. The gotc
 to call <code>assert</code> like a function</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">stdin</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#c00;font-weight:bold">SyntaxWarning</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">assertion</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">always</span> <span style="color:#000">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">perhaps</span> <span style="color:#000">remove</span> <span style="color:#000">parentheses</span><span style="color:#a40000">?</span>
-
-<span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span> <span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span>
-<span style="color:#000">Traceback</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">most</span> <span style="color:#000">recent</span> <span style="color:#000">call</span> <span style="color:#000">last</span><span style="color:#000;font-weight:bold">):</span>
-<span style="color:#000">File</span> <span style="color:#4e9a06">&#34;&lt;stdin&gt;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">line</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">module</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-<span style="color:#c00;font-weight:bold">AssertionError</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">this</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">false</span>
-</code></pre></div><p>Note that the REPL issues a warning when called with a tuple. However if the assert statement is
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">stdin</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#c00;font-weight:bold">SyntaxWarning</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">assertion</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">always</span> <span style="color:#000">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">perhaps</span> <span style="color:#000">remove</span> <span style="color:#000">parentheses</span><span style="color:#a40000">?</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span> <span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Traceback</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">most</span> <span style="color:#000">recent</span> <span style="color:#000">call</span> <span style="color:#000">last</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">File</span> <span style="color:#4e9a06">&#34;&lt;stdin&gt;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">line</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">module</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#c00;font-weight:bold">AssertionError</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">this</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">false</span>
+</span></span></code></pre></div><p>Note that the REPL issues a warning when called with a tuple. However if the assert statement is
 in a module, you will not see this and if you do not test your script on ‘faulty’ data you may just
 think that everything went fine when the assertions were actually not testing anything. Always
 test code thoroughly (especially a data migration) and make sure that safeguards are actually
@@ -322,15 +322,15 @@ very important and you need to make people feel like they <a href="http://blog.j
                 <ul class="article-tag-list">
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/code">code</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/code">code</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/devops">devops</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/devops">devops</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/people">people</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/people">people</a>
                         </li>
                     
                 </ul>

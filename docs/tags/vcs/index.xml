@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vcs on /dev/log</title>
+    <title>Vcs on /dev/log</title>
     <link>https://marc.helbling.fr/tags/vcs/</link>
-    <description>Recent content in vcs on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Vcs on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Sep 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/vcs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Sep 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/vcs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A practical introduction to git</title>
       <link>https://marc.helbling.fr/practical-git-introduction/</link>
       <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/practical-git-introduction/</guid>
-      <description>Introduction In just a few years, git has become the dominant version control system in the software industry. Despite its widespread use, it often still appears as either magical or cumbersome when its core concepts are not fully grasped. This post is a walkthrough of practical git usage that will detail how git internally handles things.
-Why a Version Control System? When not relying on a dedicated tool to keep track of versions, one has to employ strategies such as using naming schemes like [filename]_v{0-9}+.</description>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;&#xA;&lt;p&gt;In just a few years, &lt;a href=&#34;http://git-scm.com/&#34;&gt;git&lt;/a&gt; has become the dominant version control system in the software industry. Despite its widespread use, it often still appears as either magical or cumbersome when its core concepts are not fully grasped. This post is a walkthrough of practical git usage that will detail how git internally handles things.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-a-version-control-system&#34;&gt;Why a Version Control System?&lt;/h2&gt;&#xA;&lt;p&gt;When not relying on a dedicated tool to keep track of versions, one has to employ strategies such as using naming schemes like &lt;a href=&#34;http://www.phdcomics.com/comics/archive/phd101212s.gif&#34;&gt;&lt;code&gt;[filename]_v{0-9}+.doc&lt;/code&gt;&lt;/a&gt; or &lt;code&gt;[timestamp]_[filename]_[comment].zip&lt;/code&gt; (where e.g. using the &lt;a href=&#34;http://en.wikipedia.org/wiki/ISO_8601&#34;&gt;ISO 8601&lt;/a&gt; format for dates will sort version) to keep track of things.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

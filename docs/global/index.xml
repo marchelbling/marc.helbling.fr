@@ -4,19 +4,16 @@
     <title>Globals on /dev/log</title>
     <link>https://marc.helbling.fr/global/</link>
     <description>Recent content in Globals on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Sep 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/global/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Sep 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/global/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>👋🏼</title>
       <link>https://marc.helbling.fr/about/</link>
       <pubDate>Mon, 22 Sep 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/about/</guid>
-      <description>My name is Marc Helbling. I’m a software engineer with a Ph.D thesis (“Virtual sculpture using particles system”). I’ve been an early stage engineer in some successful startups. I am now working on search relevance at Algolia.
-I am mostly interested in building efficient teams and systems, with a special ❤️ when they deal with vertices and polygons.
-The posts on this blog are evolving things so the content may be updated/rewritten without any warning.</description>
+      <description>&lt;p&gt;My name is Marc Helbling. I’m a software engineer with a Ph.D thesis (“&lt;a href=&#34;http://www.theses.fr/2010ISAM0030&#34;&gt;Virtual sculpture using particles system&lt;/a&gt;”). I’ve been an early stage engineer in &lt;a href=&#34;http://tinyclues.com&#34;&gt;some&lt;/a&gt; &lt;a href=&#34;http://captaintrain.com&#34;&gt;successful&lt;/a&gt; &lt;a href=&#34;http://sketchfab.com&#34;&gt;startups&lt;/a&gt;. I am now working on search relevance at &lt;a href=&#34;https://algolia.com&#34;&gt;Algolia&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I am mostly interested in building efficient teams and systems, with a special ❤️   when they deal with vertices and polygons.&lt;/p&gt;&#xA;&lt;p&gt;The posts on this blog are evolving things so the content may be updated/rewritten without any warning.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

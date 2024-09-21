@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>c&#43;&#43; on /dev/log</title>
+    <title>C&#43;&#43; on /dev/log</title>
     <link>https://marc.helbling.fr/tags/c&#43;&#43;/</link>
-    <description>Recent content in c&#43;&#43; on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in C&#43;&#43; on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Feb 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Writing json in C&#43;&#43;</title>
       <link>https://marc.helbling.fr/writing-json-c/</link>
       <pubDate>Sat, 07 Feb 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/writing-json-c/</guid>
-      <description>Writing a valid json file looks simple. Except that if the json file contains real world data coming from unknown sources, it might not be that simple. The json format does not support everything that you could expect for numerical values and strings.
-More specifically, a numerical value involves digits in json. This prevents from having inf or nan serialized in json. Strings preferred encoding is UTF-8 with some restriction. Quotes &amp;quot; and backslash \ have to be escaped but control characters should be encoded with their unicode 4 hex digits representation.</description>
+      <description>&lt;p&gt;Writing a valid json file looks simple. Except that if the json file contains real world data coming from unknown sources, it might not be that simple. The &lt;a href=&#34;http://json.org&#34;&gt;json&lt;/a&gt; format does not support everything that you could expect for numerical values and strings.&lt;/p&gt;&#xA;&lt;p&gt;More specifically, a numerical value involves digits in json. This prevents from having &lt;code&gt;inf&lt;/code&gt; or &lt;code&gt;nan&lt;/code&gt; serialized in json.&#xA;Strings preferred encoding is UTF-8 with some restriction. Quotes &lt;code&gt;&amp;quot;&lt;/code&gt; and backslash &lt;code&gt;\&lt;/code&gt; have to be escaped but &lt;a href=&#34;http://en.wikipedia.org/wiki/Unicode_control_characters&#34;&gt;control characters&lt;/a&gt; should be encoded with their unicode 4 hex digits representation.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

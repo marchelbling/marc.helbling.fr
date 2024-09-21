@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on /dev/log</title>
+    <title>Docker on /dev/log</title>
     <link>https://marc.helbling.fr/tags/docker/</link>
-    <description>Recent content in docker on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Docker on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Running Citus in Docker</title>
       <link>https://marc.helbling.fr/running-citus-locally/</link>
       <pubDate>Fri, 17 Aug 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/running-citus-locally/</guid>
-      <description>Citus is an open-source PostgreSQL extension to distribute tables and queries on multiple shards. The extension requires a master node aka the coordinator whose role is to forward queries to workers — that actually store data — and gather results.
-While using CitusCloud to run Citus in production is probably the best idea, it is less true for local or testing environments as network adds latency and concurrent builds require hacks (like creating random schemas for each build).</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://citusdata.com&#34;&gt;Citus&lt;/a&gt; is an &lt;a href=&#34;https://github.com/citusdata/citus&#34;&gt;open-source&lt;/a&gt; &lt;a href=&#34;https://www.postgresql.org/&#34;&gt;PostgreSQL&lt;/a&gt; extension to distribute tables and queries on multiple shards.&#xA;The extension requires a master node aka the &lt;a href=&#34;http://docs.citusdata.com/en/v7.5/get_started/concepts.html#nodes-coordinator-and-workers&#34;&gt;coordinator&lt;/a&gt; whose role is to forward queries to workers — that actually store data — and gather results.&lt;/p&gt;&#xA;&lt;p&gt;While using &lt;a href=&#34;https://www.citusdata.com/product/cloud&#34;&gt;CitusCloud&lt;/a&gt; to run Citus in production is probably the best idea, it is less true for local or testing environments as network adds latency and concurrent builds require hacks (like creating random &lt;a href=&#34;https://www.postgresql.org/docs/10/static/ddl-schemas.html&#34;&gt;&lt;code&gt;schema&lt;/code&gt;s&lt;/a&gt; for each build). Relying on a local running Citus cluster in a Docker environment provides a clean solution to this problem.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

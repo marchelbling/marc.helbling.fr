@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>interview on /dev/log</title>
+    <title>Interview on /dev/log</title>
     <link>https://marc.helbling.fr/tags/interview/</link>
-    <description>Recent content in interview on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Interview on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jul 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Job interviews</title>
       <link>https://marc.helbling.fr/interviews/</link>
       <pubDate>Sat, 13 Jul 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/interviews/</guid>
-      <description>Like it or not, technical interviews are still a reality in the software industry and I don’t expect this to radically change anytime soon.
-Getting a job in a place where you have no connection can prove very hard. The obvious guess: the bigger/hotter the company, the harder. You may try to be original but I’m not sure this works very often for technical positions. From my experience, you better be concise, have a clear message, show why you care about the company you’re applying at and hopefully you’ll have a chance to show them your abilities.</description>
+      <description>&lt;p&gt;&lt;a href=&#34;http://techcrunch.com/2013/06/22/the-technical-interview-is-dead/&#34;&gt;Like it or not&lt;/a&gt;, technical interviews&#xA;are still a reality in the software industry and I don’t expect this to radically change anytime soon.&lt;/p&gt;&#xA;&lt;p&gt;Getting a job in a place where you have &lt;a href=&#34;http://www.karenx.com/blog/how-to-get-a-job-when-you-have-no-connections/&#34;&gt;no connection&lt;/a&gt;&#xA;can prove very hard. The obvious guess: the bigger/hotter the company, the harder. You may try to be&#xA;original but I’m not sure this works very often for technical positions. From my experience, you better&#xA;be concise, have a clear message, show why you care about the company you’re applying at and hopefully&#xA;you’ll have a chance to show them your abilities. Of course, if you’ve already shown the world with&#xA;some of your project, this might have proven easier than it sounds to get to the interview process.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

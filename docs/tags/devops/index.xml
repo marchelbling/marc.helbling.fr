@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>devops on /dev/log</title>
+    <title>Devops on /dev/log</title>
     <link>https://marc.helbling.fr/tags/devops/</link>
-    <description>Recent content in devops on /dev/log</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Devops on /dev/log</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://marc.helbling.fr/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 May 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://marc.helbling.fr/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What could go wrong?</title>
       <link>https://marc.helbling.fr/what-could-go-wrong/</link>
       <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://marc.helbling.fr/what-could-go-wrong/</guid>
-      <description>When dealing with software, stuff — be it technicalor human— quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.
-This is not intended to be a list of technical difficulties encountered during the development phase but a reminder of what to think about before starting to code:</description>
+      <description>&lt;p&gt;When dealing with software, stuff — be it &lt;!-- raw HTML omitted --&gt;technical&lt;!-- raw HTML omitted --&gt; or &lt;!-- raw HTML omitted --&gt;human&lt;!-- raw HTML omitted --&gt; —&#xA;quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

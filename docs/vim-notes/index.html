@@ -23,15 +23,15 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
 
-    <link href="https://marc.helbling.fr/index.xml" rel="alternate" type="application/rss+xml" title="/dev/log" />
-    <link href="https://marc.helbling.fr/index.xml" rel="feed" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="alternate" type="application/rss+xml" title="/dev/log" />
+    <link href="" rel="feed" type="application/rss+xml" title="/dev/log" />
 
-    <link rel="stylesheet" href="https://marc.helbling.fr/css/malt.css">
+    <link rel="stylesheet" href="https://marc.helbling.fr//css/malt.css">
     
 
     <link href="http://gmpg.org/xfn/11" rel="profile">
 
-    <meta name="generator" content="Hugo 0.90.0" />
+    <meta name="generator" content="Hugo 0.134.3">
 </head>
 
 
@@ -40,7 +40,7 @@
             <header id="header">
     <div id="header-outer" class="outer">
         <div id="header-inner" class="inner">
-            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr">/dev/log</a>
+            <a class="main-nav-link" style="font-size: 24px" href="https://marc.helbling.fr/">/dev/log</a>
             <a class="main-nav-link" style="font-size: 18px" href="/about">about</a>
             <a class="main-nav-link" style="font-size: 18px" href="/index.xml">rss</a>
         </div>
@@ -94,8 +94,8 @@
 </ol>
 <h2 id="advanced-editing-command-mode-exed">Advanced editing (command mode ex/ed)</h2>
 <p>The command mode syntax basically reads</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#000;font-weight:bold">:</span>[[<span style="color:#000">start_line</span>]<span style="color:#000;font-weight:bold">,</span>[<span style="color:#000">end_line</span>]]<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">verb</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#4e9a06">/&lt;pattern&gt;/</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">action</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#a40000">
-</span></code></pre></div><h3 id="lines-shortcuts">Lines shortcuts</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">:</span>[[<span style="color:#000">start_line</span>]<span style="color:#000;font-weight:bold">,</span>[<span style="color:#000">end_line</span>]]<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">verb</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#4e9a06">/&lt;pattern&gt;/</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">action</span><span style="color:#000;font-weight:bold">&gt;</span>
+</span></span></code></pre></div><h3 id="lines-shortcuts">Lines shortcuts</h3>
 <ul>
 <li><code>:%</code> ⇔  <code>:1,$</code>: all the lines</li>
 <li><code>.</code>: current line</li>
@@ -149,10 +149,10 @@
 <h2 id="commenting-lines">Commenting lines</h2>
 <p>Commenting/decommenting code is a frequent operation when updating code. Each language has its own comment syntax and having a plugin handle this transparently and easily is a must. I usually operate by visually selecting lines and need a plugin that handle this; <a href="https://github.com/tomtom/tcomment_vim">tcomment</a> works very nicely. The only arguable feature missing is that calling the <code>TComment</code> function is not a command so it prevents from using <code>.</code>. This is not such a big deal as using the tcomment toggle should likely be mapped to a shortcut.</p>
 <p>Side note: vim 703+ has a nice option removing comment character when joining commented lines</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">703</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">703</span> &amp;&amp; <span style="color:#000">has</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;patch541&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#a40000">
-</span><span style="color:#a40000"></span>  <span style="color:#000">set</span> <span style="color:#000">formatoptions</span><span style="color:#000;font-weight:bold">+=</span><span style="color:#000">j</span> <span style="color:#8f5902;font-style:italic">&#34; Delete comment character when joining commented lines</span><span style="color:#a40000">
-</span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">endif</span><span style="color:#a40000">
-</span></code></pre></div><h1 id="references">References</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">703</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">703</span> &amp;&amp; <span style="color:#000">has</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;patch541&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">set</span> <span style="color:#000">formatoptions</span><span style="color:#000;font-weight:bold">+=</span><span style="color:#000">j</span> <span style="color:#8f5902;font-style:italic">&#34; Delete comment character when joining commented lines</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">endif</span>
+</span></span></code></pre></div><h1 id="references">References</h1>
 <ul>
 <li><a href="https://danielmiessler.com/study/vim/">A vim Tutorial and Primer</a></li>
 <li><a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">“What is your most productive shortcut with vim”</a></li>
@@ -166,11 +166,11 @@
                 <ul class="article-tag-list">
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/text">text</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/text">text</a>
                         </li>
                     
                         <li class="article-tag-list-item">
-                            <a class="article-tag-list-link" href="https://marc.helbling.fr/tags/vim">vim</a>
+                            <a class="article-tag-list-link" href="https://marc.helbling.fr//tags/vim">vim</a>
                         </li>
                     
                 </ul>

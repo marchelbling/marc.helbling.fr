@@ -6,3 +6,5 @@ disablePathToLower: true
 pygmentsCodeFences: true
 pygmentsUseClasses: false
 pygmentsStyle: "tango"
+posts: "/:title"
+

@@ -13,15 +13,18 @@ cname:
 	mkdir ${BUILD_DIR}
 	echo "marc.helbling.fr" >${BUILD_DIR}/CNAME
 
+.PHONY: theme
+theme:
+	git submodule update --init
 
 .PHONY: generate
-generate: clean cname
+generate: clean cname theme
 	cd ${REPO_ROOT}
 	hugo --theme malt --destination ${BUILD_DIR}
 
 
 .PHONY: local
-local:
+local: theme
 	cd ${REPO_ROOT}
 	hugo server --disableFastRender -D watch
 

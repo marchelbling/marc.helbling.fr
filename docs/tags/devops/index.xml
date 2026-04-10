@@ -13,7 +13,7 @@
       <link>https://marc.helbling.fr/what-could-go-wrong/</link>
       <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
       <guid>https://marc.helbling.fr/what-could-go-wrong/</guid>
-      <description>&lt;p&gt;When dealing with software, stuff — be it &lt;!-- raw HTML omitted --&gt;technical&lt;!-- raw HTML omitted --&gt; or &lt;!-- raw HTML omitted --&gt;human&lt;!-- raw HTML omitted --&gt; —&#xA;quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.&lt;/p&gt;</description>
+      <description>&lt;p&gt;When dealing with software, stuff — be it &lt;a href=&#34;#code&#34;&gt;technical&lt;/a&gt; or &lt;a href=&#34;#management&#34;&gt;human&lt;/a&gt; —&#xA;quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.&lt;/p&gt;&#xA;&lt;p&gt;This is not intended to be a list of technical difficulties encountered during the development&#xA;phase but a reminder of what to think about &lt;em&gt;before&lt;/em&gt; starting to code:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

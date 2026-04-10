@@ -253,7 +253,7 @@ SyntaxError: Unexpected token N
     at ReadStream.onkeypress (readline.js:100:10)
     at ReadStream.emit (events.js:98:17)
 ```
-JS is somehow consistent and conforms to the RFC. However, `null` is untyped so depending on the usage this might lead to some issues. Also, JS serializes `inf` is serialized to `null` too making `inf` and `nan` indistinguishable from a consumer point of view.
+JS is somehow consistent and conforms to the RFC. However, `null` is untyped so depending on the usage this might lead to some issues. Also, JS serializes `inf` to `null` too making `inf` and `nan` indistinguishable from a consumer point of view.
 
 The RFC therefore seems like the way to go if the json has to be consumed by different environments.
 
@@ -297,7 +297,7 @@ Manipulating text encodings is a pain in C++ (at least to my knowledge). The sta
 
 To conform with the RFC 4627, we need to make sure every string is UTF-8 encoded and `\`, `/`, `\b`, `\f`, `\n`, `\r` and `\t` must be escaped and other control characters must be “unicode escaped” i.e. represented using `\\uxxxx`. We will suppose that input data is *mostly* UTF-8 encoded and will replace bad byte sequence by `\ufffd`. For the sake of the exercise, we will not use any library for this. [utfcpp](http://utfcpp.sourceforge.net/) or [poco](https://github.com/pocoproject/poco) would do the job.
 
-One important point when considering text decoding/encoding is wether the sequence should be considered signed or not. In our case, UTF-8 decoding/encoding will only require bit masks and shifts so the sign does not matter.
+One important point when considering text decoding/encoding is whether the sequence should be considered signed or not. In our case, UTF-8 decoding/encoding will only require bit masks and shifts so the sign does not matter.
 
 Let’s first write a naive UTF-8 decoder; we will parse the string and transform byte sequence to code points:
 
@@ -506,7 +506,7 @@ std::string sanitize(std::string const& input) const {
 
 Even though it may be a better choice to use an existing library for production code (see [language libraries](http://json.org/)), writing a json serializer is a good exercise as it involves a lot of C++ mechanisms (templates, function overload, recursion etc.) and “standards” (JSON, IEEE 754, Unicode).
 
-The exercice can be refined a lot: beautification, support for heterogeneous types, deserializer etc.
+The exercise can be refined a lot: beautification, support for heterogeneous types, deserializer etc.
 It deals with real world issues (and trade-offs) and is typically the kind of stuff that should probably be taught (more) to students.
 
 

@@ -11,7 +11,7 @@ url: advanced-git/
 
 ## Merging repositories
 
-Without loosing history:
+Without losing history:
 
 ```
 ```cd path/to/project-b

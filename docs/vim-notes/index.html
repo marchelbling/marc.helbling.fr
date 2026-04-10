@@ -116,7 +116,7 @@
   </a>
 </h2>
 <p>The command mode syntax basically reads</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:[[<span style="color:#a6e22e">start_line</span>],[<span style="color:#a6e22e">end_line</span>]]&lt;<span style="color:#a6e22e">verb</span>&gt;<span style="color:#e6db74">/&lt;pattern&gt;/</span>&lt;<span style="color:#a6e22e">action</span>&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">:</span>[[<span style="color:#000">start_line</span>]<span style="color:#000;font-weight:bold">,</span>[<span style="color:#000">end_line</span>]]<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">verb</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#4e9a06">/&lt;pattern&gt;/</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">action</span><span style="color:#000;font-weight:bold">&gt;</span>
 </span></span></code></pre></div><h3 id="lines-shortcuts">
   Lines shortcuts
   <a class="heading-anchor" href="#lines-shortcuts" aria-label="Link to this section">
@@ -207,7 +207,7 @@
     #
   </a>
 </h2>
-<p>Closing quotes/brackets/parenthesis can be automated. The feature interest seems obvious but its implementation is not. There are lots of alternatives, each making some assumptions about how clever they should be (e.g. when deleting an open quote). <a href="https://github.com/Raimondi/delimitMate">delitMate</a> is my current choice as even with no specific configuration it doesn&rsquo;t get in my edit way when it doesn&rsquo;t need to.</p>
+<p>Closing quotes/brackets/parenthesis can be automated. The feature interest seems obvious but its implementation is not. There are lots of alternatives, each making some assumptions about how clever they should be (e.g. when deleting an open quote). <a href="https://github.com/Raimondi/delimitMate">delimitMate</a> is my current choice as even with no specific configuration it doesn&rsquo;t get in my edit way when it doesn&rsquo;t need to.</p>
 <h2 id="commenting-lines">
   Commenting lines
   <a class="heading-anchor" href="#commenting-lines" aria-label="Link to this section">
@@ -216,9 +216,9 @@
 </h2>
 <p>Commenting/decommenting code is a frequent operation when updating code. Each language has its own comment syntax and having a plugin handle this transparently and easily is a must. I usually operate by visually selecting lines and need a plugin that handle this; <a href="https://github.com/tomtom/tcomment_vim">tcomment</a> works very nicely. The only arguable feature missing is that calling the <code>TComment</code> function is not a command so it prevents from using <code>.</code>. This is not such a big deal as using the tcomment toggle should likely be mapped to a shortcut.</p>
 <p>Side note: vim 703+ has a nice option removing comment character when joining commented lines</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v</span>:<span style="color:#a6e22e">version</span> &gt; <span style="color:#ae81ff">703</span> || <span style="color:#a6e22e">v</span>:<span style="color:#a6e22e">version</span> == <span style="color:#ae81ff">703</span> &amp;&amp; <span style="color:#a6e22e">has</span>(<span style="color:#e6db74">&#34;patch541&#34;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">set</span> <span style="color:#a6e22e">formatoptions</span>+=<span style="color:#a6e22e">j</span> <span style="color:#75715e">&#34; Delete comment character when joining commented lines</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">endif</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">703</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000">v</span>:<span style="color:#000">version</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">703</span> &amp;&amp; <span style="color:#000">has</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;patch541&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">set</span> <span style="color:#000">formatoptions</span><span style="color:#000;font-weight:bold">+=</span><span style="color:#000">j</span> <span style="color:#8f5902;font-style:italic">&#34; Delete comment character when joining commented lines</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">endif</span>
 </span></span></code></pre></div><h1 id="references">
   References
   <a class="heading-anchor" href="#references" aria-label="Link to this section">

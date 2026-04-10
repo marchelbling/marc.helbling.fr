@@ -68,7 +68,7 @@ Those are not difficult questions but still you have to be prepared as, if you d
 practice, you may have forgotten how [Quicksort](http://en.wikipedia.org/wiki/Quicksort) works. Also
 it is important that you know what you are looking for in your next job. This first step is both
 a technical and a ‘human’ filter and if you sound like you don’t know where you’re going with your
-carrier, you will likely not look attractive.
+career, you will likely not look attractive.
 
 # On site interviews
 
@@ -78,13 +78,13 @@ If you were convincing enough, you should go for an on site interview loop (and 
 * stay concentrate; at big corporations, you may have 5 interviews in a row which can prove physical.
 * make sure you’ve understood the question; test your understanding with an example and ask your interviewer for validation.
 * smile and stay positive; there might be questions that you don’t know the answer directly. Do not show frustration. Show you are thinking, interact with your interviewer to try to find a solution.
-* communicate a lot; explain your reasoning loudly. Your interviewer is judging your reasoning as much as your ability to solve the problem. And if you’re going on a wrong direction, he/she might even give you an hint early.
+* communicate a lot; explain your reasoning loudly. Your interviewer is judging your reasoning as much as your ability to solve the problem. And if you’re going on a wrong direction, he/she might even give you a hint early.
 * do *not* try to be too smart. First find a working solution and if the interviewer wants a better one or prefers to skip the easy one, he/she will ask you to move on to the better solution. But looking for a “not naive” solution you may give the impression that you like complexity which is not good. At all.
 
 Here are some questions you may encounter:
 
 * given a list of reference words, write a method to list all anagrams of an input word. How would you design a webservice providing anagrams of a word?
-* given a list of reference words and a string with all whitespace striped, how would you get the list of reference words contained in the string maximizing the number of characters being matched (e.g. if `reference = ["the", "then", "nuke"]` and `string = "thenuke"`, you should return `["the", "nuke"]`) (here is a [solution](http://stackoverflow.com/questions/12377231/how-to-tokenize-a-striped-string-based-on-a-list-of-patterns))
+* given a list of reference words and a string with all whitespace stripped, how would you get the list of reference words contained in the string maximizing the number of characters being matched (e.g. if `reference = ["the", "then", "nuke"]` and `string = "thenuke"`, you should return `["the", "nuke"]`) (here is a [solution](http://stackoverflow.com/questions/12377231/how-to-tokenize-a-striped-string-based-on-a-list-of-patterns))
 * given a matrix filled with 0’s and 1’s, we want to find the largest contiguous region of 1’s. Implement code solving this problem. What if you are authorized to modify the input matrix?
 * given a biased coin, provide a way to get unbiased output.
 * given an array of size n containing all numbers from 1 to n, we replace one element with another (meaning one element is duplicating and one element is missing). Find those two numbers. Could you find a solution using O(1) memory?
@@ -96,7 +96,7 @@ Here are some questions you may encounter:
         1. replace accented characters with unaccented one;
         1. be tolerant with doubled letters i.e. "fuzzy" and "fuzy" should match.
 * revert the bits in an `int`.
-* given an integer array, write a method listing all combination *with repetition* of those intergers in order. (Note: we want all n^n combinations! The "in order" information is important. As I said, you should write an example:
+* given an integer array, write a method listing all combination *with repetition* of those integers in order. (Note: we want all n^n combinations! The "in order" information is important. As I said, you should write an example:
 `[0, 1, 2] => [ [0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 0], [0, 1, 1], [0, 1, 2], [0, 2, 0], ...]`. You should see a pattern. This is a simple increment of numbers in base 3).
 
 

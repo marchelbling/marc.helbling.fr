@@ -179,7 +179,7 @@ AssertionError: this is false
 
 ### Security & credentials
 
-* as most staff members will have extra privileges, there are a good target for account hijacking.
+* as most staff members will have extra privileges, they are a good target for account hijacking.
   You must enforce strong password/authentication policy for staff members, be it on your service
   or external services like code hosting.
 * when dealing with people’s money, be very careful. Double check & test everything. Implement a
@@ -203,8 +203,8 @@ AssertionError: this is false
 ### Project
 
 * when refactoring or rewriting code, do not change every part of the system at once
-    * chances are high that you will loose focus, e.g. to fix some production bugs or another
-      priority will pop up or even you will take some vacations; by loosing focus you will likely
+    * chances are high that you will lose focus, e.g. to fix some production bugs or another
+      priority will pop up or even you will take some vacations; by losing focus you will likely
       ship bad code
     * putting large changes in production can be more difficult hence it could very well delay the
       new code going live
@@ -252,7 +252,7 @@ AssertionError: this is false
   meet what you expect from them:
    * listen to feedback
    * be analytical to find what is not working (possibly ask for an external opinion to make sure
-     you are not biaised in your analysis)
+     you are not biased in your analysis)
    * make sure people understand your expectations and their mission
    * communicate as clearly as possible
 * beware of the team culture. Joking (aka trolling) about everything gives the impression that nothing

@@ -52,7 +52,7 @@ Centralized versioning probably still represents the mostly used approach curren
 
 ## Why git?
 
-Version control is not a new problem. Alternatives to git are numerous and wether git is better than those alternatives will not be discussed here. However let’s just list some of the attractive features provided by git:
+Version control is not a new problem. Alternatives to git are numerous and whether git is better than those alternatives will not be discussed here. However let’s just list some of the attractive features provided by git:
 
 * free/open source/binaries available for all major platforms
 * decentralized
@@ -63,11 +63,11 @@ Version control is not a new problem. Alternatives to git are numerous and wethe
     * reliable (data is mostly immutable)
 * flexible regarding workflows
 * with the help of [github](https://github.com) (and also [bitbucket](https://bitbucket) or [gitlab](https://gitlab.com)) , it is now  becoming *the* standard decentralized vcs
-* [git](https://git.wiki.kernel.org/index.php/Git_FAQ#Why_the_.27Git.27_name.3F) philosophy is to perform simple operations and let complex ones — that actually occur not so frequently — to the user so it does no black magic
+* [git](https://git.wiki.kernel.org/index.php/Git_FAQ#Why_the_.27Git.27_name.3F) philosophy is to perform simple operations and let complex ones — that actually occur not so frequently — to the user so it does not do any black magic
 
 > One of the things that makes Git a pleasure to use for me is that I actually trust what Git does, because what Git does in the end is very, very stupid.
 >
-> <cite>[Linus Torvald](http://lwn.net/Articles/356626/)</cite>
+> <cite>[Linus Torvalds](http://lwn.net/Articles/356626/)</cite>
 
 
 ## About this document
@@ -78,7 +78,7 @@ It takes a “learn the hard way” path: it only makes use of the command line 
 Commands that should be typed are prefixed with the classical shell prompt `$` and command output always follows.
 Seeing a block starting with `#!EDITOR` means we are editing from a text editor; if you are not familiar with a source code editor, please first check for [sublime text](http://www.sublimetext.com/), [vim](http://vim.org), [emacs](http://www.gnu.org/software/emacs/) or whatever piece of software intended to edit raw text (which means *not* MS Word).
 
-This document might be regularly updated; see the [history](https://github.com/marchelbling/marchelbling.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://marc.helbling.fr/talks/git.html) accompany this writing as well as some [exerices](https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595).
+This document might be regularly updated; see the [history](https://github.com/marchelbling/marchelbling.github.io/commits/master/_posts/2014-09-22-practical-git-introduction.md) for the list of changes. Some [slides](http://marc.helbling.fr/talks/git.html) accompany this writing as well as some [exercises](https://gist.github.com/marchelbling/d103ef2ab0bbd89b2595).
 
 
 
@@ -259,7 +259,7 @@ Create french data file
 From this, we see that a [commit](http://git-scm.com/docs/git-commit-tree) references:
 
 * a “tree”: git internal description of the filesystem
-* a parent: git is fundamentally a **direct acyclic graph** ([DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)) in which nodes are commits that references their parent commit(s)
+* a parent: git is fundamentally a **directed acyclic graph** ([DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)) in which nodes are commits that reference their parent commit(s)
 * an author: the person who originally wrote the current commit *content*
 * an author date
 * a committer: the person who created the git commit on behalf of the author (which, as in our case, may be the same person as the author)
@@ -289,7 +289,7 @@ bonjour
 So we can see that:
 
 * a “tree” contains pointers to “blobs” and other trees and a name for each pointer
-* a “blob” is bunch of bytes representing user content (text, images etc.)
+* a “blob” is a bunch of bytes representing user content (text, images etc.)
 * both trees and blobs store a [file mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29) (i.e. a [`chmod`](http://linux.die.net/man/1/chmod)); note however that the file ownership ([`chown`](http://linux.die.net/man/1/chown)) will depend on the user that performs the git commands and is up to the final user
 * git performs deduplication based on content: if file `foo` is an exact copy of the file `bar`
     * they will be represented by the same blob
@@ -305,7 +305,7 @@ There are 4 git objects (listed from “low” to “high” level) that can be 
 
 ### Physical storage
 
-As git handles history of files, we may ask ourselves how does git stores incremental differences for our data.
+As git handles history of files, we may ask ourselves how git stores incremental differences for our data.
 To test this, let’s add some content in an existing file
 
 ```shell
@@ -363,8 +363,8 @@ The commit files follow the same construction. [Tree storage](http://stackoverfl
 
 The zlib compression will optimize git disk usage for storing commits (especially if blobs represent large files).
 
-The last important point for this quest is to understand how git names his internal files. Those names correspond to a cryptographic hash of the object. The hash function used is [SHA-1](http://en.wikipedia.org/wiki/SHA-1) and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
-You may have noticed that when referencing git [objects](http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/), we did not always used a 40 digits long value every time. git allows to use a shorter sub-sha1 *prefix*, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.
+The last important point for this quest is to understand how git names its internal files. Those names correspond to a cryptographic hash of the object. The hash function used is [SHA-1](http://en.wikipedia.org/wiki/SHA-1) and it may serve as a signature to assert data integrity (i.e. the decompressed object sha1 signature should match its filename and the content size should be the same as the size stored in the object). sha1 produces 160-bit hash value that git represents as a 40 digits long hexadecimal value.
+You may have noticed that when referencing git [objects](http://www.gitguys.com/topics/all-git-object-types-blob-tree-commit-and-tag/), we did not always use a 40 digits long value. git allows to use a shorter sub-sha1 *prefix*, provided that it is not ambiguous (i.e. that it enables to reference an object uniquely). It basically means that the bigger your repository (in terms of git objects), the longer the sha1 prefix you will have to use.
 
 ```shell
 $ cat fr/data | git hash-object --stdin
@@ -390,14 +390,14 @@ $ tree .git/objects/ --matchdirs -P bd
 
 git shards objects into 16×16=256 subfolders to grant a [faster access](http://thread.gmane.org/gmane.comp.version-control.git/69322) to a given sha1. This matters as all manipulations in git involve a sha1 (sometimes through <a href="#branches">aliases</a>).
 
-In the end, we have spent a bit of time looking at how git stores *loose* objects i.e. how git stores its objects in individual files. This helped us getting the big picture of the internal storage.
+In the end, we have spent a bit of time looking at how git stores *loose* objects i.e. how git stores its objects in individual files. This helped us get the big picture of the internal storage.
 
 We will not dig the [packfile](http://schacon.github.io/gitbook/7_the_packfile.html) [format](https://www.kernel.org/pub/software/scm/git/docs/technical/pack-format.txt) which is an optimization to avoid cluttering the disk by regrouping objects together (typically by invoking `git gc`).
 
 
 ## Immutability
 
-When creating our last commit, we made an horrible typo. git allows to amend the last commit using `git commit --amend`.  If the staging area contains any modification, they will be added to the commit.
+When creating our last commit, we made a horrible typo. git allows to amend the last commit using `git commit --amend`.  If the staging area contains any modification, they will be added to the commit.
 
 In our case, we just want to fix our typo in the commit message, so we do not add anything to the staging area:
 
@@ -458,7 +458,7 @@ $ git log --graph --oneline
 * 45de2f7 First commit
 ```
 
-we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit a new commit. We could fear that any git command have a direct and irreversible impact.
+we see that we created 3 commits until now. Amending our last commit did not add a new commit in the tree, it only replaced the last commit with a new commit. We could fear that any git command has a direct and irreversible impact.
 
 However git keeps a [reflog](https://git-scm.com/docs/git-reflog) which is a record of all commits that were referenced at some point.
 
@@ -476,7 +476,7 @@ Note however that git has [garbage](https://www.kernel.org/pub/software/scm/git/
 
 ## git basics: tl;dr
 
-* git is a functional DAG where nodes represents filetrees with metadata and keep a link to their parents
+* git is a functional DAG where nodes represent filetrees with metadata and keep a link to their parents
 * staging area is the bridge between local file tree and git data store
 * git internal data is stored efficiently and safely in the `.git` folder
 * git commands are performed by passing sha1 prefixes that identify objects uniquely
@@ -612,7 +612,7 @@ Now that we have two distinct branches, we should make sure that the changes int
 ### Comparing content
 
 * `git diff --cached`: changes that have been staged
-* `git diff A B`: changes  (computed using the [longest common subsequence algorithm](http://cbx33.github.io/gitt/afterhours3-1.html) algorithm)
+* `git diff A B`: changes  (computed using the [longest common subsequence](http://cbx33.github.io/gitt/afterhours3-1.html) algorithm)
 * `git diff A...B`: changes from common ancestor of `A` and `B` to `B`
 
 ### Comparing commits
@@ -665,7 +665,7 @@ There are multiple strategies to perform this, the most basic one being a merge 
 
 * the `MERGE_HEAD` commit i.e. the modification that we want to merge
 * the `HEAD` commit i.e. the branch in which the `MERGE_HEAD` will be merged i.e. the branch on which the `git merge` command is called
-* the `ORIG_HEAD` commit i.e. the *best common ancester* of `MERGE_HEAD` and `HEAD` that will serve as the reference.
+* the `ORIG_HEAD` commit i.e. the *best common ancestor* of `MERGE_HEAD` and `HEAD` that will serve as the reference.
 
 The result of a three-way merge will [look like](http://www.quora.com/How-does-Git-merge-work/answer/Anders-Kaseorg): `HEAD + (MERGE_HEAD - ORIG_HEAD)`
 
@@ -679,7 +679,7 @@ The result of a three-way merge will [look like](http://www.quora.com/How-does-G
 |  foo   |     |  bar         |     |   baz        |    | *conflict* |
 
 
-This short overview of how the three-way merge works assume that `ORIG_HEAD` is unique which can be wrong when merge commits are involved too. By default, git uses the `merge-recursive` strategy that is a three-way merge where the `ORIG_HEAD` is a (virtual) merge commits for all common ancestors.
+This short overview of how the three-way merge works assumes that `ORIG_HEAD` is unique which can be wrong when merge commits are involved too. By default, git uses the `merge-recursive` strategy that is a three-way merge where the `ORIG_HEAD` is a (virtual) merge commit of all common ancestors.
 
 So, after running
 
@@ -737,7 +737,7 @@ When merging, we explicitly asked git to create a merge commit using the `--no-f
 * 45de2f7 First commit
 ```
 
-Indeed, in this case, `HEAD` and `ORIG_HEAD` pointed to the same commits hence `HEAD` may just be updated to `MERGE_HEAD`. Wether one should prevent fast-forward merges or not is a matter of workflow and we will discuss this point a bit later.
+Indeed, in this case, `HEAD` and `ORIG_HEAD` pointed to the same commit hence `HEAD` may just be updated to `MERGE_HEAD`. Whether one should prevent fast-forward merges or not is a matter of workflow and we will discuss this point a bit later.
 
 
 ### Resolving conflicts
@@ -851,7 +851,7 @@ We now have the full picture:
 * the `master` branch wants to add “wesh” in the modern section;
 * the `modern-french` branch wants to add a “slang” section.
 
-This conflicts is easy to [solve](https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/) by editing the file and keeping both changes and thus having the following
+This conflict is easy to [solve](https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/) by editing the file and keeping both changes and thus having the following
 
 ```shell
 $  git diff
@@ -1092,7 +1092,7 @@ pick b588260 add french slang
 #  x, exec = run command (the rest of the line) using 
 ```
 
-It is important to note that the commits order is reversed compared to the output of `git log` command; the first commits listed are the oldest one.
+It is important to note that the commits order is reversed compared to the output of `git log` command; the first commits listed are the oldest ones.
 
 We just need to change the line
 
@@ -1100,7 +1100,7 @@ We just need to change the line
 pick 7a48ea2 add new modern data
 ```
 
-into (note that changing anything else that the verb at the beginning of a line will have no effect)
+into (note that changing anything other than the verb at the beginning of a line will have no effect)
 
 ```shell
 fixup 7a48ea2 add new modern data
@@ -1202,7 +1202,7 @@ This will give the following conflict diff
 ++>>>>>>> 631a301... third
 ```
 
-This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit `A` to commit `B` (i.e. `git diff A B`). However when three-way merge is involved (be it for merge or rebase) is the diff with respect to the common ancestor (i.e. `git diff A...B`).
+This is fully predictable: each commit stores full file snapshots however we tend to think in incremental delta, simply looking at the diff induced by changes from commit `A` to commit `B` (i.e. `git diff A B`). However when three-way merge is involved (be it for merge or rebase), the relevant diff is with respect to the common ancestor (i.e. `git diff A...B`).
 
 Let’s say that we resolved the conflict with the following
 
@@ -1229,7 +1229,7 @@ When we continue the rebase, we will again hit a conflict:
 ++>>>>>>> 50c1ff1... second
 ```
 
-We see that we have moved the issue from the common ancestor to the `MERGE_HEAD`, which in a rebase, is the parent commit and created a conflict cascade.
+We see that we have moved the issue from the common ancestor to the `MERGE_HEAD`, which in a rebase is the parent commit, creating a conflict cascade.
 
 ## Remotes
 
@@ -1277,7 +1277,7 @@ and everyone with an access to the remote can now see our work.
 
 ### Fetch
 
-Until now, we have been working on our own on the repository. As we created a public repository, some changes may have been pushed to our remote. git does not automatically try to get modification from the remote so it is the user responsibility to make sure his repository is up to date.
+Until now, we have been working on our own on the repository. As we created a public repository, some changes may have been pushed to our remote. git does not automatically try to get modification from the remote so it is the user's responsibility to make sure their repository is up to date.
 The command to retrieve remote changes is `git fetch`:
 
 ```shell
@@ -1290,7 +1290,7 @@ From github.com:marchelbling/bonjour
  * [new branch]      english    -> origin/english
 ```
 
-We can see that a new branch `english` has been pushed. We see that locally, git refers to it as `origin/english`. Indeed, git keep remote object references in an eponym namespace
+We can see that a new branch `english` has been pushed. We see that locally, git refers to it as `origin/english`. Indeed, git keeps remote object references in an eponymous namespace
 
 ```shell
 $ tree .git/refs/ --matchdirs -P remotes/origin
@@ -1370,7 +1370,7 @@ We here see that pushing a rewritten history (`git commit --amend` or `git rebas
     * `git rebase --interactive sha1^` will allow to edit/squash/remove/reorder all commits from `sha1` to `HEAD`
     * rebasing rewrites history and creates new commit objects
 * comparing branches for merge/rebase should be done with `git diff A...B` to take into account the common ancestor
-* retrieving remote updates is the user responsibility
+* retrieving remote updates is the user's responsibility
 * merge/rebase commands should usually reference branches from remote namespace
 * **never** force push without
     * having checked if changes were pushed to the remote
@@ -1385,12 +1385,12 @@ We here see that pushing a rewritten history (`git commit --amend` or `git rebas
 
 Creating branches with git is very cheap and should therefore be used without fear. The question is then: how should the branches relate to one another?
 
-There is no single answer to that question. Mostly because the answer depends on type nature of the project: a [web app](http://nvie.com/posts/a-successful-git-branching-model/) runs a single ever up-to-date version when a [desktop app](https://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html) may have multiple versions supported at a given time. The former may however be seen as a simple particular case of the latter.
+There is no single answer to that question. Mostly because the answer depends on the nature of the project: a [web app](http://nvie.com/posts/a-successful-git-branching-model/) runs a single ever up-to-date version when a [desktop app](https://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html) may have multiple versions supported at a given time. The former may however be seen as a simple particular case of the latter.
 
 > Don’t merge _upstream_ code at random points.<br>
 > Don’t merge _downstream_ code at random points either.
 >
-> <cite>[Linus Torvald](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744)</cite>
+> <cite>[Linus Torvalds](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744)</cite>
 
 
 <br>Most workflows maintain different contexts with careful synchronization points and the typical synchronization for a web app will look like:
@@ -1411,9 +1411,9 @@ Choosing the right workflow is complicated (see [discussion](https://news.ycombi
 * [feature branch flow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
 * [forking flow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
 
-Choosing the right mostly depends on the product and the team. No one size fits all solution. The rule of thumb: it should just not get in the way of developers/devops (as long as the team can be considered knowledgeable enough regarding git features).
+Choosing the right workflow mostly depends on the product and the team. No one size fits all solution. The rule of thumb: it should just not get in the way of developers/devops (as long as the team can be considered knowledgeable enough regarding git features).
 
-Let’s focus on how should branches be synchronized?
+Let’s focus on how branches should be synchronized.
 
 ### Merge or rebase?
 
@@ -1421,7 +1421,7 @@ The [“merge or rebase”](https://blog.sourcetreeapp.com/2012/08/21/merge-or-r
 
 The arguments mostly fall back to
 
-* `git merge` keeps original context but create a clumsy history that can be difficult to read and makes `git bisect` more [difficult to use](http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits)
+* `git merge` keeps original context but creates a clumsy history that can be difficult to read and makes `git bisect` more [difficult to use](http://stackoverflow.com/questions/17267816/git-bisect-with-merged-commits)
 * `git rebase` ends up in a linear history but rewrites history by computing incremental patches and thus modifies the original authored commits.
 
 It used to be about only merge or only rebase but usage is evolving with time. Nowadays, rewriting a “private” branch is seen as a cleanup and therefore mostly considered a [good](http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744) [practice](http://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/). Private does not necessarily means that the branch was not pushed on a remote yet; it rather means that you are mostly working on the branch alone. You may then push *your* branch on a remote, either to keep a backup or to help discuss a matter with team mates. Hence privacy should be seen as responsibility:
@@ -1429,7 +1429,7 @@ It used to be about only merge or only rebase but usage is evolving with time. N
 * a private branch is your own responsibility and its history may be altered to meet the project quality standards
 * a public branch is a collective responsibility and thus history should be taken with care as changing it may offend people.
 
-The question is now: how should a private branch be integrated in the public history? There is no really better solution; however it seems that people are tending to use a merge in order to keep an [identifiable](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa#032f) view of the former private branch. Also some tools like GitHub make opiniated choice and when using a Pull Request workflow with the service interface, branches may only be merged.
+The question is now: how should a private branch be integrated in the public history? There is no really better solution; however it seems that people are tending to use a merge in order to keep an [identifiable](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa#032f) view of the former private branch. Also some tools like GitHub make an opinionated choice and when using a Pull Request workflow with the service interface, branches may only be merged.
 
 To summarize what seems to become the dominant branch lifecycle in git:
 
@@ -1470,7 +1470,7 @@ Last but not least, a good commit should not contain code that has been commente
 
 ## What’s a good commit message?
 
-Commit messages are utterly important as they are the human counter part to a good commits history.
+Commit messages are utterly important as they are the human counterpart to a good commit history.
 
 ### Formatting
 
@@ -1488,7 +1488,7 @@ Following this format will produce readable [`git log`](http://git-scm.com/docs/
 ### Content
 
 The commit summary is like a (technical) book cover: it should give a good insight of what the commit is actually about.
-The description is like the backcover, providing more in-depth detail about the commit itself (and possibly listing dead ends encountered). It should answer the following [questions](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message):
+The description is like the back cover, providing more in-depth detail about the commit itself (and possibly listing dead ends encountered). It should answer the following [questions](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message):
 
 * Why is this change necessary?
 * How does it address the issue?
@@ -1561,7 +1561,7 @@ When stashing, you should always save a message (`git stash -m "..."`) to keep s
 When some bug or regression is found in a repository, we used to perform dichotomy through history to find when *it* was introduced. [`git bisect`](https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html) [automates](http://robots.thoughtbot.com/git-bisect) the process.
 
 
-We first need to start the session by setting the interval that should be tested, flagging the last known commit that is known to not have the bug as good and a bad commit
+We first need to start the session by providing a good commit (known to be bug-free) and a bad commit (known to have the bug)
 
 ```shell
 $ git bisect start
@@ -1573,7 +1573,7 @@ $ git bisect good abc123 # last commit known to be bug-free
 
 git then iterates over the range of commits using binary search and will wait for a good/bad flag for each checkouted commit. When all revisions have been bisected, the faulty commit is stored in `refs/bisect/bad`.
 
-To automate things further, an executable script or a command checking wether a revision is good or bad may be supplied by
+To automate things further, an executable script or a command checking whether a revision is good or bad may be supplied by
 
 ```shell
 $ git bisect run command
@@ -1657,7 +1657,7 @@ $ git config --global alias.hist "log --graph --pretty=format:'%Cred%h%Creset -%
     * [fixuping](http://stackoverflow.com/a/21148981/626278) a commit by committing and rebasing automatically
 
 ```shell
-$ git config--global alias.head "git log --oneline --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' | head"
+$ git config --global alias.head "git log --oneline --pretty=format:'%Cred%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' | head"
 
 $ git config --global alias.fixup "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && sha_to_patch=$( git rev-parse $1 ) && git commit --fixup=${sha_to_patch} && git rebase -i --autosquash ${sha_to_patch}^' -"
 ```
@@ -1752,7 +1752,7 @@ This definition is [relative](http://stackoverflow.com/a/2739476/626278) and dep
 
 A non-bare repository is what we have been manipulating so far: a repository containing both `.git` folder and a local file tree.
 
-A [bare](http://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/) repository has no local file tree but just the `.git` folder. It is typically used for host host git repositories on a [server](https://www.petekeen.net/self-hosted-git-server) and is instanciated using `git init --bare`.
+A [bare](http://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/) repository has no local file tree but just the `.git` folder. It is typically used to host git repositories on a [server](https://www.petekeen.net/self-hosted-git-server) and is instantiated using `git init --bare`.
 
 ### fork
 
@@ -1797,7 +1797,7 @@ A [hunk](http://joaquin.windmuller.ca/post/selectively-select-changes-to-commit-
 * [Pro Git](http://git-scm.com/book/en/v2)
 * [Introduction to git](https://speakerdeck.com/schacon/introduction-to-git)
 * [Visualizing Git Concepts with D3](http://onlywei.github.io/explain-git-with-d3/)
-* [A hackcker’s guide to git](http://wildlyinaccurate.com/a-hackers-guide-to-git)
+* [A hacker’s guide to git](http://wildlyinaccurate.com/a-hackers-guide-to-git)
 * [git for computer scientists](http://eagain.net/articles/git-for-computer-scientists/)
 * [git pretty (cheat sheet)](http://justinhileman.info/article/git-pretty/)
 * [Working with dates in git](http://alexpeattie.com/blog/working-with-dates-in-git/)

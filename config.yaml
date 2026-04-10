@@ -8,3 +8,8 @@ pygmentsUseClasses: false
 pygmentsStyle: "tango"
 posts: "/:title"
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+

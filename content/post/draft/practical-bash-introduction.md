@@ -19,7 +19,7 @@ A terminal is a hardware device providing input/display data. A terminal emulato
 
 A console runs a terminal that specifically inputs from a keyboard and outputs to a monitor, everything being *local* and attached to the computer.
 
-A shell is a command line interpreter i.e. a computer program relaying on a terminal for user interaction.
+A shell is a command line interpreter i.e. a computer program relying on a terminal for user interaction.
 
 ## POSIX
 

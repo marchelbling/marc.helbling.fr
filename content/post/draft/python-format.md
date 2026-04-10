@@ -52,7 +52,7 @@ This post is not intended to be an [introduction](https://developers.google.com/
 |-------------------------------|---|------------------------|---|----------------------|
 | `str` **`op`** `str`          |   | `str`                  |   | `str`                |
 | `str` **`op`** `unicode`      |   | `UnicodeEncodeError`   |   | `unicode`            |
-| `unicode` **`op`** `str`      |   | `UnicodeEncodeError`   |   | `UnicodeEncoreError` |
+| `unicode` **`op`** `str`      |   | `UnicodeEncodeError`   |   | `UnicodeEncodeError` |
 | `unicode` **`op`**  `unicode` |   | `unicode`              |   | `unicode`            |
 
 ```python

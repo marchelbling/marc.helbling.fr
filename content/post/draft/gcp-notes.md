@@ -48,11 +48,11 @@ The go `storage` client does *not* write any bytes for a new object unless `Writ
 
 ## Kubernetes
 
-Default ACLs do *not* provide access to pubsub so one has to explicitely enable pubsub when creating a cluster that requires to use the message queue.
+Default ACLs do *not* provide access to pubsub so one has to explicitly enable pubsub when creating a cluster that requires to use the message queue.
 
 ## Timeouts
 
-By default a client has 10s to process a message (in a way to maximize the throughput). This limit can be extended up to 10min by configuration the subscription
+By default a client has 10s to process a message (in a way to maximize the throughput). This limit can be extended up to 10min by configuring the subscription
 FIXME: see https://github.com/algolia/analytics-go/pull/202
 
 ### Ack/Nack latency

@@ -60,7 +60,7 @@
         
 
         <div class="article-entry" itemprop="articleBody">
-            <p>When dealing with software, stuff — be it <!-- raw HTML omitted -->technical<!-- raw HTML omitted --> or <!-- raw HTML omitted -->human<!-- raw HTML omitted --> —
+            <p>When dealing with software, stuff — be it <a href="#code">technical</a> or <a href="#management">human</a> —
 quite inexorably go wrong at some point for a variety of reasons. Here is a ‘memo’ list of shit that I lived or witnessed and hopefully ways to prevent them. Some points might look totally obvious but as I experienced them at least once they are probably worth listing.</p>
 <p>This is not intended to be a list of technical difficulties encountered during the development
 phase but a reminder of what to think about <em>before</em> starting to code:</p>
@@ -83,7 +83,7 @@ think in terms of a product instead of a team building a product.</p>
 </h2>
 <blockquote>
 <p>Explicit is better than implicit</p>
-<p><!-- raw HTML omitted --><a href="https://www.python.org/doc/humor/#the-zen-of-python">The Zen of Python</a><!-- raw HTML omitted --></p></blockquote>
+<p><cite><a href="https://www.python.org/doc/humor/#the-zen-of-python">The Zen of Python</a></cite></p></blockquote>
 <h3 id="bash">
   Bash
   <a class="heading-anchor" href="#bash" aria-label="Link to this section">
@@ -98,11 +98,11 @@ quotes unless you’re 100% sure it will always work correctly.</li>
 <li>there is no exception mechanism in bash. Every command or function has a <a href="http://tldp.org/LDP/abs/html/exit-status.html">return
 status</a> telling if it was successful (<code>0</code>) or not (<code>&gt;0</code>).  <em>Every</em> command. It is very easy to forget to test an important status code e.g. with some piped commands. Bash has a special flag to prevent silent failures: <a href="http://www.gnu.org/software/bash/manual/bashref.html#The-Set-Builtin"><code>set -e</code></a>, which may be used either globally (e.g. by using <code>#!/bin/bash -e</code> shebang) or on a specific bloc of code i.e.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>set -e
-</span></span><span style="display:flex;"><span>command0 | command <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -e
+</span></span><span style="display:flex;"><span>command0 <span style="color:#000;font-weight:bold">|</span> <span style="color:#204a87">command</span> <span style="color:#0000cf;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>command2
-</span></span><span style="display:flex;"><span>set +e
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> +e
 </span></span></code></pre></div><ul>
 <li>bash script often involve filesystem; even though the kernel only handles bytes, it may easily be
 overlooked that the <a href="http://en.wikipedia.org/wiki/Locale">locale</a> may have an impact on file
@@ -257,13 +257,13 @@ statement takes a second parameter to provide a human readable message. The gotc
 to call <code>assert</code> like a function</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">assert</span>(<span style="color:#66d9ef">False</span>, <span style="color:#e6db74">&#39;this is false&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>stdin<span style="color:#f92672">&gt;</span>:<span style="color:#ae81ff">1</span>: <span style="color:#a6e22e">SyntaxWarning</span>: assertion <span style="color:#f92672">is</span> always true, perhaps remove parentheses<span style="color:#960050;background-color:#1e0010">?</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">stdin</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#c00;font-weight:bold">SyntaxWarning</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">assertion</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">always</span> <span style="color:#000">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">perhaps</span> <span style="color:#000">remove</span> <span style="color:#000">parentheses</span><span style="color:#a40000">?</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">assert</span> <span style="color:#66d9ef">False</span>, <span style="color:#e6db74">&#39;this is false&#39;</span>
-</span></span><span style="display:flex;"><span>Traceback (most recent call last):
-</span></span><span style="display:flex;"><span>File <span style="color:#e6db74">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#ae81ff">1</span>, <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">AssertionError</span>: this <span style="color:#f92672">is</span> false
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#204a87;font-weight:bold">assert</span> <span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;this is false&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Traceback</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">most</span> <span style="color:#000">recent</span> <span style="color:#000">call</span> <span style="color:#000">last</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">File</span> <span style="color:#4e9a06">&#34;&lt;stdin&gt;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">line</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">module</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#c00;font-weight:bold">AssertionError</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">this</span> <span style="color:#204a87;font-weight:bold">is</span> <span style="color:#000">false</span>
 </span></span></code></pre></div><p>Note that the REPL issues a warning when called with a tuple. However if the assert statement is
 in a module, you will not see this and if you do not test your script on ‘faulty’ data you may just
 think that everything went fine when the assertions were actually not testing anything. Always
@@ -276,7 +276,7 @@ safe.</p>
   </a>
 </h3>
 <ul>
-<li>as most staff members will have extra privileges, there are a good target for account hijacking.
+<li>as most staff members will have extra privileges, they are a good target for account hijacking.
 You must enforce strong password/authentication policy for staff members, be it on your service
 or external services like code hosting.</li>
 <li>when dealing with people’s money, be very careful. Double check &amp; test everything. Implement a
@@ -296,8 +296,8 @@ issue.</li>
 </h2>
 <blockquote>
 <p>What goes well without saying, goes even better when you say it.</p>
-<p><!-- raw HTML omitted --><a href="http://en.wikipedia.org/wiki/Charles_Maurice_de_Talleyrand-P%C3%A9rigord">Charles-Maurice
-Talleyrand</a><!-- raw HTML omitted --></p></blockquote>
+<p><cite><a href="http://en.wikipedia.org/wiki/Charles_Maurice_de_Talleyrand-P%C3%A9rigord">Charles-Maurice
+Talleyrand</a></cite></p></blockquote>
 <h3 id="project">
   Project
   <a class="heading-anchor" href="#project" aria-label="Link to this section">
@@ -308,8 +308,8 @@ Talleyrand</a><!-- raw HTML omitted --></p></blockquote>
 <li>
 <p>when refactoring or rewriting code, do not change every part of the system at once</p>
 <ul>
-<li>chances are high that you will loose focus, e.g. to fix some production bugs or another
-priority will pop up or even you will take some vacations; by loosing focus you will likely
+<li>chances are high that you will lose focus, e.g. to fix some production bugs or another
+priority will pop up or even you will take some vacations; by losing focus you will likely
 ship bad code</li>
 <li>putting large changes in production can be more difficult hence it could very well delay the
 new code going live</li>
@@ -367,7 +367,7 @@ meet what you expect from them:
 <ul>
 <li>listen to feedback</li>
 <li>be analytical to find what is not working (possibly ask for an external opinion to make sure
-you are not biaised in your analysis)</li>
+you are not biased in your analysis)</li>
 <li>make sure people understand your expectations and their mission</li>
 <li>communicate as clearly as possible</li>
 </ul>

@@ -137,7 +137,7 @@ Fiddling script available as a [gist](https://gist.github.com/marchelbling/8a0b4
 
 # Using Citus in Docker: the clean approach.
 
-The previous was good to better understand how to interact with a Citus cluster but this is far from practical:
+The previous approach was good to better understand how to interact with a Citus cluster but this is far from practical:
 
 * the process is notably cumbersome as most steps have to be executed both on the coordinator and the workers in separate calls;
 * as a consequence, the proposed script uses duplicated lists which is error-prone;
@@ -179,7 +179,7 @@ Note that the environment has to be defined on all services to work as expected;
 The other handy option is the `/docker-entrypoint-initdb.d/` that allows to customize how the PostgreSQL instance should behave. Any SQL or Bash script will be executed before starting the service. This can be used to
 
 1. create our custom role,
-2. transfer owernship of the database to our custom role,
+2. transfer ownership of the database to our custom role,
 3. install custom extensions.
 
 All we have to do is “wrap” the Citus Docker image and inject our own script. Let's write a simple Dockerfile for this:

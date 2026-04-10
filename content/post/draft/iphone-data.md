@@ -17,7 +17,7 @@ Let’s see how to give them a second youth that will last, well, forever.
 
 Before looking at how to make a sms thread lively, we need to get the data which is not the easiest
 thing on earth. Information on how to do this can be found on the web rather easily (even though
-I never found a single post explaining how to process iOS backups form A to Z).
+I never found a single post explaining how to process iOS backups from A to Z).
 
 This is just a small recap on where to find iOS backup data and a bit of how to manipulate it.
 Let’s play with iOS backup data to reconstruct (and export) the full thread of discussion with a
@@ -100,7 +100,7 @@ function decrypt_backup {
 
 ## Photo storage:
 
-* sms attachements: `Library/SMS/Attachments/*`
+* sms attachments: `Library/SMS/Attachments/*`
 
 ## Finding all known numbers for a contact
 

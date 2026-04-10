@@ -42,9 +42,9 @@ So by taking this expression to the limit
 $$\lim_{s\rightarrow 1}F'_X(s) = \lim_{s\rightarrow 1}\sum_{k=0}^{+\infty}kP(X=k)s^{k-1}=\sum_{k=0}^{+\infty}kP(X=k)=E(X)$$
 
 
-## Power function of the sum of independant variabels
+## Power function of the sum of independent variables
 
-Let’s suppose $X$ and $Y$ are two independant random variables. We may write
+Let’s suppose $X$ and $Y$ are two independent random variables. We may write
 
 $$\mathbb{P}(X+Y=k) = \sum_{i=0}^{k} \mathbb{P}(X=i \cap Y=k-i) = \mathbb{P}(X=i)\mathbb{P}(Y=k-i).$$
 
@@ -60,7 +60,7 @@ $$F_{X+Y}(s)=F_X(s)F_Y(s)$$
 
 ## Application
 
-Let’s define $Z_n$ with $n\in \mathbb{N}$ as the number of male individuals at the $n$th generation. We will further assume that every individual will follow the same probability function of having $c$ children and that all individual are independant.
+Let’s define $Z_n$ with $n\in \mathbb{N}$ as the number of male individuals at the $n$th generation. We will further assume that every individual will follow the same probability function of having $c$ children and that all individual are independent.
 
 We also define
 $$\begin{array}{c}F_0(s)=s\\F_1(s)=F(s)\\F_n(s)=F(F_{n-1}(s))\end{array}$$
@@ -68,7 +68,7 @@ $$\begin{array}{c}F_0(s)=s\\F_1(s)=F(s)\\F_n(s)=F(F_{n-1}(s))\end{array}$$
 We want to demonstrate that the number of individuals at the $n$-th generation has $F_n$ as power function.
 
 
-# Exponantial law
+# Exponential law
 
 
 ## Density function:
@@ -104,7 +104,7 @@ $$F_T(x) = P(T \leq x) = 1 - P(T > x).$$
 
 If $T > x$, then $\forall i \in [1;n], T_i > x$ as $T \leq T_i$ by definition.
 
-$$P(T > x) = P\left(\underset{i=1}{\overset{n}{\bigcap}} T_i> x \right) = \prod_{i=1}^n P(T_i > x),$$ by independance.
+$$P(T > x) = P\left(\underset{i=1}{\overset{n}{\bigcap}} T_i> x \right) = \prod_{i=1}^n P(T_i > x),$$ by independence.
 
 So $$P(T > x) = P(T_1 > x)^n$$ and $$P(T \leq x) = 1- P(T > x) = 1 - P(T_1 > x)^n.$$
 

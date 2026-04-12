@@ -1,9 +1,11 @@
 import { TTS } from './tts.js';
 import { loadWords } from './data.js';
-import { createGame, checkAnswer, getDisplay, advance, addScore, isDone } from './game.js';
+import { createGame, checkAnswer, getDisplay, advance, addScore, markFailed, isDone } from './game.js';
 import type { GameState } from './types.js';
 
 const tts = new TTS();
+const statusEl = document.querySelector<HTMLElement>('#tts-status');
+tts.onReady = () => { statusEl?.remove(); };
 let state: GameState;
 let answerEl: HTMLInputElement | null = null;
 
@@ -26,7 +28,7 @@ function renderWord(): void {
   const entry = state.entries[state.index]!;
   const display = getDisplay(state);
   const missingLen = entry.missing.length;
-  const inputWidth = Math.ceil(measureText(entry.missing)) + 8;
+  const inputWidth = Math.ceil(measureText(entry.missing) + measureText('m'));
   const inputHTML = `<input id="answer" type="text"
       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
       maxlength="${missingLen + 2}"
@@ -36,11 +38,11 @@ function renderWord(): void {
   answerEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSubmit(); });
   scoreEl.textContent = `${state.score} / ${state.total}`;
   answerEl.focus();
-  tts.speak(entry.word);
+  void speakWord(entry.word);
 }
 
 function onCorrect(): void {
-  state = addScore(state);
+  if (!state.failed) state = addScore(state);
   answerEl!.className = 'correct';
   answerEl!.disabled = true;
   scoreEl.textContent = `${state.score} / ${state.total}`;
@@ -55,6 +57,7 @@ function onCorrect(): void {
 }
 
 function onWrong(): void {
+  state = markFailed(state);
   answerEl!.classList.remove('wrong');
   void answerEl!.offsetWidth; // force reflow to restart animation
   answerEl!.classList.add('wrong');
@@ -78,9 +81,15 @@ function handleSubmit(): void {
   }
 }
 
+async function speakWord(word: string): Promise<void> {
+  listenBtn.disabled = true;
+  await tts.speak(word);
+  listenBtn.disabled = false;
+}
+
 submitBtn.addEventListener('click', handleSubmit);
 listenBtn.addEventListener('click', () => {
-  if (!isDone(state)) tts.speak(state.entries[state.index]!.word);
+  if (!isDone(state)) void speakWord(state.entries[state.index]!.word);
 });
 
 loadWords('./words.json').then(entries => {

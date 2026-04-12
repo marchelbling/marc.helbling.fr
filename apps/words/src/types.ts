@@ -13,4 +13,5 @@ export interface GameState {
   readonly index: number;
   readonly score: number;
   readonly total: number;
+  readonly failed: boolean;
 }

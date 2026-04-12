@@ -1,16 +1,12 @@
 import type { WordEntry, GameState } from './types.js';
 import { maskWord } from './data.js';
 
-function normalize(s: string): string {
-  return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
 export function checkAnswer(entry: WordEntry, input: string): boolean {
-  return normalize(input) === normalize(entry.missing);
+  return input.trim().toLowerCase() === entry.missing.toLowerCase();
 }
 
 export function createGame(entries: readonly WordEntry[]): GameState {
-  return { entries, index: 0, score: 0, total: entries.length };
+  return { entries, index: 0, score: 0, total: entries.length, failed: false };
 }
 
 export function getDisplay(state: GameState): string {
@@ -18,8 +14,12 @@ export function getDisplay(state: GameState): string {
   return maskWord(entry.word, entry.missing);
 }
 
+export function markFailed(state: GameState): GameState {
+  return { ...state, failed: true };
+}
+
 export function advance(state: GameState): GameState {
-  return { ...state, index: state.index + 1 };
+  return { ...state, index: state.index + 1, failed: false };
 }
 
 export function addScore(state: GameState): GameState {

@@ -78,6 +78,8 @@
       background: #3b82f6;
       color: white;
       transition: background 0.15s;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     button:hover { background: #2563eb; }
@@ -92,6 +94,15 @@
       font-size: 1.2rem;
       color: #6b7280;
     }
+
+    #tts-status {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
   </style>
 </head>
 <body>
@@ -103,6 +114,8 @@
   </div>
 
   <div id="score"></div>
+
+  <div id="tts-status">Chargement de la voix…</div>
 
   <script type="module" src="js/main.js"></script>
 </body>

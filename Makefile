@@ -18,16 +18,24 @@ theme:
 	git submodule update --init
 
 .PHONY: generate
-generate: clean cname theme
+generate: clean cname theme build-words
 	cd ${REPO_ROOT}
 	hugo --theme malt --destination ${BUILD_DIR}
 
 
 .PHONY: local
-local: theme
+local: theme build-words
 	cd ${REPO_ROOT}
 	hugo server --disableFastRender -D watch
 
+
+.PHONY: build-words
+build-words:
+	cd ${REPO_ROOT}/apps/words && npm run build-all
+
+.PHONY: test-words
+test-words:
+	cd ${REPO_ROOT}/apps/words && npm test
 
 .PHONY: deploy
 deploy: generate

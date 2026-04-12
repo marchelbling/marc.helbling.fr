@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orthographe</title>
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/opendyslexic">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fafaf8;
+      font-family: 'OpenDyslexic', system-ui, sans-serif;
+      gap: 2rem;
+    }
+
+    #word {
+      font-size: 6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.4;
+      padding: 0 1rem;
+    }
+
+    #answer {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      background: transparent;
+      border: none;
+      border-bottom: 4px solid #333;
+      outline: none;
+      text-align: center;
+      color: #1d4ed8;
+      padding: 0 0.1em;
+      /* width set dynamically by JS based on missing length */
+      transition: border-color 0.15s, background 0.15s;
+      vertical-align: baseline;
+    }
+
+    #answer.correct {
+      border-color: #22c55e;
+      color: #15803d;
+    }
+
+    #answer.wrong {
+      border-color: #ef4444;
+      color: #dc2626;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-8px); }
+      40%       { transform: translateX(8px); }
+      60%       { transform: translateX(-6px); }
+      80%       { transform: translateX(6px); }
+    }
+
+    #controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #3b82f6;
+      color: white;
+      transition: background 0.15s;
+    }
+
+    button:hover { background: #2563eb; }
+
+    #listen { background: #6b7280; }
+    #listen:hover { background: #4b5563; }
+
+    #score {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 1.2rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div id="word">Chargement…</div>
+
+  <div id="controls">
+    <button id="listen">Écouter</button>
+    <button id="submit">Valider</button>
+  </div>
+
+  <div id="score"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

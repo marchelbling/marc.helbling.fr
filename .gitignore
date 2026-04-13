@@ -1,3 +1,4 @@
 static/apps/words/js/
 apps/words/dist/
 apps/words/node_modules/
+apps/words/scripts/.piper-models/

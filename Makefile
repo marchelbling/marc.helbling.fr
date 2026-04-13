@@ -37,6 +37,10 @@ build-words:
 test-words:
 	cd ${REPO_ROOT}/apps/words && npm test
 
+.PHONY: words-audio
+words-audio:
+	${REPO_ROOT}/apps/words/scripts/generate_audio.py
+
 .PHONY: deploy
 deploy: generate
 	git add ${BUILD_DIR} && git commit -m "make generate"

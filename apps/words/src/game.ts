@@ -6,7 +6,7 @@ export function checkAnswer(entry: WordEntry, input: string): boolean {
 }
 
 export function createGame(entries: readonly WordEntry[]): GameState {
-  return { entries, index: 0, score: 0, total: entries.length, failed: false };
+  return { entries, index: 0, score: 0, total: entries.length, failed: false, results: [] };
 }
 
 export function getDisplay(state: GameState): string {
@@ -19,7 +19,8 @@ export function markFailed(state: GameState): GameState {
 }
 
 export function advance(state: GameState): GameState {
-  return { ...state, index: state.index + 1, failed: false };
+  const result: 'correct' | 'wrong' = state.failed ? 'wrong' : 'correct';
+  return { ...state, index: state.index + 1, failed: false, results: [...state.results, result] };
 }
 
 export function addScore(state: GameState): GameState {

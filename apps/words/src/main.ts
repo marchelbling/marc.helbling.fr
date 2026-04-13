@@ -4,15 +4,30 @@ import { createGame, checkAnswer, getDisplay, advance, addScore, markFailed, isD
 import type { GameState } from './types.js';
 
 const tts = new TTS();
-const statusEl = document.querySelector<HTMLElement>('#tts-status');
-tts.onReady = () => { statusEl?.remove(); };
 let state: GameState;
 let answerEl: HTMLInputElement | null = null;
 
 const wordEl = document.querySelector<HTMLElement>('#word')!;
 const scoreEl = document.querySelector<HTMLElement>('#score')!;
+const progressEl = document.querySelector<HTMLElement>('#progress')!;
 const listenBtn = document.querySelector<HTMLButtonElement>('#listen')!;
 const submitBtn = document.querySelector<HTMLButtonElement>('#submit')!;
+const startBtn = document.querySelector<HTMLButtonElement>('#start')!;
+
+function renderProgress(): void {
+  const dots: string[] = [];
+  for (let i = 0; i < state.total; i++) {
+    const isPast = i < state.results.length;
+    const cls = isPast
+      ? state.results[i]!
+      : i === state.index
+        ? (state.failed ? 'wrong current' : 'current')
+        : 'pending';
+    const title = isPast ? ` title="${state.entries[i]!.word}"` : '';
+    dots.push(`<span class="dot ${cls}"${title}></span>`);
+  }
+  progressEl.innerHTML = dots.join('');
+}
 
 function measureText(text: string): number {
   const ruler = document.createElement('span');
@@ -37,6 +52,7 @@ function renderWord(): void {
   answerEl = document.querySelector<HTMLInputElement>('#answer')!;
   answerEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSubmit(); });
   scoreEl.textContent = `${state.score} / ${state.total}`;
+  renderProgress();
   answerEl.focus();
   void speakWord(entry.word);
 }
@@ -61,6 +77,7 @@ function onWrong(): void {
   answerEl!.classList.remove('wrong');
   void answerEl!.offsetWidth; // force reflow to restart animation
   answerEl!.classList.add('wrong');
+  renderProgress();
   answerEl!.select();
 }
 
@@ -70,6 +87,7 @@ function showDone(): void {
   submitBtn.style.display = 'none';
   listenBtn.style.display = 'none';
   scoreEl.textContent = '';
+  renderProgress();
 }
 
 function handleSubmit(): void {
@@ -92,10 +110,18 @@ listenBtn.addEventListener('click', () => {
   if (!isDone(state)) void speakWord(state.entries[state.index]!.word);
 });
 
-loadWords('./words.json').then(entries => {
-  state = createGame(entries);
-  renderWord();
-}).catch((err: unknown) => {
+const wordsPromise = loadWords('./words.json');
+wordsPromise.catch((err: unknown) => {
   wordEl.textContent = 'Erreur de chargement.';
   console.error(err);
+});
+
+startBtn.addEventListener('click', () => {
+  wordsPromise.then(entries => {
+    state = createGame(entries);
+    startBtn.style.display = 'none';
+    listenBtn.style.display = '';
+    submitBtn.style.display = '';
+    renderWord();
+  });
 });

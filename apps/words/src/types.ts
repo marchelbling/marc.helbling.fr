@@ -8,10 +8,13 @@ export interface WeekLesson {
   readonly words: WordEntry[];
 }
 
+export type WordResult = 'correct' | 'wrong';
+
 export interface GameState {
   readonly entries: readonly WordEntry[];
   readonly index: number;
   readonly score: number;
   readonly total: number;
   readonly failed: boolean;
+  readonly results: readonly WordResult[];
 }

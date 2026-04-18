@@ -2,3 +2,7 @@ static/apps/words/js/
 apps/words/dist/
 apps/words/node_modules/
 apps/words/scripts/.piper-models/
+static/apps/phonemes/js/
+apps/phonemes/dist/
+apps/phonemes/node_modules/
+apps/phonemes/scripts/.piper-models/

@@ -1,0 +1,6 @@
+# Tool versions managed by mise (https://mise.jdx.dev/).
+# Run `mise install` once from the repo root to get everything in scope.
+[tools]
+node = "lts"
+hugo = "latest"
+uv   = "latest"

@@ -2,5 +2,5 @@
 # Run `mise install` once from the repo root to get everything in scope.
 [tools]
 node = "lts"
-hugo = "latest"
+hugo = "0.160.1" # see .github/workflows/deploy.yml
 uv   = "latest"

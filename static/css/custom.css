@@ -1,3 +1,16 @@
+@keyframes shantell-dance {
+  0%   { font-weight: 700; font-style: normal; }
+  25%  { font-weight: 300; font-style: italic; }
+  50%  { font-weight: 400; font-style: normal; }
+  75%  { font-weight: 700; font-style: italic; }
+  100% { font-weight: 300; font-style: normal; }
+}
+
+.index-list-item-header h1:hover {
+  font-family: "Shantell Sans", Lato, system-ui, sans-serif;
+  animation: shantell-dance 2s ease-in-out infinite;
+}
+
 h1.article-title:hover,
 .article-entry :where(h1, h2, h3, h4, h5, h6):hover {
   font-family: "Shantell Sans", Lato, system-ui, sans-serif;

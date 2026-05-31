@@ -1,0 +1,26 @@
+<head>
+    <title>{{ .Title }}{{ if ne .Title .Site.Title }} &#9889; {{ .Site.Title }}{{ end }}</title>
+
+    {{ partial "meta.html" . }}
+    {{ partial "og.html" . }}
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Halant:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link href="{{ with .OutputFormats.Get "RSS" }}{{.Permalink }}{{end}}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+    <link href="{{ with .OutputFormats.Get "RSS" }}{{.Permalink }}{{end}}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/malt.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/custom.css">
+    {{ if eq .Layout "search" }}<link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css">{{ end }}
+
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    {{ if or .Params.math .Site.Params.math }}
+        {{ partial "math.html" . }}
+    {{ end }}
+
+    {{ hugo.Generator }}
+</head>

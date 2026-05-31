@@ -4,9 +4,9 @@ Static site built with [Hugo](https://gohugo.io). Current theme is: [malt](https
 
 ## Requirements
 
-* hugo (v0.148.0)
+* hugo (v0.160.1)
 * make
-* `git clone git@github.com:marchelbling/malt themes/malt`
+* `git submodule update --init` (or `make theme`)
 
 ## Running locally
 
@@ -20,8 +20,6 @@ $ make local
 $ make generate
 ```
 
-## Deploying to marc.helbling.fr
+## Deployment
 
-```
-$ make deploy
-```
+Deployment to GitHub Pages is automated via GitHub Actions on every push to `main`.

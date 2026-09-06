@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>France : société d'aujourd'hui et climat de demain</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#faf9f7;--panel:#fff;--ink:#1a1a19;--mut:#6b6b66;--line:#e4e2dc;--acc:#2E7D46;--acc-bg:#eef5f0}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+#app{display:flex;height:100vh}
+#side{width:390px;flex:none;background:var(--panel);border-right:1px solid var(--line);overflow-y:auto}
+#map{flex:1}
+.pad{padding:14px 16px}
+h1{font-size:16px;margin:0 0 2px;font-weight:600}
+.sub{font-size:11.5px;color:var(--mut);margin:0}
+.sec{border-top:1px solid var(--line)}
+.sec>h2{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);
+  margin:0;padding:12px 16px 10px;font-weight:600;display:flex;align-items:center;gap:8px}
+.sec>h2 button{margin-left:auto;border:0;background:none;color:var(--mut);font-size:10.5px;
+  text-transform:none;letter-spacing:0;cursor:pointer;text-decoration:underline;
+  padding:0;font-weight:500;font-family:inherit}
+.sec>h2 button:hover{color:var(--acc)}
+.bloc>summary .n{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500}
+.bloc>summary{cursor:pointer;list-style:none;font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--mut);font-weight:600;padding:12px 16px 10px;
+  display:flex;align-items:center;gap:8px}
+.bloc>summary::-webkit-details-marker{display:none}
+.bloc>summary::before{content:"›";font-size:15px;line-height:1;transition:transform .12s;
+  display:inline-block;color:var(--mut)}
+.bloc[open]>summary::before{transform:rotate(90deg)}
+.bloc>summary:hover{color:var(--ink)}
+select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:13px;background:#fff;color:var(--ink);font-family:inherit}
+
+/* ---- résumé collant ---- */
+#bar{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line);padding:11px 16px}
+#actifs{display:flex;flex-wrap:wrap;gap:5px}
+#actifs:empty{display:none}
+.puce{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:2px 6px 2px 8px;
+  border-radius:99px;background:var(--acc-bg);color:#1c5c33;border:1px solid #cfe3d6;max-width:100%}
+.puce b{font-weight:600}
+.puce span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.puce button{border:0;background:none;color:#1c5c33;cursor:pointer;font-size:13px;line-height:1;padding:0 1px;opacity:.6}
+.puce button:hover{opacity:1}
+#razAll{border:0;background:none;color:var(--mut);font-size:11px;cursor:pointer;
+  text-decoration:underline;padding:0;margin-top:7px;font-family:inherit}
+#razAll:hover{color:var(--acc)}
+
+/* ---- familles et critères ---- */
+.fam{border-top:1px solid var(--line)}
+.fam>summary{cursor:pointer;list-style:none;padding:10px 16px;display:flex;align-items:center;gap:8px;
+  font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);font-weight:600}
+.fam>summary::-webkit-details-marker{display:none}
+.fam>summary::before{content:"›";font-size:15px;transition:transform .12s;display:inline-block;color:var(--mut)}
+.fam[open]>summary::before{transform:rotate(90deg)}
+.fam>summary .n{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500;font-size:11px}
+.fam>summary .n.on{color:var(--acc);font-weight:600}
+
+.cri{border-top:1px solid #f1efe9}
+.cri>summary{cursor:pointer;list-style:none;padding:8px 16px 8px 16px;display:flex;align-items:baseline;gap:7px;font-size:12.5px}
+.cri>summary::-webkit-details-marker{display:none}
+.cri>summary::before{content:"›";color:#b4b0a6;font-size:14px;line-height:1;transition:transform .12s;
+  display:inline-block;flex:none;width:9px}
+.cri[open]>summary::before{transform:rotate(90deg)}
+.cri>summary:hover{background:#f6f4ef}
+.cri>summary:hover::before{color:var(--acc)}
+.cri.act>summary::before{color:var(--acc)}
+.cri>summary .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cri>summary .st{font-size:11px;color:var(--mut);flex:none;font-variant-numeric:tabular-nums}
+.cri.act>summary{background:var(--acc-bg)}
+.cri.act>summary .nm{font-weight:600}
+.cri.act>summary .st{color:var(--acc);font-weight:600}
+.corps{padding:2px 16px 12px 32px}
+.corps input[type=range]{width:100%;margin:2px 0;height:16px;accent-color:var(--acc)}
+.deux{display:flex;gap:8px}
+.deux>div{flex:1;min-width:0}
+.lab{font-size:10.5px;color:var(--mut);margin-bottom:1px}
+.val{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.pied{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:5px;font-size:10.5px;color:var(--mut)}
+.pied label{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.pied input{margin:0;accent-color:var(--acc)}
+.pied button{border:0;background:none;color:var(--mut);font-size:10.5px;cursor:pointer;text-decoration:underline;padding:0}
+.tag{font-size:9px;padding:1px 5px;border-radius:99px;background:#eceae3;color:#6b6b66;flex:none}
+
+/* ---- divers ---- */
+#tip{position:fixed;z-index:9999;max-width:340px;background:#25251f;color:#f2f0ea;padding:11px 13px;border-radius:8px;font-size:12px;line-height:1.5;box-shadow:0 8px 26px rgba(0,0,0,.28);display:none;pointer-events:none}
+#tip b{color:#fff;display:block;margin-bottom:4px;font-size:13px}
+#tip .meta{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.16);color:#c9c6bc;font-size:11px}
+#tip .sc{margin-top:6px;color:#c9c6bc;font-size:11px}
+.ind{border-bottom:1px dotted var(--mut);cursor:help}
+.regs{display:flex;flex-wrap:wrap;gap:5px;padding:0 16px 14px}
+.chip{font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:99px;cursor:pointer;user-select:none;background:#fff}
+.chip.off{opacity:.35}
+.leg{display:flex;flex-direction:column;gap:5px;font-size:12px;padding:0 16px 16px}
+.leg div{display:flex;align-items:center;gap:7px}
+.dot{width:11px;height:11px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);flex:none}
+.tel{border:1px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;
+  font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;width:100%}
+.tel:hover{background:#f6f4ef;border-color:var(--acc);color:var(--acc)}
+#liste{max-height:340px;overflow-y:auto;font-size:12px;margin:0 16px 14px;border:1px solid var(--line);border-radius:6px}
+#liste div{padding:5px 8px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:6px;align-items:center}
+#liste div:last-child{border:0}
+#liste div:hover{background:#f6f4ef}
+#liste .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#liste .v{color:var(--mut);font-variant-numeric:tabular-nums}
+.pop{font-size:13px;min-width:270px;max-width:340px}
+.pop h3{margin:0 0 2px;font-size:15px}
+.pop .m{color:var(--mut);font-size:11px;margin-bottom:8px}
+.pop table{border-collapse:collapse;width:100%}
+.pop td{padding:2px 0;vertical-align:top}
+.pop td:first-child{color:var(--mut);padding-right:10px}
+.pop td:last-child{text-align:right;white-space:nowrap}
+.pop .w{background:#fdf6e3;padding:6px 8px;border-radius:5px;font-size:12px;color:#6b5a20;margin-top:8px}
+.pop .famr{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);padding-top:7px;font-weight:600}
+.nb{display:inline-block;width:15px;height:15px;line-height:15px;text-align:center;border-radius:3px;color:#fff;font-size:9px;font-weight:600;margin-left:5px}
+@media(max-width:760px){#app{flex-direction:column}#side{width:100%;height:55vh}#map{height:45vh}}
+</style></head><body>
+<div id="tip"></div>
+<div id="app">
+<div id="side">
+  <div class="pad"><h1>France : société d'aujourd'hui<br>et climat de demain</h1></div>
+
+  <div id="bar" hidden>
+    <div id="actifs"></div>
+    <button id="razAll">tout remettre à zéro</button>
+  </div>
+
+  <div class="sec">
+    <h2>Critères<button id="plier">tout replier</button></h2>
+  </div>
+  <div id="filtres"></div>
+
+  <div class="sec"><h2>Colorer la carte</h2>
+    <div style="padding:0 16px 12px"><select id="colorBy"></select>
+      <p id="cbDesc" style="font-size:11px;color:var(--mut);margin:7px 0 0;line-height:1.45"></p>
+      <div class="leg" id="leg" style="padding:10px 0 0"></div>
+    </div>
+  </div>
+
+  <details class="sec bloc" open><summary>Régions</summary>
+    <div class="regs" id="regs"></div>
+  </details>
+
+  <details class="sec bloc" open><summary>Communes retenues<span class="n" id="nCom"></span></summary>
+    <div id="liste"></div>
+    <div style="padding:0 16px 16px"><button id="csv" class="tel">Télécharger la liste (CSV)</button></div>
+  </details>
+</div>
+<div id="map"></div>
+</div>
+<script>window.TERRITOIRES_SRC={communes:"communes.json",indicateurs:"indicateurs.json"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const RAMP=["#B3402A","#D9822B","#E8C34A","#7FA96B","#2E7D46"], GREY="#b8b5ad";
+let DATA=[], IND=[], byCode={}, offRegions=new Set(), F={}, markers={};
+
+const map=L.map("map",{scrollWheelZoom:true}).setView([46.9,2.6],6);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {maxZoom:18,attribution:'&copy; OpenStreetMap'}).addTo(map);
+const layer=L.layerGroup().addTo(map);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const niv=n=>n==null?GREY:RAMP[Math.max(0,Math.min(4,Math.round(n)-1))];
+const fmtNum=n=>n==null?"—":Number(n).toLocaleString("fr-FR",{maximumFractionDigits:2});
+const plur=(n,mot)=>`${n} ${mot}${n>1?"s":""}`;
+const unite=i=>(i&&i.unite&&i.unite!=="1-5"&&i.unite.length<22)?" "+esc(i.unite):"";
+const estClasse=i=>(i.bareme_texte||[]).some(b=>b.rang!=null);
+
+// ---------- état des filtres ----------
+// Un filtre est toujours un intervalle sur les paliers observés. Un critère de
+// qualité garde sa borne haute au maximum : il ne reste qu'un plancher.
+const dernier=i=>i.paliers.length-1;
+function neuf(i){ return {lo:0, hi:dernier(i), vide:true}; }
+function actif(i){ const f=F[i.code]; return !!f && (f.lo>0 || f.hi<dernier(i) || !f.vide); }
+
+// ---------- infobulles ----------
+const tip=$("tip");
+function statutTexte(i){
+  return !i.paliers.length ? "aucune valeur en base"
+       : i.statut==="calcule" ? "calculé" : "chargé depuis la source";
+}
+function ordreTexte(i){
+  const mods=(i.bareme_texte||[]).filter(b=>b.rang!=null).sort((a,b)=>a.rang-b.rang);
+  if(mods.length) return "Du moins bon au meilleur : "+mods.map(b=>esc(b.valeur)).join(" &lt; ");
+  if(i.nature==="preference") return "Aucun sens n'est « meilleur » : on filtre par intervalle.";
+  return i.sens==="decroissant" ? "Plus la valeur est basse, mieux c'est."
+                                : "Plus la valeur est haute, mieux c'est.";
+}
+function tipHTML(i){
+  const d=i.domaine||{};
+  const etendue = d.n_renseigne
+    ? (d.valeur_min!=null
+        ? `Observé : ${fmtNum(d.valeur_min)} à ${fmtNum(d.valeur_max)}${unite(i)} sur ${d.n_renseigne} communes`
+        : `Observé sur ${d.n_renseigne} communes`)
+    : "Aucune valeur en base pour l'instant";
+  return `<b>${esc(i.libelle)}</b>${esc(i.description)}
+   <div class="sc">${ordreTexte(i)}</div>
+   <div class="meta">Source : ${esc(i.source)}${i.millesime?" ("+esc(i.millesime)+")":""}<br>
+   Unité : ${esc(i.unite)} · maille : ${esc(i.maille)}<br>
+   Statut : ${statutTexte(i)}<br>${etendue}</div>`;
+}
+function bindTip(el,code){
+  const i=byCode[code]; if(!i) return;
+  el.classList.add("ind");
+  el.onmouseenter=e=>{tip.innerHTML=tipHTML(i);tip.style.display="block";moveTip(e)};
+  el.onmousemove=moveTip; el.onmouseleave=()=>tip.style.display="none";
+}
+function moveTip(e){
+  const w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=e.clientX+16,y=e.clientY+16;
+  if(x+w>innerWidth-10) x=e.clientX-w-16;
+  if(y+h>innerHeight-10) y=Math.max(10,e.clientY-h-16);
+  tip.style.left=x+"px";tip.style.top=y+"px";
+}
+
+// ---------- valeurs ----------
+function affValeur(code,v){
+  if(!v) return "—";
+  const i=byCode[code];
+  if(v.valeur_texte!=null) return esc(v.valeur_texte);
+  if(v.valeur_num==null) return "—";
+  return fmtNum(v.valeur_num)+unite(i);
+}
+function palLabel(i,p){
+  return p.valeur_texte!=null ? esc(p.valeur_texte) : fmtNum(p.valeur_num)+unite(i);
+}
+// Ce que le filtre dit, en toutes lettres.
+function resume(i){
+  const f=F[i.code], last=dernier(i);
+  if(!f) return "";
+  const bas=palLabel(i,i.paliers[f.lo]), haut=palLabel(i,i.paliers[f.hi]);
+  if(i.nature==="preference"){
+    if(f.lo===0 && f.hi===last) return "";
+    // l'unité une seule fois, à la fin : « 20 050 – 79 851 habitants »
+    const brut = i.paliers[f.lo].valeur_texte==null ? fmtNum(i.paliers[f.lo].valeur_num) : bas;
+    return `${brut} – ${haut}`;
+  }
+  if(f.lo===0) return "";
+  return estClasse(i) ? `${bas} ou mieux`
+       : (i.sens==="decroissant" ? "≤ " : "≥ ") + bas;
+}
+
+// ---------- filtrage ----------
+function passe(d){
+  if(offRegions.has(d.region)) return false;
+  for(const code in F){
+    const i=byCode[code]; if(!i||!i.paliers.length) continue;
+    const f=F[code], v=d.indicateurs[code], o=v?v.ordre:null;
+    if(o==null){ if(!f.vide) return false; continue; }
+    // `ordre` intègre déjà le sens : la comparaison est la même partout.
+    if(o < i.paliers[f.lo].ordre) return false;
+    if(o > i.paliers[f.hi].ordre) return false;
+  }
+  return true;
+}
+
+// ---------- carte ----------
+function color(d){
+  const k=$("colorBy").value;
+  if(k==="indicateurs_renseignes") return RAMP[Math.min(4,Math.floor(d.indicateurs_renseignes/5))];
+  const v=d.indicateurs[k]; return niv(v?v.niveau:null);
+}
+function tri(d){
+  const k=$("colorBy").value;
+  if(k==="indicateurs_renseignes") return d.indicateurs_renseignes;
+  const v=d.indicateurs[k]; return v&&v.ordre!=null?v.ordre:-Infinity;
+}
+function popup(d){
+  let rows="";
+  [...new Set(IND.map(i=>i.famille))].forEach(f=>{
+    const list=IND.filter(i=>i.famille===f && d.indicateurs[i.code]);
+    if(!list.length) return;
+    rows+=`<tr><td colspan="2"><div class="famr">${esc(f)}</div></td></tr>`;
+    list.forEach(i=>{
+      const v=d.indicateurs[i.code];
+      rows+=`<tr><td><span data-ind="${i.code}">${esc(i.libelle)}</span></td>
+        <td>${affValeur(i.code,v)}${v.niveau!=null?`<span class="nb" style="background:${niv(v.niveau)}">${v.niveau}</span>`:""}</td></tr>`;
+    });
+  });
+  return `<div class="pop"><h3>${esc(d.nom)}</h3>
+  <div class="m">${esc(d.bassin_vie||"—")} · ${esc(d.departement)} · ${esc(d.region)}${d.densite?" · "+esc(d.densite):""}</div>
+  <table>${rows}</table></div>`;
+}
+
+function render(){
+  layer.clearLayers(); markers={};
+  const ok=DATA.filter(passe);
+  ok.forEach(d=>{
+    markers[d.id]=L.circleMarker([d.latitude,d.longitude],{
+      radius:4.5, fillColor:color(d), color:"#fff", weight:1.2, fillOpacity:.9})
+      .bindPopup(()=>popup(d)).bindTooltip(d.nom,{direction:"top"}).addTo(layer);
+  });
+  const n=ok.length;
+  $("nCom").textContent = n===DATA.length ? plur(n,"commune")
+                                          : `${n} sur ${DATA.length}`;
+  majPuces();
+  const k=$("colorBy").value, i=byCode[k];
+  const sorted=[...ok].sort((a,b)=>tri(b)-tri(a)||a.nom.localeCompare(b.nom,"fr"));
+  $("liste").innerHTML = sorted.map(d=>{
+    const aff = i ? affValeur(k,d.indicateurs[k]) : plur(d.indicateurs_renseignes,"critère");
+    return `<div data-id="${d.id}"><span class="dot" style="background:${color(d)}"></span>
+      <span class="n">${esc(d.nom)}</span><span class="v">${aff}</span></div>`;
+  }).join("") || '<div style="color:var(--mut)">aucune commune</div>';
+  $("liste").querySelectorAll("[data-id]").forEach(el=>{
+    el.onclick=()=>{const m=markers[+el.dataset.id]; if(m){map.setView(m.getLatLng(),10);m.openPopup();}};
+  });
+  legende();
+}
+
+// ---------- résumé des filtres actifs ----------
+function majPuces(){
+  const act=IND.filter(i=>i.paliers.length&&actif(i));
+  $("actifs").innerHTML=act.map(i=>{
+    const r=resume(i)||"sans les non renseignées";
+    return `<span class="puce"><b>${esc(i.libelle.split(" (")[0])}</b>
+      <span>${r}</span><button data-raz="${i.code}" title="retirer">×</button></span>`;
+  }).join("");
+  $("actifs").querySelectorAll("[data-raz]").forEach(b=>{
+    b.onclick=()=>{ F[b.dataset.raz]=neuf(byCode[b.dataset.raz]); construire(); render(); };
+  });
+  $("bar").hidden = act.length===0;
+}
+
+function legende(){
+  const k=$("colorBy").value, i=byCode[k];
+  $("cbDesc").textContent = i ? i.description : "Nombre de critères renseignés pour cette commune.";
+  let labels;
+  if(k==="indicateurs_renseignes") labels=["0 – 4","5 – 9","10 – 14","15 – 19","≥ 20"];
+  else if(i&&i.bareme_num&&i.bareme_num.length){
+    // Les barèmes ont des bornes techniques (0 à 400 nuits par an…) qui n'ont
+    // pas de sens à l'écran. On les recadre sur ce qui est réellement observé,
+    // et on ouvre la borne quand elle dépasse le domaine.
+    const b={}; i.bareme_num.forEach(x=>b[x.note]=x);
+    const dmin=i.domaine.valeur_min, dmax=i.domaine.valeur_max, u=unite(i);
+    labels=[1,2,3,4,5].map(n=>{
+      if(!b[n]) return "niveau "+n;
+      const lo=Math.max(b[n].valeur_min, dmin), hi=Math.min(b[n].valeur_max, dmax);
+      if(lo>dmax || hi<dmin) return null;                       // bande jamais atteinte
+      if(b[n].valeur_max>dmax) return `≥ ${fmtNum(lo)}${u}`;
+      if(b[n].valeur_min<=dmin) return `< ${fmtNum(hi)}${u}`;
+      return `${fmtNum(lo)} – ${fmtNum(hi)}${u}`;
+    });
+  } else if(i&&i.bareme_texte&&i.bareme_texte.length){
+    const b={}; i.bareme_texte.forEach(x=>{(b[x.note]=b[x.note]||[]).push(x.valeur)});
+    labels=[1,2,3,4,5].map(n=>b[n]?b[n].join(", "):"—");
+  } else labels=["niveau 1","2","3","4","5"];
+  $("leg").innerHTML=labels.map((t,idx)=> t==null ? "" :
+    `<div><span class="dot" style="background:${RAMP[idx]}"></span>${esc(t)}</div>`).join("")
+    +`<div><span class="dot" style="background:${GREY}"></span>non renseigné</div>`;
+}
+
+// ---------- construction du panneau ----------
+function construire(){
+  const fams=[...new Set(IND.map(i=>i.famille))];
+  $("filtres").innerHTML=fams.map(fam=>{
+    const list=IND.filter(i=>i.famille===fam && i.paliers.length);
+    if(!list.length) return "";
+    const nAct=list.filter(i=>i.paliers.length&&actif(i)).length;
+    const corps=list.map(i=>critereHTML(i)).join("");
+    return `<details class="fam"${nAct?" open":""}>
+      <summary>${esc(fam)}<span class="n${nAct?" on":""}">${nAct?plur(nAct,"actif"):plur(list.length,"critère")}</span></summary>
+      ${corps}</details>`;
+  }).join("");
+  cabler();
+}
+
+function critereHTML(i){
+  const nom=`<span class="nm" data-ind="${i.code}">${esc(i.libelle)}</span>`;
+  const f=F[i.code], last=dernier(i), r=resume(i);
+  const n=i.domaine.n_renseigne, sansVal=DATA.length-n;
+  const bornes = i.nature==="preference"
+    ? `<div class="deux">
+         <div><div class="lab">minimum</div>
+           <div class="val" data-lo="${i.code}">${palLabel(i,i.paliers[f.lo])}</div>
+           <input type="range" min="0" max="${last}" value="${f.lo}" data-range="${i.code}" data-b="lo"></div>
+         <div><div class="lab">maximum</div>
+           <div class="val" data-hi="${i.code}">${palLabel(i,i.paliers[f.hi])}</div>
+           <input type="range" min="0" max="${last}" value="${f.hi}" data-range="${i.code}" data-b="hi"></div>
+       </div>`
+    : `<div class="lab">garder au moins</div>
+       <div class="val" data-lo="${i.code}">${palLabel(i,i.paliers[f.lo])}</div>
+       <input type="range" min="0" max="${last}" value="${f.lo}" data-range="${i.code}" data-b="lo">`;
+  return `<details class="cri${actif(i)?" act":""}" data-code="${i.code}"${actif(i)?" open":""}>
+    <summary>${nom}<span class="st">${r||"tous"}</span></summary>
+    <div class="corps">${bornes}
+      <div class="pied"${sansVal?"":' style="justify-content:flex-end"'}>
+        ${sansVal ? `<label><input type="checkbox" data-vide="${i.code}" ${f.vide?"checked":""}>
+          garder ${plur(sansVal,"commune")} sans donnée</label>` : ""}
+        <button data-raz1="${i.code}">réinitialiser</button>
+      </div>
+    </div></details>`;
+}
+
+function cabler(){
+  $("filtres").querySelectorAll("[data-range]").forEach(r=>{
+    r.oninput=()=>{
+      const c=r.dataset.range, f=F[c], v=+r.value;
+      if(r.dataset.b==="lo") f.lo=Math.min(v, f.hi); else f.hi=Math.max(v, f.lo);
+      r.value = r.dataset.b==="lo" ? f.lo : f.hi;
+      majCritere(c); render();
+    };
+  });
+  $("filtres").querySelectorAll("[data-vide]").forEach(cb=>{
+    cb.onchange=()=>{ F[cb.dataset.vide].vide=cb.checked; majCritere(cb.dataset.vide); render(); };
+  });
+  $("filtres").querySelectorAll("[data-raz1]").forEach(b=>{
+    b.onclick=e=>{ e.preventDefault(); const c=b.dataset.raz1; F[c]=neuf(byCode[c]);
+      construire(); render(); };
+  });
+  $("filtres").querySelectorAll("[data-ind]").forEach(el=>bindTip(el,el.dataset.ind));
+}
+
+// Mise à jour en place : le curseur doit rester fluide.
+function majCritere(code){
+  const i=byCode[code], f=F[code];
+  const bloc=$("filtres").querySelector(`.cri[data-code="${code}"]`); if(!bloc) return;
+  const lo=bloc.querySelector(`[data-lo="${code}"]`), hi=bloc.querySelector(`[data-hi="${code}"]`);
+  if(lo) lo.innerHTML=palLabel(i,i.paliers[f.lo]);
+  if(hi) hi.innerHTML=palLabel(i,i.paliers[f.hi]);
+  bloc.querySelector(".st").innerHTML=resume(i)||"tous";
+  bloc.classList.toggle("act", actif(i));
+  const fam=bloc.closest(".fam");
+  if(fam){
+    const list=IND.filter(x=>x.famille===i.famille && x.paliers.length);
+    const nA=list.filter(actif).length;
+    const el=fam.querySelector("summary .n");
+    el.textContent = nA?plur(nA,"actif"):plur(list.length,"critère");
+    el.classList.toggle("on", nA>0);
+  }
+}
+
+// ---------- chargement ----------
+// Où lire les données. Par défaut le serveur local ; export.py injecte
+// window.TERRITOIRES_SRC pour pointer vers les JSON statiques publiés.
+const SRC = window.TERRITOIRES_SRC ||
+  {communes:"/api/communes", indicateurs:"/api/indicateurs"};
+
+async function load(){
+  [DATA,IND]=await Promise.all([
+    fetch(SRC.communes).then(r=>r.json()),
+    fetch(SRC.indicateurs).then(r=>r.json())]);
+  byCode={};
+  IND.forEach(i=>{
+    byCode[i.code]=i; i.paliers=i.paliers||[]; i.domaine=i.domaine||{};
+    F[i.code]=neuf(i);
+  });
+
+  const fams=[...new Set(IND.map(i=>i.famille))];
+  $("colorBy").innerHTML=fams.map(f=>{
+      const l=IND.filter(i=>i.famille===f && i.paliers.length);
+      return l.length ? `<optgroup label="${esc(f)}">`
+        + l.map(i=>`<option value="${i.code}">${esc(i.libelle)}</option>`).join("")
+        + `</optgroup>` : "";
+    }).join("")
+    + `<optgroup label="Divers"><option value="indicateurs_renseignes">Critères renseignés</option></optgroup>`;
+  const pref=["chaleur_nuits_tropicales","sante_apl_generaliste","prix_dvf_median"]
+    .find(c=>byCode[c]&&byCode[c].paliers.length);
+  $("colorBy").value=pref||(IND.find(i=>i.paliers.length)||{}).code;
+
+  const rs=[...new Set(DATA.map(d=>d.region))].filter(Boolean).sort();
+  $("regs").innerHTML="";
+  rs.forEach(r=>{
+    const s=document.createElement("span");
+    s.className="chip"; s.textContent=r;
+    s.onclick=()=>{offRegions.has(r)?(offRegions.delete(r),s.classList.remove("off"))
+                                    :(offRegions.add(r),s.classList.add("off"));render();};
+    $("regs").appendChild(s);
+  });
+  construire(); render();
+}
+
+// Export du jeu filtré : une colonne par critère renseigné, valeurs brutes.
+function csv(){
+  const cols=IND.filter(i=>i.paliers.length);
+  const ent=["code_insee","nom","departement","region","bassin_vie","densite","population"]
+    .concat(cols.map(i=>i.code));
+  const ech=v=>{ const t=v==null?"":String(v);
+    return /[",;\n]/.test(t) ? '"'+t.replace(/"/g,'""')+'"' : t; };
+  const lignes=[ent.join(",")];
+  DATA.filter(passe).sort((a,b)=>a.nom.localeCompare(b.nom,"fr")).forEach(d=>{
+    const base=[d.code_insee,d.nom,d.departement,d.region,d.bassin_vie,d.densite,d.population];
+    const vals=cols.map(i=>{ const v=d.indicateurs[i.code];
+      return !v?"":(v.valeur_texte!=null?v.valeur_texte:v.valeur_num); });
+    lignes.push(base.concat(vals).map(ech).join(","));
+  });
+  const b=new Blob(["\uFEFF"+lignes.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download="france-communes.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$("csv").onclick=csv;
+
+$("razAll").onclick=()=>{ IND.forEach(i=>F[i.code]=neuf(i)); offRegions.clear();
+  $("regs").querySelectorAll(".chip").forEach(c=>c.classList.remove("off"));
+  construire(); render(); };
+// Un seul bouton pour les deux sens : il annonce ce qu'il va faire.
+$("plier").onclick=()=>{
+  const fams=[...$("filtres").querySelectorAll(".fam")];
+  const ouvrir = !fams.some(f=>f.open);
+  fams.forEach(f=>{ f.open=ouvrir;
+    if(!ouvrir) f.querySelectorAll(".cri[open]").forEach(c=>c.open=false); });
+  $("plier").textContent = ouvrir ? "tout replier" : "tout déplier";
+};
+$("colorBy").onchange=render;
+map.on("popupopen",e=>{
+  e.popup.getElement().querySelectorAll("[data-ind]").forEach(x=>bindTip(x,x.dataset.ind));
+});
+load();
+</script></body></html>
